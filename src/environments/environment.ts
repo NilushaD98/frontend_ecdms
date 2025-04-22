@@ -1,0 +1,322 @@
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+
+const API_BASE_URL = 'http://localhost:7254/api/san/';
+//const API_ADMINISTRATION_SERVICE = "administrationservice/";
+
+const API_EA_SERVICE = "entryAuthorization/";
+const API_COMMON_SERVICE = "common/";
+const API_JOU_SERVICE = "jouManagement/";
+const API_CUS_OB_SERVICE = "customerOB/";
+const API_CUS_MS_SERVICE = "customerMS/";
+const API_VEN_SERVICE = "vendorOB/";
+const API_DIS_SERVICE = "dispatch/";
+const API_PRN_SERVICE = "prnManagement/";
+const API_PURCHASE_ORDER = "purchaseOrder/";
+const API_AAT_SERVICE = "accountAndTaxes/";
+const API_BANK_SM_SERVICE = "spendMoney/";
+const API_BANK_RM_SERVICE = "receiveMoney/";
+const API_ITEM_MANAGEMENT = "itemManagement/";
+const API_BANK_FIXED_DEPOSIT = "fixedDeposit/";
+const API_BANK_LOAN = "loan/";
+const API_GRN = "grn/";
+const API_LOCAL_INVOICES = "localInvoice/";
+const API_CREDIT_NOTE = "creditNote/";
+const API_VENDOR_CREDIT = "vendorCredit/";
+const API_PRINT_CHEQUE = "printCheque/";
+const API_BANK_RECONSILATION = "bankReconsilation/";
+const API_WRITE_CHEQUE = "writeCheque/";
+
+const API_EXCHANGE_RATE_SERVICE = "exchangeRate/"
+const API_RECEIPT_SERVICE = "customerReceipt/"
+const API_PAYMENT_SERVICE = "payBills/"
+const API_PURCHASE_ORDER_SERVICE = "purchaseOrderProcess/"
+const API_BILLS_SERVICE="bills/"
+const API_CHART_OF_ACCOUNT ="chartOfAccount/"
+
+export const environment = {
+  version : '1.0.0.0',
+  production: true,
+  apiUrl: API_BASE_URL,
+
+  ADMIN_SERVICE: {
+    BANK:{
+      GET_FIXED_DEPOSITE_TABLE_DATA: `${API_BASE_URL+API_BANK_FIXED_DEPOSIT}listDeposits?compID=`,
+      GET_LOAN_DETAILS_TABLE_DATA: `${API_BASE_URL+API_BANK_LOAN}listLoans?compID=`,
+      GET_LOAN_DETAILS_TABLE_DATA_NOT_FD: `${API_BASE_URL+API_BANK_LOAN}listLoansNotFd?compID=`,
+
+      SAVE_PAYMENT: `${API_BASE_URL+API_BANK_SM_SERVICE}savePayment`,
+      SELECTED_DEPOSITE: `${API_BASE_URL+API_BANK_RM_SERVICE}loadSelectedDeposit?depID=`,
+      SELECTED_SPEND_MONEY: `${API_BASE_URL+API_BANK_SM_SERVICE}loadSelectedSpendMoney?payid=`,
+      CANCEL_REQUEST_MONEY: `${API_BASE_URL+API_BANK_RM_SERVICE}cancelRecMoney`,
+      CANCEL_SPEND_MONEY: `${API_BASE_URL+API_BANK_SM_SERVICE}cancelSpendMoney`,
+      SAVE_RECEIVED_MONEY: `${API_BASE_URL+API_BANK_RM_SERVICE}saveReceivedMoney`,
+      GET_SPEND_MONEY_TABLE: `${API_BASE_URL+API_BANK_SM_SERVICE}spendMoney?`,
+      GET_RECEIVED_MONEY_TABLE: `${API_BASE_URL+API_BANK_RM_SERVICE}receivedMoney?`,
+
+      API_BANK_LOAN_SAVE: `${API_BASE_URL+API_BANK_LOAN}saveLoan`,
+      API_BANK_LOAN_NOT_FD_SAVE: `${API_BASE_URL+API_BANK_LOAN}saveLoanNotFd`,
+      API_BANK_GET_LOAN_TYPES: `${API_BASE_URL+API_BANK_LOAN}loadLoanTypes`,
+      API_BANK_LOAD_SELECTED_FD: `${API_BASE_URL+API_BANK_LOAN}loadSelectedLoan?loanID=`,
+      API_BANK_LOAD_SELECTED_LOAN: `${API_BASE_URL+API_BANK_LOAN}loadSelectedLoanNotFD?loanID=`,
+
+
+      API_PRINT_CHEQUE_MAIN_TABLE: `${API_BASE_URL+API_PRINT_CHEQUE}listChequePrint?compID=`,
+      API_UPDATE_PRINT_DETAILS: `${API_BASE_URL+API_PRINT_CHEQUE}updateChequeDetails?payid=`,
+      API_CHECK_PRINT: `${API_BASE_URL+API_PRINT_CHEQUE}chequePrint`,
+
+      API_RECONSILATION_MAIN_TABLE: `${API_BASE_URL+API_BANK_RECONSILATION}listBankReconciliation?compID=`,
+      API_RECONSILATION_SELECTED: `${API_BASE_URL+API_BANK_RECONSILATION}loadSelectedBankReconciliation?compID=`,
+      API_RECONSILATION_SUMMERY_SELECTED: `${API_BASE_URL+API_BANK_RECONSILATION}loadBankReconciliationSummary?compID=`,
+      API_RECONSILATION_LOAD_BANK_DETAILS: `${API_BASE_URL+API_BANK_RECONSILATION}loadBankInfo`,
+      API_RECONSILATION_LOAD_TRANSACTIONS: `${API_BASE_URL+API_BANK_RECONSILATION}loadTransactions`,
+      API_RECONSILATION_SAVE_RECONCILE: `${API_BASE_URL+API_BANK_RECONSILATION}saveReconcile`,
+
+      API_LOAD_WRITE_CHEQUES :`${API_BASE_URL+API_WRITE_CHEQUE}listWriteCheque`,
+      API_SAVE_WRITE_CHEQUE :`${API_BASE_URL+API_WRITE_CHEQUE}saveWriteCheque`,
+      API_LOAD_SELECTED_WRITE_CHEQUE :`${API_BASE_URL+API_WRITE_CHEQUE}loadSelectedWriteChq`,
+      API_CANCEL_WRITE_CHEQUE :`${API_BASE_URL+API_WRITE_CHEQUE}cancelWriteCheque`,
+    },
+    COMPANY:{
+      GET_CHART_OF_ACCOUNT_TABLE_DATA: `${API_BASE_URL+API_CHART_OF_ACCOUNT}getDataToMainTbl?compID=`,
+      SAVE_HEADER_COA: `${API_BASE_URL+API_CHART_OF_ACCOUNT}saveCOA?`,
+
+
+
+      SAVE_DETAIL_COA: `${API_BASE_URL+API_EA_SERVICE}chartOfAccount/saveDetailCOA?`,
+      LOAD_OTHER_SUB_ACCOUNT: `${API_BASE_URL+API_EA_SERVICE}chartOfAccount/loadOtherSubAccounts?ledgerID=`,
+      LOAD_HEADER_ACCOUNT: `${API_BASE_URL+API_EA_SERVICE}chartOfAccount/loadHeaderAccounts?compID=`,
+      LOAD_OTHER_ACCOUNT: `${API_BASE_URL+API_EA_SERVICE}chartOfAccount/modelCoa?compID=`,
+
+      ENTRY_AUTHORIZATION: `${API_BASE_URL+API_EA_SERVICE}authorizeEntry?`,
+      LOAD_PENDING_AUTH: `${API_BASE_URL+API_EA_SERVICE}getPendingAuthList?compID=`,
+      LOAD_All_ENTRIES: `${API_BASE_URL+API_EA_SERVICE}loadAllEntries?compID=`,
+
+      LOAD_All_JOU: `${API_BASE_URL+API_JOU_SERVICE}loadDataToMainTbl?compID=`,
+      SAVE_JOU: `${API_BASE_URL+API_JOU_SERVICE}saveJournal`,
+      LOAD_SELECTED_JOU: `${API_BASE_URL+API_JOU_SERVICE}getSelectedJou`,
+
+      LOAD_ALL_ITEM: `${API_BASE_URL+API_ITEM_MANAGEMENT}getAllItemList`,
+      LOAD_CATEGORY: `${API_BASE_URL+API_ITEM_MANAGEMENT}getCategoryList`,
+      LOAD_UOM_FOR_TYPE: `${API_BASE_URL+API_ITEM_MANAGEMENT}getUOMForType?isBulk=`,
+      LOAD_UOM_LIST: `${API_BASE_URL+API_ITEM_MANAGEMENT}getUOMList`,
+      LOAD_SALES_LEDGER: `${API_BASE_URL+API_ITEM_MANAGEMENT}getAccLedgerList`,
+      LOAD_BINS: `${API_BASE_URL+API_ITEM_MANAGEMENT}listBeans`,
+      SAVE_ITEM: `${API_BASE_URL+API_ITEM_MANAGEMENT}saveItem`,
+      GET_GROUPS: `${API_BASE_URL+API_ITEM_MANAGEMENT}getGroups?catId=`,
+      SELECTED_ITEM: `${API_BASE_URL+API_ITEM_MANAGEMENT}loadSelectedItem?itemID=`,
+      CATEGORY_LIST: `${API_BASE_URL+API_ITEM_MANAGEMENT}getCategoryList`,
+      UPDATE_CATEGORY: `${API_BASE_URL+API_ITEM_MANAGEMENT}updateItemCategory`,
+      UPDATE_GROUP: `${API_BASE_URL+API_ITEM_MANAGEMENT}updateGroup`,
+      DELETE_CATEGORY: `${API_BASE_URL+API_ITEM_MANAGEMENT}deleteCategory?categoryId=`,
+      DELETE_GROUP: `${API_BASE_URL+API_ITEM_MANAGEMENT}deletegroup?groupId=`,
+      LIST_CATEGORY: `${API_BASE_URL+API_ITEM_MANAGEMENT}listCategory`,
+      LIST_ITEM_GROUPS: `${API_BASE_URL+API_ITEM_MANAGEMENT}listItemGroups`,
+      GET_FINANCIAL_YEAR_LIST: `${API_BASE_URL+API_COMMON_SERVICE}GetFinancialYearList`,
+      GET_FINANCIAL_YEAR_DETAILS: `${API_BASE_URL+API_COMMON_SERVICE}GetFinancialYearDetails`,
+      GET_PENDING_ENTRIES: `${API_BASE_URL+API_COMMON_SERVICE}checkPendingEntries`,
+      LOAD_EVENTS: `${API_BASE_URL+API_COMMON_SERVICE}loadEvents`,
+      UPDATE_CALENDER: `${API_BASE_URL+API_COMMON_SERVICE}updateCalender`,
+      ACTIVE_DEACTIVE_DATES: `${API_BASE_URL+API_COMMON_SERVICE}activeOrDeActiveAllDates`,
+      GET_LEDGER_BAL: `${API_BASE_URL+API_COMMON_SERVICE}previewLedgerBalance`,
+
+      LOAD_EXCHANGE_RATES:  `${API_BASE_URL+API_EXCHANGE_RATE_SERVICE}listExchangeRate`,
+      SAVE_EXCHANGE_RATES:  `${API_BASE_URL+API_EXCHANGE_RATE_SERVICE}saveExchangeRate`,
+    },
+    CUSTOMER:{
+      GET_CUS_OB_TABLE_DATA:`${API_BASE_URL+API_CUS_OB_SERVICE}getDatatoMainTbl?compID=`,
+      DELETE_SUP_CUS_OB_DATA:`${API_BASE_URL+API_CUS_OB_SERVICE}deleteSupCusOB`,
+      SAVE_SUP_CUS_OB_DATA:`${API_BASE_URL+API_CUS_OB_SERVICE}saveMagPopup`,
+      LOAD_SELECTED_SUP_CUS_OB:`${API_BASE_URL+API_CUS_OB_SERVICE}loadSelectedSupCusOB?id=`,
+
+      GET_CRN_PRINT_JASPER:`${API_BASE_URL+API_CREDIT_NOTE}crn-print?disId=`,
+
+      LOAD_CUS_MANAGE_DATA:`${API_BASE_URL+API_CUS_MS_SERVICE}getCustomers?buyer_countries=`,
+      SAVE_CUS_MANAGE_DATA:`${API_BASE_URL+API_CUS_MS_SERVICE}saveSupCus`,
+      GET_SELECT_CUS_MANAGE_DATA:`${API_BASE_URL+API_CUS_MS_SERVICE}getEditTableCustomerMasterr?supcusID=`,
+      GET_SELECT_DEL_TO:`${API_BASE_URL+API_CUS_MS_SERVICE}getSelectedDelTo?id=`,
+      SAVE_NORTIFY_DETAILS:`${API_BASE_URL+API_CUS_MS_SERVICE}saveNotifyDetails`,
+      DELETE_NORTIFY_DETAILS:`${API_BASE_URL+API_CUS_MS_SERVICE}deleteNotifyDetails?id=`,
+      ALL_LOCAL_INVOICES:`${API_BASE_URL+API_LOCAL_INVOICES}allLocalInvoices`,
+      SAVE_LOCAL_INVOICES:`${API_BASE_URL+API_LOCAL_INVOICES}saveLocalInvoice`,
+      LOAD_LOCAL_INVOICE:`${API_BASE_URL+API_LOCAL_INVOICES}loadSelectedLocalInvoice`,
+      UN_AUTH_INVOICE:`${API_BASE_URL+API_LOCAL_INVOICES}unAuthLocalInvoice`,
+
+      ALL_CREDIT_NOTE:`${API_BASE_URL+API_CREDIT_NOTE}listCreditNotes`,
+      SAVE_CREDIT_NOTE:`${API_BASE_URL+API_CREDIT_NOTE}save`,
+      LOAD_CREDIT_NOTE:`${API_BASE_URL+API_CREDIT_NOTE}loadSelectedCreditNote`,
+      LOAD_CUSTOMER_INVOICE_LIST:`${API_BASE_URL+API_CREDIT_NOTE}loadCustomerInvoices`,
+      LOAD_CUSTOMER_INVOICE_ITEMS_LIST:`${API_BASE_URL+API_CREDIT_NOTE}loadInvoiceItems`,
+      CANCEL_CREDIT_NOTE:`${API_BASE_URL+API_CREDIT_NOTE}cancelCreditNote`
+
+    },
+    VENDOR:{
+      GET_VEN_TABLE_DATA:`${API_BASE_URL+API_VEN_SERVICE}getDataToVendorRegistration`,
+      SAVE_VEN_DATA:`${API_BASE_URL+API_VEN_SERVICE}saveSupCusOthertwo`,
+      SAVE_VEN_OTHER_DATA:`${API_BASE_URL+API_VEN_SERVICE}saveSupCusOther`,
+      LOAD_SELECTED_VEN_DATA:`${API_BASE_URL+API_VEN_SERVICE}loadSelectedOtherTwo?supCusID=`,
+      LOAD_SELECTED_OTHER_VEN_DATA:`${API_BASE_URL+API_VEN_SERVICE}loadSupCus?userid=`,
+      LOAD_ALL_VENDOR_CREDITS:`${API_BASE_URL+API_VENDOR_CREDIT}listVendorCredit`,
+      LOAD_ALL_VENDOR_PO:`${API_BASE_URL+API_VENDOR_CREDIT}loadVendorPO`,
+      LOAD_ALL_VENDOR_PO_ITEMS:`${API_BASE_URL+API_VENDOR_CREDIT}loadPOItems`,
+      SAVE_VENDOR_CREDIT:`${API_BASE_URL+API_VENDOR_CREDIT}save`,
+      LOAD_SELECTED_VENDOR_CREDIT:`${API_BASE_URL+API_VENDOR_CREDIT}loadSelectedVendorCredit`,
+      CANCEL_VENDOR_CREDIT:`${API_BASE_URL+API_VENDOR_CREDIT}cancelVendorCredit`,
+      RESET_VENDOR_CREDIT:`${API_BASE_URL+API_VENDOR_CREDIT}resetPOItems`,
+
+      LOAD_VEN_BILLS:`${API_BASE_URL+API_BILLS_SERVICE}listBills`,
+      LOAD_RELATED_BILLS:`${API_BASE_URL+API_BILLS_SERVICE}getSupplierAndCurrancyRelatedPO`,
+      LOAD_PO_RELATED_GRNs:`${API_BASE_URL+API_BILLS_SERVICE}getPORelatedGRNDetails`,
+      SAVE_BILL:`${API_BASE_URL+API_BILLS_SERVICE}saveBill`,
+      LOAD_SELECTED_BILL:`${API_BASE_URL+API_BILLS_SERVICE}loadSelectedBill`,
+      CANCEL_BILL:`${API_BASE_URL+API_BILLS_SERVICE}cancelBill`,
+
+    },
+    INVENTORY:{
+      GET_VEN_TABLE_DATA:`${API_BASE_URL+API_DIS_SERVICE}getAllForDespatch?compID=`,
+      GET_DIS_PRINT_JASPER:`${API_BASE_URL+API_DIS_SERVICE}dispatch-print?disId=`,
+      GET_SELECTED_OD:`${API_BASE_URL+API_DIS_SERVICE}loadSelectedOD?odid=`,
+      GET_LOCAL_INVOICE_OD:`${API_BASE_URL+API_DIS_SERVICE}modelLocalInvoiceDespatchTwo?odid=`,
+      SAVE_NEW_DISPATCH:`${API_BASE_URL+API_DIS_SERVICE}saveDispatch`,
+      GET_BEAN_BIN:`${API_BASE_URL+API_DIS_SERVICE}getBeanBin`,
+      GET_DISPATCH_NOTE:`${API_BASE_URL+API_DIS_SERVICE}generateDispatchNote`,
+      LOAD_STOCK:`${API_BASE_URL+API_DIS_SERVICE}loadStock?plantid=`,
+      UNAUTH_LOCAL_ORDER_DISPATCH:`${API_BASE_URL+API_DIS_SERVICE}unauthLocalOrderDispatch`,
+      RESTRICT_PRINT:`${API_BASE_URL+API_DIS_SERVICE}restrictPrint?refid=`,
+
+      GET_GRN_TABLE:`${API_BASE_URL+API_GRN}getGRNList?grnStatus=`,
+      SAVE_GRN:`${API_BASE_URL+API_GRN}save`,
+      SAVE_GRN_CRN:`${API_BASE_URL+API_GRN}saveCRNGRN`,
+      SAVE_GRN_IMT:`${API_BASE_URL+API_GRN}saveIMTGRN`,
+      GET_GRN_PRINT_JASPER:`${API_BASE_URL+API_DIS_SERVICE}grn-print?grnNo=`,
+      GET_GRN_IMT_PRINT_JASPER:`${API_BASE_URL+API_DIS_SERVICE}grn-print-imt?grnNo=`,
+      GET_GRN_GRN_PRINT_JASPER:`${API_BASE_URL+API_DIS_SERVICE}grn-print-grn?grnNo=`,
+      LOAD_SELECTED_GRN:`${API_BASE_URL+API_GRN}loadSelectedGRN?grnID=`,
+      LOAD_SELECTED_IMT_FOR_GRN2:`${API_BASE_URL+API_GRN}loadSelectedIMTForGRN?imtgrnid=`,
+      LOAD_SELECTED_GRN_PO:`${API_BASE_URL+API_GRN}loadSelectedPO?poid=`,
+      LOAD_SELECTED_CRN_FOR_GRN:`${API_BASE_URL+API_GRN}loadCreditNoteForGRN?crnID=`,
+      LOAD_SELECTED_IMT_FOR_GRN:`${API_BASE_URL+API_GRN}loadIMTForGRN?imtID=`,
+      LOAD_SELECTED_CRN_FOR_GRN2:`${API_BASE_URL+API_GRN}loadSelectedGRNForCRN?crngrnid=`,
+      LOAD_ALL_PO:`${API_BASE_URL+API_GRN}allPo?compID=`,
+      CANCEL_CRN_GRN:`${API_BASE_URL+API_GRN}cancelGRNCRN?compID=`,
+      CANCEL_GRN:`${API_BASE_URL+API_GRN}cancelGRN`,
+      QC_CHECK_GRN:`${API_BASE_URL+API_GRN}qcCheck`,
+      LIST_CRN_FOR_GRN:`${API_BASE_URL+API_GRN}listCRNforGRN?compID=`,
+      LIST_IMT:`${API_BASE_URL+API_GRN}allimt?compID=`,
+    },
+    PURCHASING:{
+      GET_ALL_PRN:`${API_BASE_URL+API_PRN_SERVICE}allPrn?compID=`,
+      GET_ALL_PRN_WITHOUT_PAGE:`${API_BASE_URL+API_PRN_SERVICE}allPrnWithoutPage?compID=`,
+      GET_ALL_PRN_WITH_SORT:`${API_BASE_URL+API_PRN_SERVICE}allPrnWithSort?compID=`,
+      GET_ALL_PRN_WITH_SEARCH_TERM:`${API_BASE_URL+API_PRN_SERVICE}allPrnWithSearchTerm?compID=`,
+      GET_SELECTED_PRN:`${API_BASE_URL+API_PRN_SERVICE}loadprn?prnid=`,
+      GET_ITEM_STORED_DATA:`${API_BASE_URL+API_PRN_SERVICE}listItemsStoredData`,
+      GET_ITEM_STORED_DATA_ITEM:`${API_BASE_URL+API_PRN_SERVICE}listMainItem`,
+      SAVE_PRN:`${API_BASE_URL+API_PRN_SERVICE}savePrn`,
+      CANCEL_PRN:`${API_BASE_URL+API_PRN_SERVICE}cancelprn`,
+      //Purchase Order
+      ALL_PURCHASE_ORDER:`${API_BASE_URL+API_PURCHASE_ORDER}getPOList`,
+      ALL_PRN:`${API_BASE_URL+API_PURCHASE_ORDER}allPrn`,
+      LOAD_PO:`${API_BASE_URL+API_PURCHASE_ORDER}loadpo`,
+      LOAD_PO_FOR_POPUP:`${API_BASE_URL+API_PURCHASE_ORDER}loadSelectedPOForPopup`,
+      LOAD_PRN:`${API_BASE_URL+API_PURCHASE_ORDER}loadprn`,
+      SAVE_PO:`${API_BASE_URL+API_PURCHASE_ORDER}save`,
+        GET_PO_PROGRESS_LIST:`${API_BASE_URL+API_PURCHASE_ORDER_SERVICE}getPOProgressList`,
+        GET_PLANTS:`${API_BASE_URL+API_PURCHASE_ORDER_SERVICE}getPlants`,
+        GET_CUSTOMERS:`${API_BASE_URL+API_PURCHASE_ORDER_SERVICE}getCustomers`,
+        GET_GRN_ITEM_LIST:`${API_BASE_URL+API_PURCHASE_ORDER_SERVICE}getGrnItemList`,
+      CLOSE_PO:`${API_BASE_URL+API_PURCHASE_ORDER}closepo`,
+      UNAUTH_PO:`${API_BASE_URL+API_PURCHASE_ORDER}unauthpo`,
+      GET_GEN_TERMS:`${API_BASE_URL+API_PURCHASE_ORDER}getgenterms`,
+      RESET_PRINT_COUNT:`${API_BASE_URL+API_PURCHASE_ORDER}resetPrintCount`,
+    },
+    REPORT:{
+      LOAD_TRIAL_BALANCE:`${API_BASE_URL+API_AAT_SERVICE}loadTrialBalance?compID=`,
+      LOAD_LEDGER_REPORT:`${API_BASE_URL+API_AAT_SERVICE}loadLedgerReport?compID=`,
+      LOAD_GENERAL_LEDGER:`${API_BASE_URL+API_AAT_SERVICE}loadGeneralLedger?compID=`,
+
+      LOAD_LOAN_REPORT:`${API_BASE_URL+API_AAT_SERVICE}loadLoanReport?compID=`,
+      LOAD_PNL:`${API_BASE_URL+API_AAT_SERVICE}loadPNL?compID=`,
+      LOAD_GP:`${API_BASE_URL+API_AAT_SERVICE}loadGPComparison?compID=`,
+      LOAD_BALANCE_SHEET:`${API_BASE_URL+API_AAT_SERVICE}loadBalanceSheet?compID=`,
+      LOAD_SELECTED_BALANCE_SHEET:`${API_BASE_URL+API_AAT_SERVICE}loadSelectedBalanceSheet?compID=`,
+      LOAD_SUP_CUS_AGAIN:`${API_BASE_URL+API_AAT_SERVICE}loadSupCusAging?compID=`,
+      LOAD_SUP_CUS_TRANSACTION:`${API_BASE_URL+API_AAT_SERVICE}loadSupCusTransactions?compID=`,
+      LOAD_CUS_OUTSTANDING:`${API_BASE_URL+API_AAT_SERVICE}loadCustomerOutstanding?compID=`,
+      LOAD_VEN_OUTSTANDING:`${API_BASE_URL+API_AAT_SERVICE}loadVendorOutstanding?compID=`,
+      LOAD_RECEIVED_MONEY_DETAILS:`${API_BASE_URL+API_AAT_SERVICE}loadReceivePayments?compID=`,
+      LOAD_VENDOR_CREDIT_SUMMERY:`${API_BASE_URL+API_AAT_SERVICE}loadVendorCreditSummery?compID=`,
+      LOAD_PAYMENT_DETAILS:`${API_BASE_URL+API_AAT_SERVICE}loadPaymentDetails?compID=`,
+      LOAD_PNL_DETAILS:`${API_BASE_URL+API_AAT_SERVICE}loadPNLDetails?compID=`,
+    },
+    COMMON:{
+      LOAD_SELECTED_ENTRY: `${API_BASE_URL+API_COMMON_SERVICE}loadDataToPopup?`,
+      LOAD_CURRENCY: `${API_BASE_URL+API_COMMON_SERVICE}getCurrencyList`,
+      LOAD_JOU_TYPES: `${API_BASE_URL+API_COMMON_SERVICE}loadJouTypes`,
+      LOAD_LEDGERS: `${API_BASE_URL+API_COMMON_SERVICE}getLedgersForReceivedMoneyAccount?`,
+      LOAD_LEDGERS_CAO: `${API_BASE_URL+API_COMMON_SERVICE}getLedgersForSpendMoney?`,
+      LOAD_PLANTS: `${API_BASE_URL+API_COMMON_SERVICE}loadPlants`,
+      LOAD_SHIPMENTS: `${API_BASE_URL+API_COMMON_SERVICE}loadShipments`,
+      LOAD_VENDORS: `${API_BASE_URL+API_COMMON_SERVICE}getVendors`,
+      LOAD_CATEGORIES: `${API_BASE_URL+API_COMMON_SERVICE}getSupCusCategoryList`,
+      LOAD_COUNTRIES: `${API_BASE_URL+API_COMMON_SERVICE}getCountryList`,
+      LOAD_ACTIVE_DATES: `${API_BASE_URL+API_COMMON_SERVICE}getActivatedDates`,
+      LOAD_LEDGERS_TWO: `${API_BASE_URL+API_COMMON_SERVICE}getSupplierLedgerList`,
+      GET_REGION_NUMBER: `${API_BASE_URL+API_COMMON_SERVICE}getRegionNumber?id=`,
+      GET_EMPLOYEE_LIST: `${API_BASE_URL+API_COMMON_SERVICE}getEmployeeList`,
+      GET_REGION_LIST: `${API_BASE_URL+API_COMMON_SERVICE}getRegionList`,
+      GET_LEDGER_LIST: `${API_BASE_URL+API_COMMON_SERVICE}getLegerList`,
+      GET_EMAIL_GROUPS: `${API_BASE_URL+API_COMMON_SERVICE}getEmailGroupList`,
+      GET_LOCAL_INVOICE: `${API_BASE_URL+API_COMMON_SERVICE}getLocalInvoices?compID=`,
+      SEND_EMAIL: `${API_BASE_URL+API_COMMON_SERVICE}email`,
+      GET_PUR_REQ_PDF: `${API_BASE_URL+API_COMMON_SERVICE}purchase-request-note?prnNo=`,
+      GET_DEPARTMENTS: `${API_BASE_URL+API_COMMON_SERVICE}loadDepartments?plantID=`,
+      GET_CERTIFICATIONS: `${API_BASE_URL+API_COMMON_SERVICE}getCertificateList`,
+      GET_FINANCIAL_YEARS: `${API_BASE_URL+API_COMMON_SERVICE}getFinancialYearList?compID=`,
+      GET_FINANCIAL_YEAR_DETAILS: `${API_BASE_URL+API_COMMON_SERVICE}getFinancialYearDetails?compID=`,
+      GET_NOTIFICATIONS: `${API_BASE_URL+API_COMMON_SERVICE}getPendingAuthEntries?compID=`,
+      GET_PROVIDER_BANK: `${API_BASE_URL+API_COMMON_SERVICE}loadProviderBank?compID=`,
+      GET_ACTIVE_DATES: `${API_BASE_URL+API_COMMON_SERVICE}listActiveDates?compID=`,
+      GET_LOAN_TYPES: `${API_BASE_URL+API_COMMON_SERVICE}loadLoanTypes`,
+      GET_SUP_CUS_CATEGORY: `${API_BASE_URL+API_COMMON_SERVICE}loadSupCusCategories?supType=`,
+      LIST_ACCOUNTS: `${API_BASE_URL+API_COMMON_SERVICE}listAccounts?`,
+      LIST_CERTIFICATES: `${API_BASE_URL+API_COMMON_SERVICE}getCertificateList`,
+      SUP_CUS_LIST: `${API_BASE_URL+API_COMMON_SERVICE}listUsersStoredData`,
+      ITEMS_LIST: `${API_BASE_URL+API_COMMON_SERVICE}listItemsStoredData`,
+      GET_EX_RATE:`${API_BASE_URL+API_COMMON_SERVICE}getExRate`,
+      GET_PROJECT_LIST:`${API_BASE_URL+API_COMMON_SERVICE}getProjectList`,
+      CLOSE_FINANCE_YEAR:  `${API_BASE_URL+API_COMMON_SERVICE}closeFinancialYear`,
+
+    },
+    RECEIPT:{
+      LOAD_CUSTOMER_RECEIPT:`${API_BASE_URL+API_RECEIPT_SERVICE}listCustomerReceipt`,
+      LOAD_CUSTOMERS:`${API_BASE_URL+API_RECEIPT_SERVICE}listCustomers`,
+      LIST_CUSTOMER_INVOICES:`${API_BASE_URL+API_RECEIPT_SERVICE}listCustomerInvoices`,
+      LIST_SETTLEMENT_DATA:`${API_BASE_URL+API_RECEIPT_SERVICE}loadSettlementData`,
+      SAVE_SETTLEMENT:`${API_BASE_URL+API_RECEIPT_SERVICE}saveSettlement`,
+      SAVE_CUSTOMER_RECEIPT:`${API_BASE_URL+API_RECEIPT_SERVICE}saveCustomerReceipt`,
+      LOAD_SELECTED_CUSTOMER_RECEIPT:`${API_BASE_URL+API_RECEIPT_SERVICE}loadSelectedCustomerReceipt`
+    },
+    PAYMENTS:{
+      LOAD_PAY_BILLS:`${API_BASE_URL+API_PAYMENT_SERVICE}listPayBills`,
+      LOAD_VENDOR_BILLS:`${API_BASE_URL+API_PAYMENT_SERVICE}listVendorBills`,
+      LIST_SETTLEMENT_DATA:`${API_BASE_URL+API_PAYMENT_SERVICE}loadSettlementData`,
+      SAVE_SETTLEMENT:`${API_BASE_URL+API_PAYMENT_SERVICE}saveSettlement`,
+      SAVE_PAY_BILL:`${API_BASE_URL+API_PAYMENT_SERVICE}savePayBill`,
+      LOAD_SELECTED_BILL:`${API_BASE_URL+API_PAYMENT_SERVICE}loadSelectedPayBill`,
+      CANCEL:`${API_BASE_URL+API_PAYMENT_SERVICE}cancel`,
+      GET_BILL_PRINT_JASPER:`${API_BASE_URL+API_PAYMENT_SERVICE}bill-print?disId=`,
+
+    }
+  }
+};
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

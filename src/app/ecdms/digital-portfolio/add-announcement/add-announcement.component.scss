@@ -1,0 +1,39 @@
+/* Base styles for the dropzone */
+.custom-drop-zone {
+  width: 100%; /* Full width */
+  min-height: 200px; /* Minimum height */
+  max-width: 600px; /* Maximum width (optional) */
+  border: 2px dashed #007bff; /* Blue dashed border */
+  border-radius: 10px; /* Rounded corners */
+  display: flex; /* Center content inside the dropzone */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 18px; /* Font size */
+  font-weight: bold; /* Bold text */
+  color: #007bff; /* Text color */
+  background-color: #f9f9f9; /* Light background */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transitions */
+}
+
+/* Hover effect for the dropzone */
+.custom-drop-zone:hover {
+  border-color: #0056b3; /* Darker blue border on hover */
+  background-color: #e9ecef; /* Slightly darker background on hover */
+}
+
+/* Active state (when dragging files over the dropzone) */
+.custom-drop-zone.active {
+  border-color: #28a745; /* Green border when active */
+  background-color: #d4edda; /* Light green background */
+}
+
+/* Uploaded image preview */
+img.img-fluid {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}

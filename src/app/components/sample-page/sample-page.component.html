@@ -1,0 +1,193 @@
+<app-breadcrumb [title]="'Customer Receipt'" [items]="['Receipt']" [active_item]="'Customer Receipt'"></app-breadcrumb>
+<div>
+    <form class="needs-validation" novalidate [ngClass]="{'was-validated': validate}">
+        <div class="card">
+            <div class="card-body megaoptions-border-space-sm">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="card input-air-primary">
+                            <div class="media p-20">
+                                <div class="media-body">
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" for="validationDefault04">Entry No</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control input-air-primary" id="inputEmail3" type="email" placeholder="AUTO" required="" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row" >
+                                        <label class="col-sm-3 col-form-label" for="validationDefault04">Customer</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-select input-air-primary" id="validationDefault04" required="">
+                                                <option value="" disabled selected>Select vendors</option>
+                                                <option value="">Buyer 01</option>
+                                                <option value="">Buyer 02</option>
+                                                <option value="">Buyer 03</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select a buyer.</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" for="validationDefault04">SBU</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control input-air-primary" id="inputEmail3" type="email" placeholder="Enter Consignee" required="">
+                                            <div class="invalid-feedback">Please provide a valid display name.</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" for="validationDefault04">Narration</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control input-air-primary" id="inputEmail3" type="email" placeholder="Enter Consignee" required="">
+                                            <div class="invalid-feedback">Please provide a valid display name.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card input-air-primary">
+                            <div class="media p-20">
+                                <div class="media-body">
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" for="validationDefault04">Entry Date</label>
+                                        <div class="col-sm-9">
+                                            <div class="input-group">
+                                                <input class="form-control input-air-primary" placeholder="yyyy-mm-dd"
+                                                       name="dp" [(ngModel)]="model" ngbDatepicker #d3="ngbDatepicker"
+                                                       [placement]="placement" [positionTarget]="buttonEl">
+                                                <button #buttonEl class="btn btn-primary calendar input-air-primary" (click)="d3.toggle()" type="button">
+                                                    <i data-feather="calendar"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row" >
+                                        <label class="col-sm-3 col-form-label" for="validationDefault04">Pay Method</label>
+                                        <div class="col-sm-3">
+                                            <select class="form-select input-air-primary" id="validationDefault05" placeholder="" required="">
+                                                <option value="" disabled selected>....</option>
+                                                <option value="">Cash</option>
+                                                <option value="">Cheque</option>
+                                                <option value="">Bank</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select a invoice type.</div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input class="form-control input-air-primary" type="text" placeholder="Enter Cheque Number" required="">
+                                            <div class="invalid-feedback">Please provide prepared person.</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" for="validationDefault04">Amount</label>
+                                        <div class="col-sm-3">
+                                            <input class="form-control input-air-primary" type="text" placeholder="Enter Prepared By" required="">
+                                            <div class="invalid-feedback">Please provide prepared person.</div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <select class="form-select input-air-primary" id="validationDefault05" placeholder="" required="">
+                                                <option value="">LKR</option>
+                                                <option value="">Cheque</option>
+                                                <option value="">Bank</option>
+                                            </select>
+                                            <div class="invalid-feedback">Please select a invoice type.</div>
+                                        </div>
+                                        <label class="col-sm-1 col-form-label" for="validationDefault04">Rate</label>
+                                        <div class="col-sm-2">
+                                            <input class="form-control input-air-primary" type="text" placeholder="Rate" required="">
+                                            <div class="invalid-feedback">Please provide prepared person.</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" for="validationDefault04">Reference</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control input-air-primary" type="text" placeholder="Enter Reference" required="">
+                                            <div class="invalid-feedback">Please provide approved person.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" type="submit" (click)=submit()>Submit form</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body megaoptions-border-space-sm">
+                <div class="row g-3">
+                    <div class="col-sm-12">
+                        <div class="card input-air-primary">
+                            <div class="media p-20">
+                                <div class="media-body">
+                                    <div class="card-body">
+                                        <div class="table-responsive data-table">
+                                            <form>
+                                                <table class="table table-striped table-border-vertical">
+                                                    <thead>
+                                                    <tr>
+                                                        <th  >Item Code</th>
+                                                        <th scope="col" >Item Name</th>
+                                                        <th scope="col"  >Certification</th>
+                                                        <th scope="col" >Description</th>
+                                                        <th scope="col" >No of Cartons/Bags</th>
+                                                        <th scope="col" >Quantity</th>
+                                                        <th scope="col" >UOM</th>
+                                                        <th scope="col" >Selling Price</th>
+                                                        <th scope="col" >Total Amount</th>
+                                                        <th scope="col" >Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr *ngFor="let item of basicTable$ | async">
+                                                        <td scope="row">
+                                                            <img class="img-40 me-2" src="{{item.img}}" alt="">
+                                                            <ngb-highlight [result]="item.name" [term]="service.searchTerm"></ngb-highlight>
+                                                        </td>
+                                                        <td>
+                                                            <ngb-highlight [result]="item.startDate" [term]="service.searchTerm"></ngb-highlight>
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" id="exampleFormControlInput1" type="text" >
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" id="exampleFormControlInput1" type="text" >
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" id="exampleFormControlInput1" type="number" >
+                                                        </td>
+                                                        <td>
+                                                            <input class="form-control" id="exampleFormControlInput1" type="number" >
+                                                        </td>
+                                                        <td>
+                                                    <span class="badge {{item.ActionClass}}">
+                                                      <ngb-highlight [result]="item.salary" [term]="service.searchTerm"></ngb-highlight>
+                                                    </span>
+                                                        </td>
+                                                        <td>
+                                                            <ngb-highlight [result]="item.Budget" [term]="service.searchTerm"></ngb-highlight>
+                                                        </td>
+                                                        <td>
+                                                    <span>
+                                                      <i class="fa fa-eye font-primary pe-2"></i>
+                                                      <span (click)="deleteData(item.id)">
+                                                        <i class="icofont icofont-close-circled font-danger ps-2"></i>
+                                                      </span>
+                                                    </span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

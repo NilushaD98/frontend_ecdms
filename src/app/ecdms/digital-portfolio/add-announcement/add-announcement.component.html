@@ -1,0 +1,45 @@
+<app-breadcrumb [title]="'Add Announcement'" [items]="['Digital Portfolio']" [active_item]="'Add Announcement'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>Post Edit</h5>
+                </div>
+                <div class="card-body add-post">
+                    <form class="row needs-validation" novalidate="">
+                        <div class="col-sm-12">
+                            <div class="mb-3">
+                                <label for="validationCustom01">Caption:</label>
+                                <input class="form-control" id="validationCustom01" type="text" name="validationCustom01"
+                                       placeholder="post caption" required="" [(ngModel)]="caption">
+                                <div class="valid-feedback">Looks good!</div>
+                            </div>
+                        </div>
+                    </form>
+                    <form>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label>Upload file</label>
+                                    <dropzone
+                                            [config]="config"
+                                            [message]="text"
+                                            [className]="'custom-drop-zone'"
+                                            (error)="onUploadError($event)"
+                                            (success)="onUploadSuccess($event)">
+                                    </dropzone>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="btn-showcase text-end">
+                        <button class="btn btn-primary" (click)="post()">Post</button>
+                        <input class="btn btn-light" type="reset" value="Discard">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<img *ngIf="uploadedImageUrl" [src]="uploadedImageUrl" alt="Uploaded image" class="img-fluid mt-3">

@@ -1,0 +1,117 @@
+<app-breadcrumb [title]="'Add Student'" [items]="['Manage Users']" [active_item]="'Add Student'"></app-breadcrumb>
+
+<div class="card">
+    <div class="card-header pb-0">
+        <h5>Student Information</h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form" >
+            <div class="row g-3 mb-2">
+                <div class="col-md-6">
+                    <label class="form-label" for="firstName">First name</label>
+                    <input formControlName="firstName" class="form-control" id="firstName" type="text" placeholder="First name"  >
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="lastName">Last name</label>
+                    <input formControlName="lastName" class="form-control" id="lastName" type="text" placeholder="Last name"  >
+                </div>
+            </div>
+            <div class="row g-3 mb-2">
+                <div class="col-md-12">
+                    <label class="form-label" for="fullName">Full name</label>
+                    <input formControlName="fullName" class="form-control" id="fullName" type="text" placeholder="Full name"  >
+                </div>
+            </div>
+            <div class="row g-3 mb-2">
+                <div class="col-md-6">
+                    <label class="form-label" for="dob">Date of Birth</label>
+                    <input formControlName="dob" class="form-control" id="dob" type="date" placeholder="Birthday" >
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="gender">Gender</label>
+                    <select  formControlName="gender" class="form-select" id="gender" >
+                        <option selected="" disabled="" value="">Choose...</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row g-3 mb-2">
+                <div class="col-md-12">
+                    <label class="form-label" for="address">Address</label>
+                    <input formControlName="address" class="form-control" id="address" type="text" placeholder="Address" >
+                </div>
+            </div>
+            <div class="row g-3 mb-2">
+                <div class="col-md-6">
+                    <label class="form-label" for="program">Program Enroll For</label>
+                    <select  formControlName="program" class="form-select" id="program" >
+                        <option selected="" disabled="" value="">Choose...</option>
+                        <option value="ecd">ECD Center</option>
+                        <option value="dc">Daycare Center</option>
+                        <option value="ecddc">ECD & Daycare Center</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="ageCategory">Age Category</label>
+                    <select  formControlName="ageCategory" class="form-select" id="ageCategory" >
+                        <option selected="" disabled="" value="">Choose...</option>
+                            <option value="1">2.5 - 3 years</option>
+                            <option value="2">3 - 4 years</option>
+                            <option value="3">4 - 5 years</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header pb-0">
+        <h5>Parent/Guardian Information</h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="parentForm" >
+            <div class="row g-3 mb-2">
+                <div class="col-md-12">
+                    <label class="form-label" for="fullNameParent">Full name</label>
+                    <input formControlName="fullNameParent" class="form-control" id="fullNameParent" type="text" placeholder="Full name"  >
+                </div>
+            </div>
+            <div class="row g-3 mb-2">
+                <div class="col-md-6">
+                    <label class="form-label" for="relationship">Relationship to Child</label>
+                    <select  formControlName="relationship" class="form-select" id="relationship" >
+                        <option selected="" disabled="" value="">Choose...</option>
+                        <option value="mother">Mother</option>
+                        <option value="father">Father</option>
+                        <option value="guardian">Guardian</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row g-3 mb-2">
+                <div class="col-md-12">
+                    <label class="form-label" for="email">Email</label>
+                    <input formControlName="email" class="form-control" id="email" type="email" placeholder="e-mail" >
+                </div>
+            </div>
+            <div class="row g-3 mb-2">
+                <div class="col-md-6">
+                    <label class="form-label" for="contactOne">Contact 1</label>
+                    <input formControlName="contactOne" class="form-control" id="contactOne" type="text" placeholder="Contact 1" >
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="contactTwo">Contact 2</label>
+                    <input formControlName="contactTwo" class="form-control" id="contactTwo" type="text" placeholder="Contact 2" >
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body d-flex justify-content-end gap-2">
+        <button class="btn btn-primary" (click)="addStudent()">Save</button>
+        <button class="btn btn-warning">Clear</button>
+    </div>
+</div>

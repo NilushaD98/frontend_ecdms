@@ -1,0 +1,92 @@
+<app-breadcrumb [title]="'Students'" [items]="['Manage Users']" [active_item]="'Students'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive data-table">
+                        <form>
+                            <div class="mb-3 row justify-content-end">
+                                    <div class="col-xs-1">
+                                        <button class="btn btn-primary btn-air-primary" (click)="navigateAddStdent()">Add Student</button>
+                                    </div>
+                                <span class="col col-form-label text-end" *ngIf="service.loading$ | async">Loading...</span>
+                                <label for="table-complete-search" class="col-xs-3 col-sm-auto col-form-label">Search:</label>
+                                <div class="col-xs-3 col-sm-auto">
+                                    <input id="table-complete-search" type="text" class="form-control" name="searchTerm" [(ngModel)]="service.searchTerm">
+                                </div>
+                            </div>
+
+                            <table class="table table-striped table-border-vertical">
+                                <thead>
+                                <tr>
+                                    <th scope="col" sortable="name" (sort)="onSort($event)">Student ID</th>
+                                    <th scope="col" sortable="invoice" (sort)="onSort($event)">Student Name</th>
+                                    <th scope="col" sortable="startDate" >Birthday</th>
+                                    <th scope="col" sortable="invoice" (sort)="onSort($event)">Gender</th>
+                                    <th scope="col" sortable="invoice" (sort)="onSort($event)">Program</th>
+                                    <th scope="col" sortable="position" (sort)="onSort($event)">Category</th>
+                                    <th scope="col" >Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let item of basicTable$ | async">
+                                    <td scope="row">
+                                        <img class="img-40 me-2" src="{{item.img}}" alt="">
+                                        <ngb-highlight [result]="item.stuID" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.firstName+' '+item.lastName" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.dob | date:'yyyy-MM-dd'" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.gender" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="getProgramDisplayName(item.program)" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="getCategory(item.ageCategory)" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <span>
+                                          <i class="fa fa-eye font-primary pe-2"  (click)="viewStudent(item.stuID)"></i>
+                                          <span (click)="deleteData(item.stuID)">
+                                            <i class="icofont icofont-close-circled font-danger ps-2"></i>
+                                          </span>
+                                        </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between mt-3">
+                                <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                                    <option [ngValue]="2">2 items per page</option>
+                                    <option [ngValue]="4">4 items per page</option>
+                                    <option [ngValue]="6">6 items per page</option>
+                                </select>
+                                <ngb-pagination
+                                        [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+                                </ngb-pagination>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="mb-3 row justify-content-end">-->
+<!--    <div class="col-xs-1">-->
+<!--        <button class="btn btn-primary btn-air-primary" (click)="navigateAddStdent()">Add Student</button>-->
+<!--    </div>-->
+<!--    <label for="table-complete-search" class="col-xs-3 col-sm-auto col-form-label">Search:</label>-->
+<!--    <div class="col-xs-3 col-sm-auto">-->
+<!--        <input id="table-complete-search" type="text" class="form-control" name="searchTerm"-->
+<!--               [(ngModel)]="service.searchTerm">-->
+<!--    </div>-->
+<!--</div>-->

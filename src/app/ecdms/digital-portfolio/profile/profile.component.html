@@ -1,0 +1,65 @@
+<app-breadcrumb [title]="'Profile'" [items]="['Digital Portfolio']" [active_item]="'Profile'"></app-breadcrumb>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div *ngFor="let item of posts">
+            <div class="card" >
+                <div class="card-body">
+                    <div class="new-users-social">
+                        <div class="media">
+<!--                            <img class="rounded-circle image-radius m-r-15" src="{{item.user.profile_photo_url}}" alt="">-->
+                            <div class="media-body">
+                                <h6 class="mb-0 f-w-700">ADMIN</h6>
+                                <p>{{item.postDate | date: 'MMMM, d, yyyy' }}</p>
+                            </div><span class="pull-right mt-2"><i data-feather="more-vertical"></i></span>
+                        </div>
+                    </div>
+                    <img class="img-fluid" alt="" src="{{item.pictureLink}}">
+                    <div class="timeline-content">
+                        <p>{{item.caption}}</p>
+                        <div class="like-content mt-2">
+                            <span class="comment-number">
+                                <i style="cursor: pointer" (click)="changeLikeStatus(item)"  *ngIf="item.likeStatus" class="fa fa-heart font-danger"></i>
+                                <i style="cursor: pointer" (click)="changeLikeStatus(item)" *ngIf="!item.likeStatus" class="fa fa-heart-o"></i>
+                                <span>{{item.likeCount}}</span>
+                            </span>
+                            <span class="pull-right comment-number">
+                                <span>
+                                    <i style="cursor: pointer" (click)="item.commentShow = !item.commentShow" class="fa fa-comments-o"></i>
+                                </span>
+                                <span>{{item.commentCount}}</span>
+                            </span>
+                        </div>
+                        <div *ngIf="item.commentShow" class="social-chat">
+                            <div *ngFor="let comment of item.commentDTOList">
+                                <div class="your-msg">
+                                    <div class="media">
+<!--                                        <img class="img-50 img-fluid m-r-20 rounded-circle" alt="" src="{{comment.user.profile_photo_url}}">-->
+                                        <div class="media-body"><span class="f-w-600">{{comment.userDTO.name}} <span>{{comment.commentDate | date: 'EEEE, MMMM d, y'}}</span></span>
+                                            <p>{{comment.comment}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <a style="cursor: pointer" class="f-w-600" (click)="item.commentShow = !item.commentShow">Hide Comments</a>
+                            </div>
+                        </div>
+                        <div class="comments-box">
+                            <div class="media"><img class="img-50 img-fluid m-r-20 rounded-circle" alt=""
+                                                    src="assets/images/user/1.jpg">
+                                <div class="media-body">
+                                    <div class="input-group text-box">
+                                        <input [(ngModel)]="item.newComment" class="form-control input-txt-bx" type="text" name="message-to-send"
+                                               placeholder="Post Your commnets">
+                                        <div class="input-group-text"> <i  class="fa fa-paper-plane" style="cursor: pointer; color: whitesmoke" (click)="addComment(item)" ></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
