@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
                     console.log(response);
                     localStorage.setItem("token", response.token);
                     localStorage.setItem("username", JSON.stringify(loginDTO.username));
-                    this.router.navigate(["/dashboard/default"]);
+                    this.router.navigate(["/digital-portfolio/profile"]);
 
                 }
             );

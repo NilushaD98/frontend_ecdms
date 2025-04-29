@@ -1,6 +1,7 @@
 <!-- Page Sidebar Start-->
 <div class="logo-wrapper">
   <div class="back-btn" (click)="sidebarToggle()">
+
     <i class="fa fa-angle-left"></i>
   </div>
 </div>
@@ -27,7 +28,7 @@
             [class.link-nav]="!menuItem.children"
             [ngClass]="{active: menuItem.active}"
             *ngIf="menuItem.type === 'sub'" (click)="toggletNavActive(menuItem)">
-              <svg-icon src="assets/svgIcon/{{menuItem.icon}}.svg"></svg-icon>
+<!--              <svg-icon src="assets/svgIcon/{{menuItem.icon}}.svg"></svg-icon>-->
               <span>{{menuItem.title }}</span>
               <div class="according-menu">
                 <i class="fa fa-angle-{{menuItem.active ? 'down' : 'right'}} pull-right" *ngIf="menuItem.children"></i>
@@ -38,7 +39,7 @@
         [class.link-nav]="!menuItem.children"
         [ngClass]="{active: menuItem.active}"
         *ngIf="menuItem.type === 'link'">
-           <svg-icon src="assets/svgIcon/{{menuItem.icon}}.svg"></svg-icon>
+<!--           <svg-icon src="assets/svgIcon/{{menuItem.icon}}.svg"></svg-icon>-->
           <span (click)="close()">{{menuItem.title }}</span>
           <div class="according-menu">
             <i class="fa fa-angle-{{menuItem.active ? 'down' : 'right'}} pull-right" *ngIf="menuItem.children"></i>
@@ -49,7 +50,7 @@
           [class.link-nav]="!menuItem.children" 
           [ngClass]="{active: menuItem.active}"
           *ngIf="menuItem.type === 'extLink'">
-          <svg-icon src="assets/svgIcon/{{menuItem.icon}}.svg"></svg-icon>
+<!--          <svg-icon src="assets/svgIcon/{{menuItem.icon}}.svg"></svg-icon>-->
           <span>{{menuItem.title}}</span>
           <div class="according-menu">
             <i class="fa fa-angle-{{menuItem.active ? 'down' : 'right'}} pull-right" *ngIf="menuItem.children"></i>
@@ -60,7 +61,7 @@
             [class.link-nav]="!menuItem.children"  
             [ngClass]="{active: menuItem.active}" 
             *ngIf="menuItem.type === 'extTabLink'">
-            <svg-icon src="assets/svgIcon/{{menuItem.icon}}.svg"></svg-icon>
+<!--            <svg-icon src="assets/svgIcon/{{menuItem.icon}}.svg"></svg-icon>-->
           <span>{{menuItem.title }}</span>
           <div class="according-menu">
             <i class="fa fa-angle-{{menuItem.active ? 'down' : 'right'}} pull-right" *ngIf="menuItem.children"></i>

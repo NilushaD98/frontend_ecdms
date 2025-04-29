@@ -1,12 +1,12 @@
 <div class="customizer-links" [ngClass]="{'open': customizer != '' }">
    <div class="nav flex-column nac-pills" id="c-pills-tab" role="tablist" aria-orientation="vertical">
       <a href="javascript:void(0)" class="nav-link" [ngClass]="{'active show': customizer == 'layout' }" (click)="Customizer('layout')">
-         <div class="settings"><i class="icon-paint-bucket"></i></div> 
+         <div class="settings"><i class="icon-paint-bucket"></i></div>
          <span>Check layouts</span>
       </a>
       <a href="javascript:void(0)" class="nav-link" [ngClass]="{'active show': customizer == 'option' }" id="c-pills-home-tab" (click)="Customizer('option')">
          <div class="settings"><i class="icon-settings"></i></div>
-         <span>Quick option</span> 
+         <span>Quick option</span>
       </a>
    </div>
 </div>
@@ -27,13 +27,13 @@
             <div class="modal-body">
                <div class="modal-body config-popup">
                   <div class="row">
-         
+
                      <p>To replace our design with your desired theme. Please do configuration as mention </p>
                      <p> <b> Path : src > app > shared > services > layout.service.ts </b> </p>
                      <div>
                         <pre>
    <code>
-      public config = &#123;  
+      public config = &#123;
          settings&#58; &#123;
             sidebar&#58; '{{layout.config.settings.sidebar}}',
             layout_type&#58; '{{layout.config.settings.layout_type}}',

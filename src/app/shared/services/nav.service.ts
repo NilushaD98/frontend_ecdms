@@ -61,14 +61,22 @@ export class NavService {
 
   MENUITEMS: Menu[] = [
     {
-      title: "Manage Users",
-      icon: "users",
+      title: "Home",
+        icon: "home",
+        type: "sub",
+        badgeType: "light-primary",
+    },
+    {
+      title: "Payments",
+      icon: "exchange",
       type: "sub",
       active: true,
-      children: [
-        { path: "/student-management/manage-student", title: "Students", type: "link" },
-        { path: "/student-management/manage-teacher", title: "Teachers", type: "link" },
-      ],
+    },
+    {
+      title: "Annual Calendar",
+      icon: "calendar",
+      type: "sub",
+      active: true,
     },
     {
       title: "Digital Portfolio",
@@ -80,6 +88,35 @@ export class NavService {
         { path: "/digital-portfolio/add-post", title: "Add Announcement", type: "link" },
       ],
     },
+    {
+      title: "Attendance",
+      icon: "users",
+      type: "sub",
+      active: true,
+    },
+    {
+      title: "Academic Milestones",
+      icon: "star-on",
+      type: "sub",
+      active: true,
+    },
+    {
+      title: "Appointment scheduling",
+      icon: "forms",
+      type: "sub",
+      active: true,
+    },
+    {
+      title: "Manage Users",
+      icon: "newUser",
+      type: "sub",
+      active: true,
+      children: [
+        { path: "/student-management/manage-student", title: "Students", type: "link" },
+        { path: "/student-management/manage-teacher", title: "Teachers", type: "link" },
+      ],
+    },
+
     // {
     //   title: "Dashboards",
     //   icon: "home",
