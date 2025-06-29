@@ -12,14 +12,15 @@ import {TablesModule} from "../../components/tables/tables.module";
 
 
 @NgModule({
-  declarations: [ManageTeacherComponent,ManageStudentComponent,AddTeacherComponent,AddStudentComponent],
+  declarations: [ManageTeacherComponent,ManageStudentComponent,AddStudentComponent],
     imports: [
         CommonModule,
         StudentManagementRoutingModule,
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
-        TablesModule
+        TablesModule,
+        AddTeacherComponent
     ]
 })
 export class StudentManagementModule { }

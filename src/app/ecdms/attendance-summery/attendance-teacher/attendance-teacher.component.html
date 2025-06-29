@@ -1,0 +1,69 @@
+<app-breadcrumb [title]="'Attendance'" [items]="['Attendance']" [active_item]="'Teacher'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive data-table">
+                        <form>
+                            <div class="row g-3 mb-2">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="joiningDate">Date</label>
+                                    <input id="joiningDate" type="date" class="form-control"
+                                           [attr.value]="todayDate" (input)="onDateChange($event)" />
+                                </div>
+                                <div class="col-md-4">
+                                    <span class="col col-form-label text-end" *ngIf="service.loading$ | async">Loading...</span>
+                                    <label for="table-complete-search" class="col-xs-3 col-sm-auto col-form-label">Search:</label>
+                                    <div class="col-xs-3 col-sm-auto">
+                                        <input id="table-complete-search" type="text" class="form-control" name="searchTerm" [(ngModel)]="service.searchTerm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table class="table table-striped table-border-vertical">
+                                <thead>
+                                <tr>
+                                    <th scope="col" sortable="attendanceID" (sort)="onSort($event)">Teacher ID</th>
+                                    <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+                                    <th scope="col" >Mark</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let item of basicTable$ | async">
+                                    <td scope="row">
+                                        <img class="img-40 me-2" src="{{item.img}}" alt="">
+                                        <ngb-highlight [result]="'TCHR-'+item.attendanceID" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.name" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <input
+                                                class="checkbox_animated"
+                                                type="checkbox"
+                                                [(ngModel)]="item.presentStatus"
+                                                (change)="toggleAttendance(item)"
+                                        >
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between mt-3">
+                                <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                                    <option [ngValue]="2">2 items per page</option>
+                                    <option [ngValue]="4">4 items per page</option>
+                                    <option [ngValue]="6">6 items per page</option>
+                                </select>
+                                <ngb-pagination
+                                        [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+                                </ngb-pagination>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

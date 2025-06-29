@@ -15,6 +15,7 @@ import {FeatherIconComponent} from "../../../shared/components/feather-icon/feat
 import {ActivatedRoute, Route, Router} from "@angular/router";
 import {TABLEDATA} from "../../../shared/data/table/tableData";
 import {UserServiceService} from "../../service/user-service/user-service.service";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-manage-student',
@@ -40,21 +41,24 @@ export class ManageStudentComponent {
     3: '4 - 5 years'
   };
   constructor(
-      public service: TablesService,
+      public service: UserServiceService,
       public route:Router,
       public userService:UserServiceService,
       public activatedRoute: ActivatedRoute,
 
       ) {
+    this.fetchAllStudents();
 
-    userService.getAllStudents().subscribe(
+  }
+  fetchAllStudents(){
+    this.userService.getAllStudents().subscribe(
         (res:any)=>{
           console.log(res)
-          userService.setTableData(res.data);
-          this.basicTable$ = userService.basicTable$;
-          this.total$ = userService.total$;
+          this.userService.setTableData(res.data);
+          this.basicTable$ = this.userService.basicTable$;
+          this.total$ = this.userService.total$;
         }
-    )
+    );
   }
 
   // Method to get the display name
@@ -87,5 +91,31 @@ export class ManageStudentComponent {
 
   viewStudent(stuID: any) {
       this.route.navigate(['/student-management/add-student'],{ queryParams: { stuID: stuID } });
+  }
+
+  removeStudent(stuID: any) {
+    this.userService.removeStudent(stuID);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.removeStudent(stuID).subscribe(
+            (res: any) => {
+              if(res.success){
+                Swal.fire('Deleted!', res.message, 'success');
+              }else {
+                Swal.fire('Unsuccessful!', "Error occurred in student remove.", 'error');
+              }
+              this.fetchAllStudents();
+            }
+        );
+      }
+    });
   }
 }

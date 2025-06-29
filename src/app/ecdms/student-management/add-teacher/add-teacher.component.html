@@ -1,1 +1,81 @@
-<p>add-teacher works!</p>
+<app-breadcrumb [title]="'Add Teacher'" [items]="['Manage Users']" [active_item]="'Add Teacher'"></app-breadcrumb>
+
+<div class="card">
+    <div class="card-header pb-0">
+        <h5>Teacher Information</h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="form">
+            <div class="row g-3 mb-2">
+                <div class="col-md-6">
+                    <label class="form-label" for="fullName">Full Name</label>
+                    <input formControlName="fullName" id="fullName" type="text" class="form-control" placeholder="Full Name" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="contact">Contact</label>
+                    <input formControlName="contact" id="contact" type="text" class="form-control" placeholder="Phone Number" />
+                </div>
+            </div>
+
+            <div class="row g-3 mb-2">
+                <div class="col-md-6">
+                    <label class="form-label" for="nic">NIC</label>
+                    <input formControlName="nic" id="nic" type="text" class="form-control" placeholder="National ID" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="dob">Date of Birth</label>
+                    <input formControlName="dob" id="dob" type="date" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row g-3 mb-2">
+                <div class="col-md-6">
+                    <label class="form-label" for="email">Email</label>
+                    <input formControlName="email" id="email" type="email" class="form-control" placeholder="Email Address" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="gender">Gender</label>
+                    <select formControlName="gender" id="gender" class="form-select">
+                        <option value="">Choose...</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-2">
+                <div class="col-md-6">
+                    <label class="form-label" for="salary">Salary</label>
+                    <input formControlName="salary" id="salary" type="number" step="any" class="form-control" placeholder="e.g., 50000" />
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="joiningDate">Joining Date</label>
+                    <input formControlName="joiningDate" id="joiningDate" type="date" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row g-3 mb-2">
+                <div class="col-md-12">
+                    <label class="form-label" for="address">Address</label>
+                    <input formControlName="address" id="address" type="text" class="form-control" placeholder="Address" />
+                </div>
+            </div>
+
+            <div class="row g-3 mb-2">
+                <div class="col-md-12">
+                    <label class="form-label" >Assign Classroom(s)</label>
+                    <ng-select formControlName="classroomList" [items]="classrooms" bindLabel="name" bindValue="id" [multiple]="true" placeholder="Select cities" [(ngModel)]="selectedClasses">
+                    </ng-select>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body d-flex justify-content-end gap-2">
+        <button class="btn btn-primary" (click)="saveTeacher()">Save</button>
+        <button class="btn btn-warning" (click)="resetForm()">Clear</button>
+    </div>
+</div>

@@ -32,6 +32,7 @@ import {AuthService} from "./auth/service/auth.service";
 import {HttpService} from "./auth/service/interceptors/http.service";
 import {DigitalPortfolioModule} from "./ecdms/digital-portfolio/digital-portfolio.module";
 import {StudentManagementModule} from "./ecdms/student-management/student-management.module";
+import {AttendanceSummeryModule} from "./ecdms/attendance-summery/attendance-summery.module";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -63,6 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         FlatpickrModule.forRoot(),
         DigitalPortfolioModule,
         StudentManagementModule,
+        AttendanceSummeryModule,
         NgxMasonryModule,
         NgxPermissionsModule.forRoot()
     ],

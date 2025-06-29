@@ -142,4 +142,8 @@ export const content: Routes = [
     path: "digital-portfolio",
     loadChildren: () => import("../../../ecdms/digital-portfolio/digital-portfolio-routing.module").then((m) => m.DigitalPortfolioRoutingModule)
   },
+  {
+    path: "attendance",
+    loadChildren: () => import("../../../ecdms/attendance-summery/attendance-summery-routing.module").then((m) => m.AttendanceSummeryRoutingModule)
+  },
 ];

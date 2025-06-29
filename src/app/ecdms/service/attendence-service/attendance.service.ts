@@ -1,10 +1,11 @@
 import {Injectable, PipeTransform} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, delay, Observable, of, Subject, switchMap, tap} from "rxjs";
-import {AddStudentDTO} from "../../dto/AddStudentDTO";
 import {SortColumn, SortDirection} from "../../../shared/directive/sortable.directive";
 import {DecimalPipe} from "@angular/common";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {debounceTime} from "rxjs/operators";
+import {AttendanceMarkDTO, AttendanceRequestDTO} from "../../dto/AttendanceRequestDTO";
+
 
 interface SearchResult {
   basicTable: any[];
@@ -29,16 +30,15 @@ function sort(basicTable: any[], column: SortColumn, direction: string): any[] {
   }
 }
 function matches(table: any, term: string, pipe: PipeTransform) {
-  if (table.firstName != undefined) {
-    return table.firstName.toLowerCase().includes(term.toLowerCase())
+  if (table.name != undefined) {
+    return table.name.toLowerCase().includes(term.toLowerCase())
         ;
   }
 }
 @Injectable({
   providedIn: 'root'
 })
-export class UserServiceService {
-
+export class AttendanceService {
 
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
@@ -90,19 +90,6 @@ export class UserServiceService {
     this._search$.next();
   }
 
-
-  addStudent(addStudentDTO: AddStudentDTO): Observable<any> {
-    const token = localStorage.getItem('token') || '';
-    console.log('Token:', token);
-    let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
-    console.log('Custom Headers:', headers);
-
-    return this.http.post(
-        'http://localhost:9090/user/add-student',
-        addStudentDTO,
-        { headers: headers }
-    );
-  }
   private _search(): Observable<SearchResult> {
     const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
@@ -119,39 +106,56 @@ export class UserServiceService {
     return of({ basicTable, total });
   }
 
-  getAllStudents(){
+  getAttendanceByDate(attendanceRequestDTO:AttendanceRequestDTO){
     const token = localStorage.getItem('token') || '';
     console.log('Token:', token);
     let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
     console.log('Custom Headers:', headers);
 
-    return this.http.get(
-        'http://localhost:9090/user/get-all-students',
+    return this.http.post(
+        'http://localhost:9090/attendance/get-attendance-by-date',
+        attendanceRequestDTO,
+        { headers: headers }
+    );
+
+  }
+
+  updateAttendanceStatus(attendance: AttendanceMarkDTO) {
+    const token = localStorage.getItem('token') || '';
+    console.log('Token:', token);
+    let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
+    console.log('Custom Headers:', headers);
+
+    return this.http.post(
+        'http://localhost:9090/attendance/student-attendance-mark',
+        attendance,
         { headers: headers }
     );
   }
 
-    getStudentByID(stuID: number) {
-      const token = localStorage.getItem('token') || '';
-      console.log('Token:', token);
-      let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
-      console.log('Custom Headers:', headers);
+  getAttendanceByDateTeacher(attendanceRequestDTO: AttendanceRequestDTO) {
+    const token = localStorage.getItem('token') || '';
+    console.log('Token:', token);
+    let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
+    console.log('Custom Headers:', headers);
 
-      return this.http.get(
-          'http://localhost:9090/user/get-student-by-id?userID='+stuID,
-          { headers: headers }
-      );
-    }
+    return this.http.post(
+        'http://localhost:9090/attendance/get-attendance-by-date-teacher',
+        attendanceRequestDTO,
+        { headers: headers }
+    );
+  }
 
-    removeStudent(stuID: any) {
-      const token = localStorage.getItem('token') || '';
-      console.log('Token:', token);
-      let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
-      console.log('Custom Headers:', headers);
+  updateAttendanceStatusTeacher(attendance: AttendanceMarkDTO) {
+    const token = localStorage.getItem('token') || '';
+    console.log('Token:', token);
+    let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
+    console.log('Custom Headers:', headers);
 
-      return this.http.delete(
-          'http://localhost:9090/user/remove-student-by-id?userID='+stuID,
-          { headers: headers }
-      );
-    }
+    return this.http.post(
+        'http://localhost:9090/attendance/teacher-attendance-mark',
+        attendance,
+        { headers: headers }
+    );
+  }
 }

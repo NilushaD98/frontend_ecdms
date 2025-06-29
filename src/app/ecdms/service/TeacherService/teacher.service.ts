@@ -1,10 +1,12 @@
 import {Injectable, PipeTransform} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, delay, Observable, of, Subject, switchMap, tap} from "rxjs";
-import {AddStudentDTO} from "../../dto/AddStudentDTO";
 import {SortColumn, SortDirection} from "../../../shared/directive/sortable.directive";
+import {BehaviorSubject, delay, Observable, of, Subject, switchMap, tap} from "rxjs";
 import {DecimalPipe} from "@angular/common";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {debounceTime} from "rxjs/operators";
+import {AddTeacherDTO} from "../../dto/AddTeacherDTO";
+
+
 
 interface SearchResult {
   basicTable: any[];
@@ -29,16 +31,15 @@ function sort(basicTable: any[], column: SortColumn, direction: string): any[] {
   }
 }
 function matches(table: any, term: string, pipe: PipeTransform) {
-  if (table.firstName != undefined) {
-    return table.firstName.toLowerCase().includes(term.toLowerCase())
+  if (table.fullName != undefined) {
+    return table.fullName.toLowerCase().includes(term.toLowerCase())
         ;
   }
 }
 @Injectable({
   providedIn: 'root'
 })
-export class UserServiceService {
-
+export class TeacherService {
 
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
@@ -50,7 +51,7 @@ export class UserServiceService {
 
   private _state: State = {
     page: 1,
-    pageSize: 60,
+    pageSize: 4,
     searchTerm: '',
     sortColumn: '',
     sortDirection: ''
@@ -70,6 +71,7 @@ export class UserServiceService {
         });
     this._search$.next();
   }
+
   get basicTable$() { return this._tables$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
@@ -90,67 +92,79 @@ export class UserServiceService {
     this._search$.next();
   }
 
-
-  addStudent(addStudentDTO: AddStudentDTO): Observable<any> {
-    const token = localStorage.getItem('token') || '';
-    console.log('Token:', token);
-    let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
-    console.log('Custom Headers:', headers);
-
-    return this.http.post(
-        'http://localhost:9090/user/add-student',
-        addStudentDTO,
-        { headers: headers }
-    );
-  }
   private _search(): Observable<SearchResult> {
     const { sortColumn, sortDirection, pageSize, page, searchTerm } = this._state;
 
-    // Get the current table data
     let basicTable = sort(this._tableData$.getValue(), sortColumn, sortDirection);
-
-    // Filter the data
     basicTable = basicTable.filter(table => matches(table, searchTerm, this.pipe));
 
     const total = basicTable.length;
 
-    // Paginate the data
-    basicTable = basicTable.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+    // Paginate correctly using the current page & pageSize
+    basicTable = basicTable.slice((page - 1) * pageSize, page * pageSize);
+
     return of({ basicTable, total });
   }
 
-  getAllStudents(){
+
+  getAllTeachers(){
     const token = localStorage.getItem('token') || '';
     console.log('Token:', token);
     let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
     console.log('Custom Headers:', headers);
 
     return this.http.get(
-        'http://localhost:9090/user/get-all-students',
+        'http://localhost:9090/user/get-all-teachers',
         { headers: headers }
     );
   }
 
-    getStudentByID(stuID: number) {
-      const token = localStorage.getItem('token') || '';
-      console.log('Token:', token);
-      let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
-      console.log('Custom Headers:', headers);
+  getTeacherById(id: number) {
+    const token = localStorage.getItem('token') || '';
+    console.log('Token:', token);
+    let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
+    console.log('Custom Headers:', headers);
 
-      return this.http.get(
-          'http://localhost:9090/user/get-student-by-id?userID='+stuID,
-          { headers: headers }
-      );
-    }
+    return this.http.get(
+        'http://localhost:9090/user/get-teacher-by-id?teacherID='+id,
+        { headers: headers }
+    );
+  }
 
-    removeStudent(stuID: any) {
+  updateTeacher(teacher: AddTeacherDTO) {
+    const token = localStorage.getItem('token') || '';
+    console.log('Token:', token);
+    let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
+    console.log('Custom Headers:', headers);
+
+    return this.http.put(
+        'http://localhost:9090/user/update-teacher',
+        teacher,
+        { headers: headers }
+    );
+  }
+
+  addTeacher(teacher: AddTeacherDTO):any {
+    const token = localStorage.getItem('token') || '';
+    console.log('Token:', token);
+    let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
+    console.log('Custom Headers:', headers);
+
+    return this.http.post(
+        'http://localhost:9090/user/add-teacher',
+        teacher,
+        { headers: headers }
+    );
+  }
+
+    removeTeacher(id: any) {
       const token = localStorage.getItem('token') || '';
       console.log('Token:', token);
       let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
       console.log('Custom Headers:', headers);
 
       return this.http.delete(
-          'http://localhost:9090/user/remove-student-by-id?userID='+stuID,
+          'http://localhost:9090/user/remove-teacher-by-id?teacherID='+id,
           { headers: headers }
       );
     }
