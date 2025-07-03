@@ -103,6 +103,10 @@ export class NavService {
       icon: "star-on",
       type: "sub",
       active: false,
+      children: [
+        { path: "/academic-milestones/tests", title: "Tests", type: "link" },
+        { path: "/academic-milestones/exam-results", title: "Exam Results", type: "link" },
+      ],
     },
     {
       title: "Appointment scheduling",
@@ -121,211 +125,211 @@ export class NavService {
       ],
     },
 
-    {
-      title: "Dashboards",
-      icon: "home",
-      type: "sub",
-      badgeType: "light-primary",
-      badgeValue: "2",
-      active: false,
-      children: [
-        { path: "/dashboard/default", title: "Default", type: "link" },
-        { path: "/dashboard/ecommerce", title: "Ecommerce", type: "link" },
-        { path: "/dashboard/crypto", title: "Crypto", type: "link" },
-      ],
-    },
-    {
-      title: "Company",
-      icon: "home",
-      type: "sub",
-      active: false,
-      children: [
-        { path: "/company/chart-of-account", title: "Chart Of Accounts", type: "link" },
-        { path: "/company/journal-entries", title: "Journal Entries", type: "link" },
-        { path: "/company/entry-authorization", title: "Entry Authorization", type: "link" },
-        { path: "/company/exchange-rates", title: "Exchange Rates", type: "link" },
-        { path: "/company/finance-year-closing", title: "Financial Year Closing", type: "link" },
-        { path: "/company/item-master", title: "Item Master", type: "link" },
-        { path: "/company/date-controller", title: "Date Controller", type: "link" },
-        {
-          title: "System User Management",
-          type: "sub",
-          active: false,
-          children: [
-            {
-              path: "/company/role-management", title: "Role Management", type: "link"
-            },
-            {
-              path:"/company/user-management",title:"User Management", type:"link"
-            }
-          ]
-        },
-      ],
-    },
-    {
-      title: "Customer",
-      icon: "users",
-      type: "sub",
-      active: false,
-      children: [
-        { path: "/customer/invoice", title: "Invoice", type: "link" },
-        { path: "/customer/credit-note", title: "Credit Note", type: "link" },
-        { path: "/customer/customer-master", title: "Customer Master", type: "link" },
-        { path: "/customer/customer-opening-balance", title: "Customer Opening Balance", type: "link" },
-      ],
-    },
-    {
-      title: "Receipt",
-      icon: "project",
-      type: "sub",
-      active: false,
-      children: [
-        { path: "/receipt/customer-receipt-management", title: "Customer Receipt", type: "link" },
-      ],
-    },
-    {
-      title: "Vendors",
-      icon: "users",
-      type: "sub",
-      active: false,
-      children: [
-        { path: "/vendors/vendor-registration", title: "Vendor Registration", type: "link" },
-        { path: "/vendors/bills-management", title: "Bills", type: "link" },
-        { path: "/vendors/vendor-credit", title: "Vendor Credit", type: "link" },
-        { path: "/vendors/vendor-opening-balance", title: "Vendor Opening Balance", type: "link" },
-      ],
-    },
-    {
-      title: "Payments",
-      icon: "forms",
-      type: "sub",
-      active: false,
-      children: [
-        { path: "/payments/pay-bill", title: "Pay Bill", type: "link" },
-      ],
-    },
-    {
-      title: "Bank",
-      icon: "jobsearch",
-      type: "sub",
-      active: false,
-      children: [
-        { path: "/bank/bank-reconciliation", title: "Bank Reconciliation", type: "link" },
-        { path: "/bank/write-cheque-management", title: "Write Cheque Management", type: "link" },
-        { path: "/bank/print-cheque", title: "print Cheque", type: "link" },
-        { path: "/bank/spend-money", title: "Spend Money", type: "link" },
-        { path: "/bank/receive-money", title: "Receive Money", type: "link" },
-        { path: "/bank/loan", title: "Loan", type: "link" },
-        { path: "/bank/fixed-deposit", title: "Fixed Deposit", type: "link" },
-      ],
-    },
-    {
-      title: "Purchasing",
-      icon: "page",
-      type: "sub",
-      active: false,
-      children: [
-        { path: "/purchasing/purchase-requisition-note", title: "Purchase Requisition Note", type: "link" },
-        { path: "/purchasing/purchase-order", title: "Purchase Order", type: "link" },
-        { path: "/purchasing/purchase-order-progress", title: "Purchase Order Progress", type: "link" },
-      ],
-    },
-    {
-      title: "Inventory",
-      icon: "file",
-      type: "sub",
-      active: false,
-      children: [
-        { path: "/inventory/good-receive-note", title: "Good Receive Note", type: "link" },
-        { path: "/inventory/dispatch", title: "Dispatch", type: "link" },
-      ],
-    },
-    {
-      title: "Report Center",
-      icon: "ticket",
-      type: "sub",
-      active: false,
-      children: [
-        {
-          title: "Vendors Payable",
-          type: "sub",
-          active: false,
-          children: [
-            { path: "/report-center/vendors-payable/aging-detail", title: "Aging Detail", type: "link" },
-            { path: "/report-center/vendors-payable/payment-details-report", title: "Payment Details Report", type: "link" },
-            { path: "/report-center/vendors-payable/payment-settlement-report", title: "Payment Settlement Report", type: "link" },
-            { path: "/report-center/vendors-payable/vendor-transactions", title: "Vendor Transactions", type: "link" },
-            { path: "/report-center/vendors-payable/vendor-transactions-summary", title: "Vendor Transactions Summary", type: "link" },
-            { path: "/report-center/vendors-payable/vendor-outstanding-report", title: "Vendor Outstanding Report", type: "link" },
-            { path: "/report-center/vendors-payable/vendor-credit-summary", title: "Vendor Credit Summary", type: "link" },
-            { path: "/report-center/vendors-payable/vendor-movement-report", title: "Vendor Movement Report", type: "link" },
-          ],
-        },
-        {
-          title: "Purchasing",
-          type: "sub",
-          active: false,
-          children: [
-            { path: "/report-center/purchasing/purchase-summary", title: "Purchase Summary", type: "link" },
-            { path: "/report-center/purchasing/po-summary", title: "PO Summary", type: "link" },
-            { path: "/report-center/purchasing/prn-summary", title: "PRN Summary", type: "link" },
-            { path: "/report-center/purchasing/open-po-report", title: "Open PO Report", type: "link" },
-            { path: "/report-center/purchasing/po-delivery-delay-report", title: "PO Delivery Delay Report", type: "link" },
-            { path: "/report-center/purchasing/purchase-analysis-report", title: "Purchase Analysis Report", type: "link" },
-            { path: "/report-center/purchasing/latest-item-price-report", title: "Latest Item Price Report", type: "link" },
-          ],
-        },
-        {
-          title: "Inventory",
-          type: "sub",
-          active: false,
-          children: [
-            { path: "/report-center/inventory/stock-availability", title: "Stock Availability", type: "link" },
-            { path: "/report-center/inventory/grn-available-quantities", title: "GRN Available Quantities", type: "link" },
-            { path: "/report-center/inventory/inventory-item-list-report", title: "Inventory Item List Report", type: "link" },
-          ],
-        },
-        {
-          title: "Customers & Receivables",
-          type: "sub",
-          active: false,
-          children: [
-            { path: "/report-center/customers-receivables/aging-detail", title: "Aging Detail", type: "link" },
-            { path: "/report-center/customers-receivables/received-payments-details", title: "Received Payments Details", type: "link" },
-            { path: "/report-center/customers-receivables/customer-transactions", title: "Customer Transactions", type: "link" },
-            { path: "/report-center/customers-receivables/customer-outstanding-report", title: "Customer Outstanding Report", type: "link" },
-          ],
-        },
-        {
-          title: "Account Taxes",
-          type: "sub",
-          active: false,
-          children: [
-            { path: "/report-center/account-taxes/trial-balance", title: "Trial Balance", type: "link" },
-            { path: "/report-center/account-taxes/general-ledger", title: "General Ledger", type: "link" },
-            { path: "/report-center/account-taxes/ledger-report", title: "Ledger Report", type: "link" },
-          ],
-        },
-        {
-          title: "Bank",
-          type: "sub",
-          active: false,
-          children: [
-            { path: "/report-center/bank/loan-fd-detailed-report", title: "Loan/FD Detailed Report", type: "link" },
-          ],
-        },
-        {
-          title: "Company Financial",
-          type: "sub",
-          active: false,
-          children: [
-            { path: "/report-center/company-financial/profit-loss", title: "Profit Loss", type: "link" },
-            { path: "/report-center/company-financial/gp-comparison", title: "GP Comparison", type: "link" },
-            { path: "/report-center/company-financial/balance-sheet-summary", title: "Balance Sheet Summary", type: "link" },
-          ],
-        },
-      ],
-    },
+    // {
+    //   title: "Dashboards",
+    //   icon: "home",
+    //   type: "sub",
+    //   badgeType: "light-primary",
+    //   badgeValue: "2",
+    //   active: false,
+    //   children: [
+    //     { path: "/dashboard/default", title: "Default", type: "link" },
+    //     { path: "/dashboard/ecommerce", title: "Ecommerce", type: "link" },
+    //     { path: "/dashboard/crypto", title: "Crypto", type: "link" },
+    //   ],
+    // },
+    // {
+    //   title: "Company",
+    //   icon: "home",
+    //   type: "sub",
+    //   active: false,
+    //   children: [
+    //     { path: "/company/chart-of-account", title: "Chart Of Accounts", type: "link" },
+    //     { path: "/company/journal-entries", title: "Journal Entries", type: "link" },
+    //     { path: "/company/entry-authorization", title: "Entry Authorization", type: "link" },
+    //     { path: "/company/exchange-rates", title: "Exchange Rates", type: "link" },
+    //     { path: "/company/finance-year-closing", title: "Financial Year Closing", type: "link" },
+    //     { path: "/company/item-master", title: "Item Master", type: "link" },
+    //     { path: "/company/date-controller", title: "Date Controller", type: "link" },
+    //     {
+    //       title: "System User Management",
+    //       type: "sub",
+    //       active: false,
+    //       children: [
+    //         {
+    //           path: "/company/role-management", title: "Role Management", type: "link"
+    //         },
+    //         {
+    //           path:"/company/user-management",title:"User Management", type:"link"
+    //         }
+    //       ]
+    //     },
+    //   ],
+    // },
+    // {
+    //   title: "Customer",
+    //   icon: "users",
+    //   type: "sub",
+    //   active: false,
+    //   children: [
+    //     { path: "/customer/invoice", title: "Invoice", type: "link" },
+    //     { path: "/customer/credit-note", title: "Credit Note", type: "link" },
+    //     { path: "/customer/customer-master", title: "Customer Master", type: "link" },
+    //     { path: "/customer/customer-opening-balance", title: "Customer Opening Balance", type: "link" },
+    //   ],
+    // },
+    // {
+    //   title: "Receipt",
+    //   icon: "project",
+    //   type: "sub",
+    //   active: false,
+    //   children: [
+    //     { path: "/receipt/customer-receipt-management", title: "Customer Receipt", type: "link" },
+    //   ],
+    // },
+    // {
+    //   title: "Vendors",
+    //   icon: "users",
+    //   type: "sub",
+    //   active: false,
+    //   children: [
+    //     { path: "/vendors/vendor-registration", title: "Vendor Registration", type: "link" },
+    //     { path: "/vendors/bills-management", title: "Bills", type: "link" },
+    //     { path: "/vendors/vendor-credit", title: "Vendor Credit", type: "link" },
+    //     { path: "/vendors/vendor-opening-balance", title: "Vendor Opening Balance", type: "link" },
+    //   ],
+    // },
+    // {
+    //   title: "Payments",
+    //   icon: "forms",
+    //   type: "sub",
+    //   active: false,
+    //   children: [
+    //     { path: "/payments/pay-bill", title: "Pay Bill", type: "link" },
+    //   ],
+    // },
+    // {
+    //   title: "Bank",
+    //   icon: "jobsearch",
+    //   type: "sub",
+    //   active: false,
+    //   children: [
+    //     { path: "/bank/bank-reconciliation", title: "Bank Reconciliation", type: "link" },
+    //     { path: "/bank/write-cheque-management", title: "Write Cheque Management", type: "link" },
+    //     { path: "/bank/print-cheque", title: "print Cheque", type: "link" },
+    //     { path: "/bank/spend-money", title: "Spend Money", type: "link" },
+    //     { path: "/bank/receive-money", title: "Receive Money", type: "link" },
+    //     { path: "/bank/loan", title: "Loan", type: "link" },
+    //     { path: "/bank/fixed-deposit", title: "Fixed Deposit", type: "link" },
+    //   ],
+    // },
+    // {
+    //   title: "Purchasing",
+    //   icon: "page",
+    //   type: "sub",
+    //   active: false,
+    //   children: [
+    //     { path: "/purchasing/purchase-requisition-note", title: "Purchase Requisition Note", type: "link" },
+    //     { path: "/purchasing/purchase-order", title: "Purchase Order", type: "link" },
+    //     { path: "/purchasing/purchase-order-progress", title: "Purchase Order Progress", type: "link" },
+    //   ],
+    // },
+    // {
+    //   title: "Inventory",
+    //   icon: "file",
+    //   type: "sub",
+    //   active: false,
+    //   children: [
+    //     { path: "/inventory/good-receive-note", title: "Good Receive Note", type: "link" },
+    //     { path: "/inventory/dispatch", title: "Dispatch", type: "link" },
+    //   ],
+    // },
+    // {
+    //   title: "Report Center",
+    //   icon: "ticket",
+    //   type: "sub",
+    //   active: false,
+    //   children: [
+    //     {
+    //       title: "Vendors Payable",
+    //       type: "sub",
+    //       active: false,
+    //       children: [
+    //         { path: "/report-center/vendors-payable/aging-detail", title: "Aging Detail", type: "link" },
+    //         { path: "/report-center/vendors-payable/payment-details-report", title: "Payment Details Report", type: "link" },
+    //         { path: "/report-center/vendors-payable/payment-settlement-report", title: "Payment Settlement Report", type: "link" },
+    //         { path: "/report-center/vendors-payable/vendor-transactions", title: "Vendor Transactions", type: "link" },
+    //         { path: "/report-center/vendors-payable/vendor-transactions-summary", title: "Vendor Transactions Summary", type: "link" },
+    //         { path: "/report-center/vendors-payable/vendor-outstanding-report", title: "Vendor Outstanding Report", type: "link" },
+    //         { path: "/report-center/vendors-payable/vendor-credit-summary", title: "Vendor Credit Summary", type: "link" },
+    //         { path: "/report-center/vendors-payable/vendor-movement-report", title: "Vendor Movement Report", type: "link" },
+    //       ],
+    //     },
+    //     {
+    //       title: "Purchasing",
+    //       type: "sub",
+    //       active: false,
+    //       children: [
+    //         { path: "/report-center/purchasing/purchase-summary", title: "Purchase Summary", type: "link" },
+    //         { path: "/report-center/purchasing/po-summary", title: "PO Summary", type: "link" },
+    //         { path: "/report-center/purchasing/prn-summary", title: "PRN Summary", type: "link" },
+    //         { path: "/report-center/purchasing/open-po-report", title: "Open PO Report", type: "link" },
+    //         { path: "/report-center/purchasing/po-delivery-delay-report", title: "PO Delivery Delay Report", type: "link" },
+    //         { path: "/report-center/purchasing/purchase-analysis-report", title: "Purchase Analysis Report", type: "link" },
+    //         { path: "/report-center/purchasing/latest-item-price-report", title: "Latest Item Price Report", type: "link" },
+    //       ],
+    //     },
+    //     {
+    //       title: "Inventory",
+    //       type: "sub",
+    //       active: false,
+    //       children: [
+    //         { path: "/report-center/inventory/stock-availability", title: "Stock Availability", type: "link" },
+    //         { path: "/report-center/inventory/grn-available-quantities", title: "GRN Available Quantities", type: "link" },
+    //         { path: "/report-center/inventory/inventory-item-list-report", title: "Inventory Item List Report", type: "link" },
+    //       ],
+    //     },
+    //     {
+    //       title: "Customers & Receivables",
+    //       type: "sub",
+    //       active: false,
+    //       children: [
+    //         { path: "/report-center/customers-receivables/aging-detail", title: "Aging Detail", type: "link" },
+    //         { path: "/report-center/customers-receivables/received-payments-details", title: "Received Payments Details", type: "link" },
+    //         { path: "/report-center/customers-receivables/customer-transactions", title: "Customer Transactions", type: "link" },
+    //         { path: "/report-center/customers-receivables/customer-outstanding-report", title: "Customer Outstanding Report", type: "link" },
+    //       ],
+    //     },
+    //     {
+    //       title: "Account Taxes",
+    //       type: "sub",
+    //       active: false,
+    //       children: [
+    //         { path: "/report-center/account-taxes/trial-balance", title: "Trial Balance", type: "link" },
+    //         { path: "/report-center/account-taxes/general-ledger", title: "General Ledger", type: "link" },
+    //         { path: "/report-center/account-taxes/ledger-report", title: "Ledger Report", type: "link" },
+    //       ],
+    //     },
+    //     {
+    //       title: "Bank",
+    //       type: "sub",
+    //       active: false,
+    //       children: [
+    //         { path: "/report-center/bank/loan-fd-detailed-report", title: "Loan/FD Detailed Report", type: "link" },
+    //       ],
+    //     },
+    //     {
+    //       title: "Company Financial",
+    //       type: "sub",
+    //       active: false,
+    //       children: [
+    //         { path: "/report-center/company-financial/profit-loss", title: "Profit Loss", type: "link" },
+    //         { path: "/report-center/company-financial/gp-comparison", title: "GP Comparison", type: "link" },
+    //         { path: "/report-center/company-financial/balance-sheet-summary", title: "Balance Sheet Summary", type: "link" },
+    //       ],
+    //     },
+    //   ],
+    // },
 
     /*{
       title: "Dashboards",

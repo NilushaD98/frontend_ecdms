@@ -146,4 +146,8 @@ export const content: Routes = [
     path: "attendance",
     loadChildren: () => import("../../../ecdms/attendance-summery/attendance-summery-routing.module").then((m) => m.AttendanceSummeryRoutingModule)
   },
+  {
+    path:"academic-milestones",
+    loadChildren:() => import("../../../ecdms/academic-milestones/academic-milestones-routing.module").then((m) => m.AcademicMilestonesRoutingModule)
+  }
 ];

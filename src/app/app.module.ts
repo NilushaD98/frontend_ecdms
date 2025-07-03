@@ -33,6 +33,7 @@ import {HttpService} from "./auth/service/interceptors/http.service";
 import {DigitalPortfolioModule} from "./ecdms/digital-portfolio/digital-portfolio.module";
 import {StudentManagementModule} from "./ecdms/student-management/student-management.module";
 import {AttendanceSummeryModule} from "./ecdms/attendance-summery/attendance-summery.module";
+import {AcademicMilestonesModule} from "./ecdms/academic-milestones/academic-milestones.module";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -66,7 +67,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         StudentManagementModule,
         AttendanceSummeryModule,
         NgxMasonryModule,
-        NgxPermissionsModule.forRoot()
+        NgxPermissionsModule.forRoot(),
+        AcademicMilestonesModule
     ],
     providers: [
         AdminGuard,
