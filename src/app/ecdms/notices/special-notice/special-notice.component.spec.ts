@@ -1,0 +1,23 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { SpecialNoticeComponent } from './special-notice.component';
+
+describe('SpecialNoticeComponent', () => {
+  let component: SpecialNoticeComponent;
+  let fixture: ComponentFixture<SpecialNoticeComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SpecialNoticeComponent]
+    })
+    .compileComponents();
+    
+    fixture = TestBed.createComponent(SpecialNoticeComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

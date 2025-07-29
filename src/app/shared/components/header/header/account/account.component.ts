@@ -9,8 +9,15 @@ import { Router } from "@angular/router";
 export class AccountComponent implements OnInit {
   public userName: string;
   public profileImg: "assets/images/dashboard/profile.jpg";
+  public user:string | null = '';
+  notAdmin: boolean = false;
 
-  constructor(public router: Router) {}
+  constructor(public router: Router) {
+    this.user = localStorage.getItem('user_type');
+    if(this.user == 'PARENT' ||  this.user == 'TEACHER'){
+      this.notAdmin = true;
+    }
+  }
 
   logoutFunc() {
     localStorage.clear();
@@ -18,4 +25,13 @@ export class AccountComponent implements OnInit {
     this.router.navigate(["/authentication/login"]);
   }
   ngOnInit(): void {}
+
+    navigateProfile() {
+        let user = localStorage.getItem('user_type');
+        if(user == 'PARENT'){
+          this.router.navigate(["/profile/student"]);
+        }else if (user == 'TEACHER'){
+          this.router.navigate(["/profile/teacher"]);
+        }
+    }
 }

@@ -1,12 +1,9 @@
-<app-breadcrumb [title]="'Calender'" [items]="['Apps']" [active_item]="'Calender'"></app-breadcrumb>
+<app-breadcrumb [title]="'Calender'" [items]="['Calender']" [active_item]="''"></app-breadcrumb>
 
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
       <div class="card box-shadow-title">
-        <div class="card-header border-bottom">
-          <h5>Calendar</h5>
-        </div>
         <div class="card-body">
           <div class="row text-center">
             <div class="col-md-4">
@@ -99,14 +96,13 @@
             >
           </mwl-calendar-day-view>
         </div>
-        <h3 class="mt-5 mb-2">
+        <h3 class="mt-5 mb-2" *ngIf="userType == 'ADMIN'">
           Edit events
-          <button class="btn btn-primary float-end" (click)="addEvent()">
-            Add new
-          </button>
+          <button class="btn btn-primary float-end" style="margin-right: 10px;" (click)="addEvent()">+</button>
+          <button class="btn btn-primary float-end" style="margin-right: 10px;" (click)="save()">Save All</button>
           <div class="clearfix"></div>
         </h3>
-        <div class="table-responsive">
+        <div *ngIf="userType == 'ADMIN'" class="table-responsive">
           <table class="table table-bordered calendar-event">
             <thead>
               <tr>

@@ -1,0 +1,118 @@
+<app-breadcrumb [title]="'Payments Log'" [items]="['Payments']" [active_item]="'Payments Log'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-8">
+                            <label class="col-xs-3 col-sm-auto col-form-label">Student:</label>
+                            <ng-select [(ngModel)]="selectedUser" [items]="users"
+                                       bindLabel="fullName" bindValue="stuID"
+                                       placeholder="Select a Student" (change)="getPayments()">
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive data-table">
+                        <form>
+                            <table class="table table-striped table-border-vertical">
+                                <thead>
+                                <tr>
+                                    <th scope="col" sortable="resultID" (sort)="onSort($event)">Payment ID</th>
+                                    <th scope="col" sortable="student" (sort)="onSort($event)">Type</th>
+                                    <th scope="col" sortable="score" (sort)="onSort($event)">Amount</th>
+                                    <th scope="col" sortable="score" (sort)="onSort($event)">Due Date</th>
+                                    <th scope="col" sortable="score" (sort)="onSort($event)">Paid Date</th>
+                                    <th scope="col" >Paid Status</th>
+                                    <th scope="col" >Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let item of basicTable$ | async">
+                                    <td scope="row">
+                                        <ngb-highlight [result]="item.paymentId" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.type" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.amount | number: '1.2-2'" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.dueDate | date:'yyyy-MM-dd' " [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.paidDate | date:'yyyy-MM-dd h:mm a'" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="item.paid" class="badge badge-success">Paid</span>
+                                        <span *ngIf="!item.paid" class="badge badge-danger">Unpaid</span>
+                                    </td>
+                                    <td>
+                                        <span>
+                                          <i class="fa fa-eye font-primary pe-2"  (click)="viewPayment(item,getContent)"></i>
+                                          </span >
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between mt-3">
+                                <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                                    <option [ngValue]="2">2 items per page</option>
+                                    <option [ngValue]="4">4 items per page</option>
+                                    <option [ngValue]="6">6 items per page</option>
+                                </select>
+                                <ngb-pagination
+                                        [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+                                </ngb-pagination>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #getContent let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">New Test</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <label class="col-form-label">Type:</label>
+            <input class="form-control" type="text" value="Test Name" [(ngModel)]="paymentType" disabled>
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label">Amount:</label>
+            <input class="form-control" type="text" value="Test Name" [(ngModel)]="amount" disabled>
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label">Due Date:</label>
+            <input class="form-control" type="text" [value]="dueDateFormatted" disabled>
+        </div>
+
+        <div class="mb-3">
+            <label class="col-form-label">Paid Date:</label>
+            <input class="form-control" type="text" [value]="paidDateFormatted" disabled>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button *ngIf="!paidStatus" (click)="makePayment()" class="btn btn-primary" type="button">Make Payment</button>
+     </div>
+</ng-template>

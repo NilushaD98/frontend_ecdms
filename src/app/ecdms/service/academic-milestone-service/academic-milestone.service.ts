@@ -5,6 +5,7 @@ import {DecimalPipe} from "@angular/common";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {debounceTime} from "rxjs/operators";
 import {TestTypeDTO} from "../../dto/TestTypeDTO";
+import {ExamResultDTO} from "../../dto/AddResultDTO";
 
 
 
@@ -34,6 +35,9 @@ function matches(table: any, term: string, pipe: PipeTransform) {
   if (table.testName != undefined) {
     return table.testName.toLowerCase().includes(term.toLowerCase())
         ;
+  }if (table.student != undefined) {
+    return table.student.toLowerCase().includes(term.toLowerCase())
+        ;
   }
 }
 @Injectable({
@@ -51,7 +55,7 @@ export class AcademicMilestoneService {
 
   private _state: State = {
     page: 1,
-    pageSize: 5,
+    pageSize: 6,
     searchTerm: '',
     sortColumn: '',
     sortDirection: ''
@@ -167,4 +171,42 @@ export class AcademicMilestoneService {
     );
 
   }
+
+  getTestTypeAllDetailsByID(testTypeID:number){
+    const token = localStorage.getItem('token') || '';
+    console.log('Token:', token);
+    let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
+    console.log('Custom Headers:', headers);
+
+    return this.http.get(
+        'http://localhost:9090/test-type/get-test-type-all-details-by-id?testTypeID='+testTypeID,
+        { headers: headers }
+    );
+  }
+
+  addExamResult(examResultDTO:ExamResultDTO){
+    const token = localStorage.getItem('token') || '';
+    console.log('Token:', token);
+    let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
+    console.log('Custom Headers:', headers);
+
+    return this.http.post(
+        'http://localhost:9090/exam-result/add-exam-result',
+        examResultDTO,
+        { headers: headers }
+    );
+  }
+
+  removeResult(resultID: number){
+    const token = localStorage.getItem('token') || '';
+    console.log('Token:', token);
+    let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
+    console.log('Custom Headers:', headers);
+
+    return this.http.delete(
+        'http://localhost:9090/exam-result/remove-result?resultID='+resultID,
+        { headers: headers }
+    );
+  }
+
 }

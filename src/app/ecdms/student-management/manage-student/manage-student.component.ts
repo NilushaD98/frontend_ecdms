@@ -94,7 +94,6 @@ export class ManageStudentComponent {
   }
 
   removeStudent(stuID: any) {
-    this.userService.removeStudent(stuID);
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",

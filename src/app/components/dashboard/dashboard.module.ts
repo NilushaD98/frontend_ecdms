@@ -44,47 +44,50 @@ import {AdminGuard} from "../../shared/guard/admin.guard";
 import {AppComponent} from "../../app.component";
 
 @NgModule({
-  declarations: [
-    CryptoComponent,
-    EcommerceComponent,
-    DefaultComponent,
-    GetStartedComponent,
-    TodayEarningComponent,
-    WeeklyChartComponent,
-    NewsAndUpdateComponent,
-    RecentActivityComponent,
-    TotalTransactionsComponent,
-    YearlyChartComponent,
-    OngoingProjectComponent,
-    PremiumAccessComponent,
-    SalesStatsComponent,
-    InvoiceOverviewComponent,
-    HotSellingProductsComponent,
-    RecentOrdersComponent,
-    OurActivitiesComponent,
-    RevenueByCategoryComponent,
-    ProductDiscountComponent,
-    TotalSaleComponent,
-    SupportComponent,
-    TradingActivitiesComponent,
-    NotificationComponent,
-    ChatComponent,
-    CandlestickChartTotalComponent,
-    BuySellComponent,
-    ChartDataComponent,
-    CoinComponent,
-    SellComponent,
-    BuyComponent,
-  ],
-  providers: [
-    {
-      provide:APP_INITIALIZER,
-      useFactory: permissionFactory,
-      deps:[AuthService,NgxPermissionsService],
-      multi:true
-    }
+    declarations: [
+        CryptoComponent,
+        EcommerceComponent,
+        DefaultComponent,
+        GetStartedComponent,
+        TodayEarningComponent,
+        WeeklyChartComponent,
+        NewsAndUpdateComponent,
+        RecentActivityComponent,
+        TotalTransactionsComponent,
+        YearlyChartComponent,
+        OngoingProjectComponent,
+        PremiumAccessComponent,
+        SalesStatsComponent,
+        InvoiceOverviewComponent,
+        HotSellingProductsComponent,
+        RecentOrdersComponent,
+        OurActivitiesComponent,
+        RevenueByCategoryComponent,
+        ProductDiscountComponent,
+        TotalSaleComponent,
+        SupportComponent,
+        TradingActivitiesComponent,
+        NotificationComponent,
+        ChatComponent,
+        CandlestickChartTotalComponent,
+        BuySellComponent,
+        ChartDataComponent,
+        CoinComponent,
+        SellComponent,
+        BuyComponent,
     ],
-  imports: [CommonModule, DashboardRoutingModule, SharedModule, CarouselModule, NgApexchartsModule, NgbModule, ChartistModule],
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: permissionFactory,
+            deps: [AuthService, NgxPermissionsService],
+            multi: true
+        }
+    ],
+    imports: [CommonModule, DashboardRoutingModule, SharedModule, CarouselModule, NgApexchartsModule, NgbModule, ChartistModule],
+    exports: [
+        NotificationComponent
+    ]
 })
 export class DashboardModule {}
 

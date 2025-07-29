@@ -1,0 +1,19 @@
+.list-group-item {
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  border: none;
+  background-color: #f9f9f9;
+  margin-bottom: 0.5rem;
+}
+
+.list-group-item strong {
+  min-width: 60px;
+  display: inline-block;
+  font-weight: 600;
+  color: #333;
+}
+
+.cd-date {
+  font-size: 0.9rem;
+  color: #888;
+}

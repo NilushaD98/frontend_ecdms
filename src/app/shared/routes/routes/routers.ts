@@ -149,5 +149,25 @@ export const content: Routes = [
   {
     path:"academic-milestones",
     loadChildren:() => import("../../../ecdms/academic-milestones/academic-milestones-routing.module").then((m) => m.AcademicMilestonesRoutingModule)
-  }
+  },
+  {
+    path:"appointment",
+    loadChildren:() => import("../../../ecdms/appointment/appointment-routing.module").then((m) => m.AppointmentRoutingModule)
+  },
+  {
+    path:"payments",
+    loadChildren:() => import("../../../ecdms/payments/payments-routing.module").then((m) => m.PaymentsRoutingModule)
+  },
+  {
+    path:"annual-calendar",
+    loadChildren:() => import("../../../ecdms/annual-calendar/annual-calendar-routing.module").then((m) => m.AnnualCalendarRoutingModule)
+  },
+  {
+    path:"profile",
+    loadChildren:() => import("../../../ecdms/user-profile/user-profile.module-routing").then((m) => m.UserProfileModuleRouting)
+  },
+  {
+    path:"notice",
+    loadChildren:() => import("../../../ecdms/notices/notices-routing.module").then((m) => m.NoticesRoutingModule)
+  },
 ];

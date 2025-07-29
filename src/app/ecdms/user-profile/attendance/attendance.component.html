@@ -1,0 +1,22 @@
+<app-breadcrumb [title]="'Attendance'" [items]="['Attendance']" [active_item]="'Attendance'"></app-breadcrumb>
+
+<div class="card">
+    <div class="card-body">
+        <div class="mt-3">
+
+            <div class="calendar-container">
+                <div class="calendar-navigation mb-3 text-center">
+                    <button (click)="previousMonth()" class="btn btn-outline-primary mx-2">← Previous</button>
+                    <strong>{{ viewDate | date: 'MMMM yyyy' }}</strong>
+                    <button (click)="nextMonth()" class="btn btn-outline-primary mx-2">Next →</button>
+                </div>
+                <mwl-calendar-month-view
+                        [viewDate]="viewDate"
+                        [events]="attendanceEvents"
+                        [refresh]="refresh"
+                        [locale]="'en'">
+                </mwl-calendar-month-view>
+            </div>
+        </div>
+    </div>
+</div>

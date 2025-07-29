@@ -8,6 +8,7 @@ import {AnnouncementDTO} from "../../dto/AnnouncementDTO";
 import Swal from "sweetalert2";
 import {throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Component({
   selector: 'app-add-announcement',
@@ -15,113 +16,101 @@ import {catchError} from "rxjs/operators";
   styleUrl: './add-announcement.component.scss'
 })
 export class AddAnnouncementComponent {
+  files: File[] = [];
   uploadedImageUrl: string;
-  public html = '';
-  selectedCity: any;
-  selectedCityIds: string[];
-  selectedCityName = 'Vilnius';
-  selectedCityId: number;
-  selectedUserIds: number[];
-  files: File[] = []
-  public category = [{ id: 1, name: "Life Style" }, { id: 2, name: "Travel" }];
-  public selectedCategory: string[] = [];
+  uploading = false;
+  caption: string = '';
 
-  cities2 = [
-    { id: 1, name: 'Vilnius' },
-    { id: 2, name: 'Kaunas' },
-    { id: 3, name: 'Pavilnys', disabled: true },
-    { id: 4, name: 'Pabradė' },
-    { id: 5, name: 'Klaipėda' }
-  ];
-  cities4: { id: number; name: string; }[];
+  // Cloudinary config
+  private cloudName = 'dsc7devgs';
+  private uploadPreset = 'ecdmstemplate';
 
-  public text = '<i class="icon-cloud-up"></i><h6>Drop files here or click to upload.</h6><span class="dz-message">(Upload files directly to Cloudinary)</span>';
-  public config: DropzoneConfigInterface;
+  constructor(
+      private http: HttpClient,
+      public announcementService: AnnouncementService
+  ) {}
 
-  private cloudinary: Cloudinary;
-  caption: any;
-  private dropzoneInstance: any;
+  // Called when file is selected
+  onSelect(event: any) {
+    const file = event.addedFiles[0];
 
-  constructor(public announcementService:AnnouncementService) {
-    this.cloudinary = new Cloudinary({
-      cloud: {
-        cloudName: 'dsc7devgs' // Replace with your Cloudinary cloud name
-      }
-    });
-    // Configure Dropzone to use Cloudinary
-    this.config = {
-      url: `https://api.cloudinary.com/v1_1/dsc7devgs/upload`,
-      maxFilesize: 50,
-      acceptedFiles: 'image/*',
-      addRemoveLinks: true,
-      maxFiles:2,
-      headers: { },
-      params: {
-        upload_preset: 'ecdmstemplate' // Replace with your Cloudinary upload preset
-      },
+    // Clear previous file
+    this.files = [file];
+
+    // Start upload immediately
+    this.uploadToCloudinary(file);
+  }
+
+  onRemove(file: File) {
+    this.files = this.files.filter(f => f !== file);
+    // Optionally: cancel upload or delete from Cloudinary (requires backend)
+  }
+
+  uploadToCloudinary(file: File) {
+    this.uploading = true;
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', this.uploadPreset); // e.g., 'ecdmstemplate'
+
+    // 🔥 No headers = no Authorization sent
+    const httpOptions = {
+      headers: new HttpHeaders({}), // <-- Critical
     };
+
+    const uploadUrl = `https://api.cloudinary.com/v1_1/${this.cloudName}/upload`;
+
+    this.http.post(uploadUrl, formData, httpOptions)
+        .pipe(
+            catchError(err => {
+              console.error('Upload to Cloudinary failed', err);
+              Swal.fire('Error', 'Failed to upload file to Cloudinary.', 'error');
+              this.uploading = false;
+              return throwError(() => err);
+            })
+        )
+        .subscribe({
+          next: (response: any) => {
+            Swal.fire('Success', 'File uploaded successfully.', 'success');
+            this.uploadedImageUrl = response.secure_url;
+            this.uploading = false;
+          }
+        });
   }
-
-  ngOnInit(): void {}
-
-  onUploadError(args: any): void {
-    console.error('Upload Error:', args);
-  }
-
-  onUploadSuccess(args: any): void {
-    const [file, response] = args;
-    console.log('Upload Success:', response);
-    this.uploadedImageUrl = args[1]?.secure_url;
-    // Access the uploaded file URL from Cloudinary
-    // Access the uploaded file URL from Clouaddinary
-    const uploadedImageUrl = response.secure_url;
-    console.log('Uploaded Image URL:', uploadedImageUrl);
-  }
-
 
   post() {
-    if(this.uploadedImageUrl || this.caption){
-      let addAnnouncementDTO = new AnnouncementDTO();
-      addAnnouncementDTO.announcementID = 0
-      addAnnouncementDTO.pictureLink = this.uploadedImageUrl;
-      addAnnouncementDTO.caption = this.caption;
-      this.announcementService.addAnnouncement(addAnnouncementDTO).pipe(
-          catchError(
-              (err) =>{
-                Swal.fire(
-                    '500',
-                    'Internal Server Error',
-                    'error'
-                );
-                return throwError(err);
-              }
-          )
-      ).subscribe(
-          (res:any)=>{
-            console.log(res)
-            if(res.announcementID >0){
-              Swal.fire(
-                  'Success',
-                  'Post Uploded Successfully',
-                  'success'
-              );
-              this.caption = '';
-              this.uploadedImageUrl = '';
-            }else {
-              Swal.fire(
-                  '500',
-                  'Internal Server Error',
-                  'error'
-              );
+    if (!this.caption && !this.uploadedImageUrl) {
+      Swal.fire('Error', 'You cannot post an empty post', 'error');
+      return;
+    }
+
+    const addAnnouncementDTO = new AnnouncementDTO();
+    addAnnouncementDTO.announcementID = 0;
+    addAnnouncementDTO.pictureLink = this.uploadedImageUrl;
+    addAnnouncementDTO.caption = this.caption;
+
+    this.announcementService.addAnnouncement(addAnnouncementDTO)
+        .pipe(
+            catchError(err => {
+              Swal.fire('Error', 'Internal Server Error', 'error');
+              return throwError(() => err);
+            })
+        )
+        .subscribe({
+          next: (res: any) => {
+            if (res?.announcementID > 0) {
+              Swal.fire('Success', 'Post Uploaded Successfully', 'success');
+              this.resetForm();
+            } else {
+              Swal.fire('Error', 'Failed to save post', 'error');
             }
           }
-      );
-    }else {
-      Swal.fire(
-          'Error',
-          'You cannot post empty post',
-          'error'
-      );
-    }
+        });
+  }
+
+  resetForm() {
+    this.caption = '';
+    this.files = [];
+    this.uploadedImageUrl = '';
   }
 }

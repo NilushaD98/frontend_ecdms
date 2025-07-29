@@ -1,0 +1,177 @@
+<app-breadcrumb [title]="'Payments'" [items]="['Payments']" [active_item]="'Payments'"></app-breadcrumb>
+
+<div class="container-fluid">
+    <!-- Next Payment Section -->
+    <div class="row mb-4" *ngIf="upcomingPayments.length > 0">
+        <div class="col-12">
+            <h5>Next Payment</h5>
+        </div>
+        <!-- Display only the FIRST upcoming payment -->
+        <!-- Use safe navigation operator (?) and check if upcomingPayments[0] exists -->
+        <div class="col-md-6 col-lg-4" *ngIf="upcomingPayments[0] as nextPayment; else noNextPayment">
+            <div class="card border-left-success border-left-4 shadow h-100 py-2"
+                 [ngClass]="{
+             'border-left-success': getPaymentStatusClass(nextPayment) === 'paid',
+             'border-left-warning': getPaymentStatusClass(nextPayment) === 'pending',
+             'border-left-danger': getPaymentStatusClass(nextPayment) === 'overdue'
+           }">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-uppercase mb-1"
+                                 [ngClass]="{
+                     'text-success': getPaymentStatusClass(nextPayment) === 'paid',
+                     'text-warning': getPaymentStatusClass(nextPayment) === 'pending',
+                     'text-danger': getPaymentStatusClass(nextPayment) === 'overdue'
+                   }">
+                                {{ nextPayment.type }}
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">${{ nextPayment.amount }}</div>
+                            <div class="mt-2">
+                <span class="badge"
+                      [ngClass]="{
+                        'badge-success': getPaymentStatusClass(nextPayment) === 'paid',
+                        'badge-warning': getPaymentStatusClass(nextPayment) === 'pending',
+                        'badge-danger': getPaymentStatusClass(nextPayment) === 'overdue'
+                      }">
+                  {{ getPaymentStatusText(nextPayment) }}
+                </span>
+                            </div>
+                            <div class="mt-2 small text-muted">
+                                <strong>Due Date:</strong> {{ formatDate(nextPayment.dueDate) }}
+                            </div>
+                            <div class="mt-1 small text-muted" *ngIf="nextPayment.paidDate">
+                                <strong>Paid On:</strong> {{ formatDateTime(nextPayment.paidDate) }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #noNextPayment>
+            <!-- This case should ideally not happen if *ngIf="upcomingPayments.length > 0" holds,
+                 but it's good practice to handle it. -->
+            <div class="col-md-6 col-lg-4">
+                <div class="alert alert-info">No next payment found.</div>
+            </div>
+        </ng-template>
+    </div>
+
+    <!-- Overdue Payments Section -->
+    <div class="row mb-4" *ngIf="overduePayments.length > 0">
+        <div class="col-12">
+            <h5>Overdue Payments</h5>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let payment of overduePayments; trackBy: trackByPaymentId">
+            <div class="card border-left-danger border-left-4 shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">{{ payment.type }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">${{ payment.amount }}</div>
+                            <div class="mt-2">
+                                <span class="badge badge-danger">{{ getPaymentStatusText(payment) }}</span>
+                            </div>
+                            <div class="mt-2 small text-muted">
+                                <strong>Due Date:</strong> {{ formatDate(payment.dueDate) }}
+                            </div>
+                            <!-- <div class="mt-1 small text-muted" *ngIf="payment.paidDate">
+                              <strong>Paid On:</strong> {{ formatDateTime(payment.paidDate) }}
+                            </div> -->
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-exclamation-circle fa-2x text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paid Payments Section -->
+    <div class="row mb-4" *ngIf="paidPayments.length > 0">
+        <div class="col-12">
+            <h5>Paid Payments</h5>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let payment of paidPayments; trackBy: trackByPaymentId">
+            <div class="card border-left-success border-left-4 shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{ payment.type }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">${{ payment.amount }}</div>
+                            <div class="mt-2">
+                                <span class="badge badge-success">{{ getPaymentStatusText(payment) }}</span>
+                            </div>
+                            <div class="mt-2 small text-muted">
+                                <strong>Due Date:</strong> {{ formatDate(payment.dueDate) }}
+                            </div>
+                            <div class="mt-1 small text-muted" *ngIf="payment.paidDate">
+                                <strong>Paid On:</strong> {{ formatDateTime(payment.paidDate) }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-check-circle fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Payments Section (Other than the next one) -->
+    <div class="row mb-4" *ngIf="upcomingPayments.length > 1">
+        <div class="col-12">
+            <h5>Other Pending Payments</h5>
+        </div>
+        <!-- Display upcoming payments starting from the second one -->
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let payment of upcomingPayments.slice(1); trackBy: trackByPaymentId">
+            <div class="card border-left-warning border-left-4 shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{{ payment.type }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">${{ payment.amount }}</div>
+                            <div class="mt-2">
+                                <span class="badge badge-warning">{{ getPaymentStatusText(payment) }}</span>
+                            </div>
+                            <div class="mt-2 small text-muted">
+                                <strong>Due Date:</strong> {{ formatDate(payment.dueDate) }}
+                            </div>
+                            <!-- <div class="mt-1 small text-muted" *ngIf="payment.paidDate">
+                              <strong>Paid On:</strong> {{ formatDateTime(payment.paidDate) }}
+                            </div> -->
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Payments Message -->
+    <div class="row" *ngIf="paymentDetails.length === 0">
+        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                No payment information found.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TrackBy functions for performance -->
+<!-- Add these to your component.ts if not already there -->
+<!--
+trackByPaymentId(index: number, item: any): any {
+  return item.paymentId;
+}
+
+trackByIndex(index: number, item: any): any {
+  return index;
+}
+-->

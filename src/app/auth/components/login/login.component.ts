@@ -5,6 +5,8 @@ import {AuthService} from "../../service/auth.service";
 import {catchError, throwError} from "rxjs";
 import Swal from "sweetalert2";
 import {LoginDTO} from "../../dto/LoginDTO";
+import {NoticeService} from "../../../ecdms/service/notice-service/notice.service";
+import {NoticesRequestDTO} from "../../../ecdms/dto/AddSpecialNoticeDTO";
 
 @Component({
     selector: "app-login", templateUrl: "./login.component.html", styleUrls: ["./login.component.scss"],
@@ -17,7 +19,8 @@ export class LoginComponent implements OnInit {
     constructor(
         public authService:AuthService,
         private fb: FormBuilder,
-        public router: Router
+        public router: Router,
+        public noticeService:NoticeService
     ) {
         this.loginForm = this.fb.group({
             email: ["admin", [Validators.required]],
@@ -44,9 +47,19 @@ export class LoginComponent implements OnInit {
                 (response:any)=>{
                     console.log(response);
                     localStorage.setItem("token", response.token);
-                    localStorage.setItem("username", JSON.stringify(loginDTO.username));
-                    this.router.navigate(["/digital-portfolio/profile"]);
+                    localStorage.setItem("username", loginDTO.username);
+                    localStorage.setItem("user_type", response.userType);
+                    localStorage.setItem("user_id", response.userID);
+                    if(response.userType == 'PARENT'){
+                        this.router.navigate(["/profile/student"]);
 
+                    }else if(response.userType == 'ADMIN'){
+                        this.router.navigate(["/digital-portfolio/profile"]);
+
+                    }else if(response.userType == 'TEACHER'){
+                        this.router.navigate(["/profile/teacher"]);
+
+                    }
                 }
             );
         }

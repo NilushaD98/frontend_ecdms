@@ -1,0 +1,168 @@
+.calendar-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 0 10px #ccc;
+}
+
+/* Modal Styles */
+
+/* Ensure modal backdrop covers the whole screen */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040; // Standard Bootstrap backdrop z-index
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+
+  &.fade { opacity: 0; }
+  &.show { opacity: .5; }
+}
+
+/* Modal Dialog Styles */
+.modal {
+  // Ensure modal is fixed and centered
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050; // Standard Bootstrap modal z-index
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+
+  &.show {
+    display: block; // Override display when modal is open
+  }
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 0.5rem; // Default margin
+  pointer-events: none;
+
+  // Center vertically and horizontally
+  display: flex;
+  align-items: center;
+  min-height: calc(100% - 1rem);
+
+  @media (min-width: 576px) {
+    max-width: 500px;
+    margin: 1.75rem auto;
+    min-height: calc(100% - 3.5rem);
+  }
+
+  // Large modal size
+  &.modal-lg {
+    @media (min-width: 992px) {
+      max-width: 800px; // Adjust size as needed
+    }
+  }
+}
+
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); // Add shadow for depth
+}
+
+.modal-header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: calc(0.3rem - 1px);
+  border-top-right-radius: calc(0.3rem - 1px);
+
+  .btn-close {
+    padding: 0.5rem 0.5rem;
+    margin: -0.5rem -0.5rem -0.5rem auto; // Adjust margin for close button
+  }
+}
+
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 1rem;
+  // Ensure content scrolls if needed
+  max-height: 70vh; // Adjust max height as needed
+  overflow-y: auto;
+}
+
+.modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.75rem;
+  border-top: 1px solid #dee2e6;
+  border-bottom-right-radius: calc(0.3rem - 1px);
+  border-bottom-left-radius: calc(0.3rem - 1px);
+
+  > * {
+    margin: 0.25rem;
+  }
+}
+
+
+/* Notice Item Styles */
+
+.notices-container {
+  // Styles for the container holding all notices
+}
+
+.notice-item {
+  transition: box-shadow 1s ease-in-out; // Smooth hover effect
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); // Slightly elevate on hover
+  }
+}
+
+.notice-message {
+  font-size: 1rem; // Adjust font size
+  line-height: 1.5; // Improve readability
+  color: #333; // Darker text color
+  white-space: pre-wrap; // Preserve line breaks if present in message
+  word-wrap: break-word; // Break long words
+}
+
+.notice-image-container {
+  text-align: center; // Center the image/link
+}
+
+.notice-image {
+  max-width: 100%; // Responsive image
+  height: auto; // Maintain aspect ratio
+  // max-height: 400px; // Optional: Limit image height
+  object-fit: contain; // Ensure entire image is visible within constraints
+  cursor: pointer; // Indicate it's clickable
+  border: 1px solid #ddd; // Subtle border
+}
+
+/* Ensure the modal is above other content */
+#noticesModal {
+  z-index: 1055; // Higher than backdrop
+}

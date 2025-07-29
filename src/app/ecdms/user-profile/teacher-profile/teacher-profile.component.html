@@ -1,0 +1,105 @@
+<app-breadcrumb [title]="'Permissions Allocation'" [items]="['System User Management']" [active_item]="'Permissions Allocation'"></app-breadcrumb>
+<div>
+    <div class="card">
+        <div class="card-body">
+            <div class="text-end col-sm-12">
+                <div class="btn-showcase" >
+                    <ng-container>
+                        <button class="btn btn-primary" type="button"><i class="fa fa-floppy-o"></i> Save</button>
+                        <button class="btn btn-danger" type="button" routerLink="/company/user-management"><i class="fa fa-backward" ></i> Back</button>
+
+                    </ng-container>
+                </div>
+            </div>
+            <ul ngbNav #nav1="ngbNav" [activeId]="1" class="nav-tabs border-tab">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink><i class="icofont icofont-star"></i>Product Permission</a>
+                    <ng-template ngbNavContent>
+                        <div class="card">
+                            <div class="card-body megaoptions-border-space-sm">
+                                <div class="row g-3">
+                                    <div class="media-body">
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-1 col-form-label" >User Type</label>
+                                            <div class="col-sm-3">
+                                            </div>
+                                            <label class="col-sm-1 col-form-label">Company List</label>
+                                            <div class="col-sm-3">
+
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-1 col-form-label" >Plant List</label>
+                                            <div class="col-sm-3">
+                                            </div>
+                                            <label class="col-sm-1 col-form-label" >Buyer Permission</label>
+                                            <div class="col-sm-3">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <div class="col-sm-2">
+                                                <div class="form-check checkbox checkbox-solid-dark">
+                                                    <input class="form-check-input" id="procom" type="checkbox" >
+                                                    <label class="form-check-label mb-0" for="procom">Production Complete</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="form-check checkbox checkbox-solid-dark">
+                                                    <input class="form-check-input" id="shippingn" type="checkbox" >
+                                                    <label class="form-check-label mb-0" for="shippingn">Shipping Notifications</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="form-check checkbox checkbox-solid-dark">
+                                                    <input class="form-check-input" id="storen" type="checkbox" >
+                                                    <label class="form-check-label mb-0" for="storen">Stores Notifications</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="form-check checkbox checkbox-solid-dark">
+                                                    <input class="form-check-input" id="poclose" type="checkbox" >
+                                                    <label class="form-check-label mb-0" for="poclose">PO Close</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink><i class="icofont icofont-notebook"></i>Account Permission</a>
+                    <ng-template ngbNavContent>
+                        <div class="media-body">
+                            <div class="mb-3 row">
+                                <label class="col-sm-1 col-form-label" >Company List</label>
+                                <div class="col-sm-3">
+
+                                </div>
+
+                                <label class="col-sm-1 col-form-label" >Plant List</label>
+                                <div class="col-sm-3">
+
+                                </div>
+                                <label class="col-sm-1 col-form-label" >Buyer Permission</label>
+                                <div class="col-sm-3">
+
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-sm-2">
+                                    <div class="form-check checkbox checkbox-solid-dark">
+                                        <input class="form-check-input" id="pocloseacc" type="checkbox" >
+                                        <label class="form-check-label mb-0" for="pocloseacc">PO Close</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+            <div [ngbNavOutlet]="nav1" class="mt-4"></div>
+        </div>
+    </div>
+</div>

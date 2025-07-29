@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LayoutService } from 'src/app/shared/services/layout/layout.service';
 import { NavService } from 'src/app/shared/services/nav.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,11 @@ export class HeaderComponent implements OnInit {
   compFullName: any;
   plantName: any;
   VERSION_NO: any;
-    constructor(private navServices: NavService, public layout: LayoutService) {
+  public user:string | null = '';
+
+  constructor(private navServices: NavService, public layout: LayoutService) {
+    this.user = localStorage.getItem('user_type');
+
   }
 
   sidebarToggle( ) {

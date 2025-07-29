@@ -1,0 +1,129 @@
+<app-breadcrumb [title]="'Special Notice'" [items]="['Notices']" [active_item]="'Special Notice'"></app-breadcrumb>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive data-table">
+                        <form>
+                            <div class="mb-3 row justify-content-end">
+                                                                <div class="col-xs-1">
+                                                                    <button class="btn btn-primary btn-air-primary" (click)="openAddSpecialNotice(getContent2)">Add Notice</button>
+                                                                </div>
+                                <span class="col col-form-label text-end" *ngIf="service.loading$ | async">Loading...</span>
+                                <label for="table-complete-search" class="col-xs-3 col-sm-auto col-form-label">Search:</label>
+                                <div class="col-xs-3 col-sm-auto">
+                                    <input id="table-complete-search" type="text" class="form-control" name="searchTerm" [(ngModel)]="service.searchTerm">
+                                </div>
+                            </div>
+
+                            <table class="table table-striped table-border-vertical">
+                                <thead>
+                                <tr>
+                                    <th scope="col" sortable="resultID" (sort)="onSort($event)">ID</th>
+                                    <th scope="col" sortable="student" (sort)="onSort($event)">Message</th>
+                                    <th scope="col" >Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let item of basicTable$ | async">
+                                    <td scope="row">
+                                        <ngb-highlight [result]="item.specialNoticeID" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.message" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <span>
+                                          <i class="fa fa-eye font-primary pe-2"  (click)="openModal(getContent,item)"></i>
+                                          <i class="fa fa-trash font-primary pe-2"  (click)="removeSpecialNotice(item)"></i>
+                                          </span >
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between mt-3">
+                                <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                                    <option [ngValue]="2">2 items per page</option>
+                                    <option [ngValue]="4">4 items per page</option>
+                                    <option [ngValue]="6">6 items per page</option>
+                                </select>
+                                <ngb-pagination
+                                        [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+                                </ngb-pagination>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #getContent let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Special Notice</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <div class="col-md-12">
+                <label class="form-label" >Users</label>
+                <ng-select  [items]="users" bindLabel="fullName" bindValue="stuID" [multiple]="true" placeholder="Select users" [(ngModel)]="selectedUsers">
+                </ng-select>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label">Message:</label>
+            <input class="form-control" type="text" value="Test Name" [(ngModel)]="message" disabled>
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label">Media:</label>
+            <img [src]="uploadedImageUrl" alt="Uploaded image" class="img-fluid mt-3">
+
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #getContent2 let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Special Notice</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <div class="col-md-12">
+                <label class="form-label" >Users</label>
+                <ng-select [items]="users" bindLabel="fullName" bindValue="stuID" [multiple]="true" placeholder="Select users" [(ngModel)]="selectedUsers">
+                </ng-select>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label">Message:</label>
+            <input class="form-control" type="text" value="Test Name" [(ngModel)]="message" >
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label">Media:</label>
+            <ngx-dropzone [multiple]="false" (change)="onSelect($event)" [disabled]="uploading">
+                <ngx-dropzone-label>
+                    <div class="dz-message needsclick">
+                        <i class="icon-cloud-up"></i>
+                        <h6>Drop files here or click to upload</h6>
+                        <span class="text-muted">Upload directly to Cloudinary</span>
+                    </div>
+                </ngx-dropzone-label>
+
+                <!-- Previews -->
+                <ngx-dropzone-preview *ngFor="let file of files" [removable]="true" (removed)="onRemove(file)">
+                    <ngx-dropzone-label>{{ file.name }}</ngx-dropzone-label>
+                    <ngx-dropzone-image-preview *ngIf="file.type.includes('image')" [file]="file"></ngx-dropzone-image-preview>
+                </ngx-dropzone-preview>
+            </ngx-dropzone>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="addSpecialNotice()">Save</button>
+    </div>
+
+</ng-template>

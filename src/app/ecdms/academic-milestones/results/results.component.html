@@ -1,1 +1,116 @@
-<p>results works!</p>
+<app-breadcrumb [title]="'Exam Results'" [items]="['Academic Milestones']" [active_item]="'Exam Results'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-4">
+                            <label class="col-xs-3 col-sm-auto col-form-label">Test Type:</label>
+                            <ng-select [(ngModel)]="selectedTest" [items]="tests"
+                                       bindLabel="testName" bindValue="testTypeID"
+                                       placeholder="Select a Test Type"
+                                        (change)="fetchResults()"
+                            >
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="col-xs-3 col-sm-auto col-form-label">Pass Score:</label>
+                            <input id="table-complete-search" placeholder="Pass Score" type="number" class="form-control" name="searchTerm" [(ngModel)]="passScore">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-8">
+                            <label class="col-xs-3 col-sm-auto col-form-label">Student:</label>
+                            <ng-select [(ngModel)]="selectedUser" [items]="users"
+                                       bindLabel="fullName" bindValue="stuID"
+                                       placeholder="Select a Student">
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="col-xs-3 col-sm-auto col-form-label">Score</label>
+                            <input id="table-complete-searchs" placeholder="Score" type="number" class="form-control" name="searchTerm" [(ngModel)]="score">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="btn btn-primary"  style="width: 100%;" type="button" (click)="addResult()">+ Add Result</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive data-table">
+                        <form>
+                            <div class="mb-3 row justify-content-end">
+<!--                                <div class="col-xs-1">-->
+<!--                                    <button class="btn btn-primary btn-air-primary" (click)="navigateAddTest(getContent)">Add Test</button>-->
+<!--                                </div>-->
+                                <span class="col col-form-label text-end" *ngIf="service.loading$ | async">Loading...</span>
+                                <label for="table-complete-search" class="col-xs-3 col-sm-auto col-form-label">Search:</label>
+                                <div class="col-xs-3 col-sm-auto">
+                                    <input id="table-complete-search" type="text" class="form-control" name="searchTerm" [(ngModel)]="service.searchTerm">
+                                </div>
+                            </div>
+
+                            <table class="table table-striped table-border-vertical">
+                                <thead>
+                                <tr>
+                                    <th scope="col" sortable="resultID" (sort)="onSort($event)">Result ID</th>
+                                    <th scope="col" sortable="student" (sort)="onSort($event)">Student Name</th>
+                                    <th scope="col" sortable="score" (sort)="onSort($event)">Score</th>
+                                    <th scope="col" >Pass Status</th>
+                                    <th scope="col" >Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let item of basicTable$ | async">
+                                    <td scope="row">
+                                        <ngb-highlight [result]="item.resultID" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.student" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.score +'/'+ item.passScore"  [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="item.passStatus" class="badge badge-success">Pass</span>
+                                        <span *ngIf="!item.passStatus" class="badge badge-danger">Fail</span>
+                                    </td>
+                                    <td>
+                                        <span>
+                                          <i class="fa fa-trash font-primary pe-2"  (click)="removeResult(item)"></i>
+                                          </span >
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between mt-3">
+                                <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                                    <option [ngValue]="2">2 items per page</option>
+                                    <option [ngValue]="4">4 items per page</option>
+                                    <option [ngValue]="6">6 items per page</option>
+                                </select>
+                                <ngb-pagination
+                                        [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+                                </ngb-pagination>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

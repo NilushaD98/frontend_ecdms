@@ -33,28 +33,31 @@ import "hammerjs";
 import "mousetrap";
 
 @NgModule({
-  declarations: [
-    SocialAppComponent,
-    TimeLineComponent,
-    AboutComponent,
-    FriendsComponent,
-    PhotosComponent,
-    TimeLineLeftComponent,
-    TimeLineCenterComponent,
-    TimeLineRightComponent,
-    MyProfileComponent,
-    MutualFriendComponent,
-    ActivityFeedComponent,
-    CommentOneComponent,
-    CommentTwoComponent,
-    ProfileIntroComponent,
-    AboutCenterComponent,
-    AddFriendsComponent,
-    HobbiesComponent,
-    EducationAndEmploymentComponent,
-    ViewedYourProfileComponent,
-    ActivityLogComponent,
-  ],
-  imports: [CommonModule, SocialAppRoutingModule, SharedModule, NgbModule, UsersModule, GalleryModule, LightboxModule],
+    declarations: [
+        SocialAppComponent,
+        TimeLineComponent,
+        AboutComponent,
+        FriendsComponent,
+        PhotosComponent,
+        TimeLineLeftComponent,
+        TimeLineCenterComponent,
+        TimeLineRightComponent,
+        MyProfileComponent,
+        MutualFriendComponent,
+        ActivityFeedComponent,
+        CommentOneComponent,
+        CommentTwoComponent,
+        ProfileIntroComponent,
+        AboutCenterComponent,
+        AddFriendsComponent,
+        HobbiesComponent,
+        EducationAndEmploymentComponent,
+        ViewedYourProfileComponent,
+        ActivityLogComponent,
+    ],
+    imports: [CommonModule, SocialAppRoutingModule, SharedModule, NgbModule, UsersModule, GalleryModule, LightboxModule],
+    exports: [
+        MyProfileComponent
+    ]
 })
 export class SocialAppModule {}

@@ -1,0 +1,91 @@
+<app-breadcrumb [title]="'Appointments'" [items]="['Appointment']" [active_item]="'Appointments'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="mb-3 row justify-content-end">
+                        <div class="col-auto d-flex gap-2">
+                            <button class="btn btn-primary btn-air-primary"
+                                    (click)="navigateAddAppointment(getContent)">
+                                Add Appointment
+                            </button>
+
+                            <button *ngIf="userType=='ADMIN'" class="btn btn-primary btn-air-primary"
+                                    (click)="navigateRequestedAppointment()">
+                                View Requested Appointments
+                            </button>
+                        </div>
+                    </div>
+                    <section class="cd-container" id="cd-timeline">
+                        <div *ngFor="let group of groupedAppointments; let i = index" class="cd-timeline-block">
+
+                            <!-- Icon with alternating color -->
+                            <div class="cd-timeline-img cd-picture"
+                                 [class.bg-primary]="i % 2 === 0"
+                                 [class.bg-secondary]="i % 2 !== 0">
+                                <i class="icon-user"></i>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="cd-timeline-content">
+                                <div *ngIf="userType=='ADMIN'">
+                                    <h4>{{ group.date }}</h4>
+
+                                    <!-- Appointment List -->
+                                    <ul class="list-group mt-3">
+                                        <li class="list-group-item" *ngFor="let app of group.appointmentDTOS">
+                                            <strong>Student:</strong> {{ app.studentName }}<br>
+                                            <strong>Time:</strong> {{ app.scheduledTime | date:'shortTime' }}<br>
+                                            <strong>Reason:</strong> {{ app.reason }}
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div *ngIf="userType=='PARENT'">
+                                    <h4>{{ group.date }}</h4>
+                                    <ul class="list-group mt-3">
+                                        <li class="list-group-item" *ngFor="let app of group.appointmentDTOS">
+                                            <strong>Time:</strong> {{ app.scheduledTime | date:'shortTime' }}<br>
+                                            <strong>Reason:</strong> {{ app.reason }}
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Optional Date Footer -->
+                                <span class="cd-date">{{ group.date | date:'MMM d' }}</span>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- cd-timeline Ends -->
+                    <!-- cd-timeline Ends-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #getContent let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">New Appointment</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <label class="col-xs-3 col-sm-auto col-form-label">Student:</label>
+            <ng-select [(ngModel)]="selectedUser" [items]="users"
+                       bindLabel="fullName" bindValue="stuID"
+                       placeholder="Select a Student">
+            </ng-select>
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label" >Reason:</label>
+            <textarea class="form-control" [(ngModel)]="reason"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="addAppointment()" class="btn btn-primary" type="button">Add Appointment</button>
+    </div>
+</ng-template>

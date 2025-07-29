@@ -131,28 +131,40 @@ export class TestsComponent {
     }
 
     removeTest(item: any) {
-        this.service.removeTestTypeByID(item.testTypeID).subscribe(
-            (res:any) =>{
-                if(res.success){
-                    Swal.fire(
-                        'Success',
-                        'Test type Remove Successfully.',
-                        'success'
-                    );
-                    this.modalService.dismissAll();
-                    this.testName = '';
-                    this.description = '';
-                    this.fetchAllTests();
-                }else {
-                    Swal.fire(
-                        'Error',
-                        'Test type Remove Error occurred.',
-                        'error'
-                    );
-                    return;
-                }
+        Swal.fire({
+            title: 'Are you sure remove test?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.service.removeTestTypeByID(item.testTypeID).subscribe(
+                    (res:any) =>{
+                        if(res.success){
+                            Swal.fire(
+                                'Success',
+                                'Test type Remove Successfully.',
+                                'success'
+                            );
+                            this.modalService.dismissAll();
+                            this.testName = '';
+                            this.description = '';
+                            this.fetchAllTests();
+                        }else {
+                            Swal.fire(
+                                'Error',
+                                'Test type Remove Error occurred.',
+                                'error'
+                            );
+                            return;
+                        }
+                    }
+                )
             }
-        )
+        });
     }
 
     private handleModalClose() {

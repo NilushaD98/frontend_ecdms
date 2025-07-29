@@ -1,0 +1,118 @@
+<app-breadcrumb [title]="'Results'" [items]="['Student Results']" [active_item]="'Results'"></app-breadcrumb>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <!-- Loading Indicator -->
+            <div *ngIf="loading" class="d-flex justify-content-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div *ngIf="!loading && error" class="alert alert-danger" role="alert">
+                {{ error }}
+                <button type="button" class="btn btn-sm btn-outline-danger ms-3" (click)="fetchStudentData()">Retry</button>
+            </div>
+
+            <!-- Main Content -->
+            <div *ngIf="!loading && !error && studentData">
+
+                <!-- Basic Information Card -->
+<!--                <div class="card mb-4">-->
+<!--                    <div class="card-header bg-primary text-white">-->
+<!--                        <h5 class="mb-0">Student Information</h5>-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-6 mb-3">-->
+<!--                                <strong>Full Name:</strong> {{ studentData.fullName }}-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6 mb-3">-->
+<!--                                <strong>Date of Birth:</strong> {{ getFormattedDob() || 'N/A' }}-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6 mb-3">-->
+<!--                                <strong>Programme:</strong> {{ studentData.programme }}-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6 mb-3">-->
+<!--                                <strong>Gender:</strong> {{ studentData.gender }}-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6 mb-3">-->
+<!--                                <strong>Allergies:</strong> {{ studentData.allergies || 'None' }}-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <!-- Parent/Guardian Information Card -->
+<!--                <div class="card mb-4">-->
+<!--                    <div class="card-header bg-secondary text-white">-->
+<!--                        <h5 class="mb-0">Parent/Guardian Information</h5>-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-6 mb-3">-->
+<!--                                <strong>Parent/Guardian Name:</strong> {{ studentData.parentName }}-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6 mb-3">-->
+<!--                                <strong>Relationship:</strong> {{ studentData.relationship }}-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6 mb-3">-->
+<!--                                <strong>Email:</strong> {{ studentData.email }}-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6 mb-3">-->
+<!--                                <strong>Contact 1:</strong> {{ studentData.contact1 }}-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6 mb-3">-->
+<!--                                <strong>Contact 2:</strong> {{ studentData.contactTwo || 'N/A' }}-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <!-- Academic Milestones / Test Results Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Academic Milestones (Test Results)</h5>
+                        <span class="badge bg-light text-dark">{{ studentData.testResultsDTOList?.length || 0 }} Tests</span>
+                    </div>
+                    <div class="card-body">
+                        <div *ngIf="studentData.testResultsDTOList && studentData.testResultsDTOList.length > 0; else noTests">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">Test Name</th>
+                                        <th scope="col">Marks Obtained</th>
+                                        <th scope="col">Max Marks</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let result of studentData.testResultsDTOList ">
+
+                                        <td>{{ result.testName }}</td>
+                                        <td>{{ result.marks }}</td>
+                                        <td>{{ result.maxMark }}</td>
+                                        <td>
+                        <span class="badge"
+                              [ngClass]="getResultBadgeClass(result.passStatus)">
+                          {{ getResultStatusText(result.passStatus) }}
+                        </span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <ng-template #noTests>
+                            <p class="text-muted">No test results available.</p>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

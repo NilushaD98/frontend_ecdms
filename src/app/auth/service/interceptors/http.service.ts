@@ -16,6 +16,11 @@ export class HttpService implements HttpInterceptor{
   constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    if (req.url.includes('cloudinary')) {
+      return next.handle(req); // pass original request (no auth)
+    }
+
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

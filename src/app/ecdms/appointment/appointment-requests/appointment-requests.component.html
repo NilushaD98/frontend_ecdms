@@ -1,0 +1,87 @@
+<app-breadcrumb [title]="'Appointment Requests'" [items]="['Appointments']" [active_item]="'Appointment Requests'"></app-breadcrumb>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive data-table">
+                        <form>
+                            <div class="mb-3 row justify-content-end">
+                                <span class="col col-form-label text-end" *ngIf="service.loading$ | async">Loading...</span>
+                                <label for="table-complete-search" class="col-xs-3 col-sm-auto col-form-label">Search:</label>
+                                <div class="col-xs-3 col-sm-auto">
+                                    <input id="table-complete-search" type="text" class="form-control" name="searchTerm" [(ngModel)]="service.searchTerm">
+                                </div>
+                            </div>
+                            <table class="table table-striped table-border-vertical">
+                                <thead>
+                                <tr>
+                                    <th scope="col" sortable="appointmentId" (sort)="onSort($event)">Appointment ID</th>
+                                    <th scope="col" sortable="studentName" (sort)="onSort($event)">Student Name</th>
+                                    <th scope="col" sortable="reason" (sort)="onSort($event)">Reason</th>
+                                    <th scope="col" >Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let item of basicTable$ | async">
+                                    <td scope="row">
+                                        <ngb-highlight [result]="item.appointmentId" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.studentName" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.reason" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+
+                                    <td>
+                                        <span>
+                                          <i class="fa fa-eye font-primary pe-2"  (click)="viewAppointment(item,getContent)"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between mt-3">
+                                <select class="form-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                                    <option [ngValue]="2">2 items per page</option>
+                                    <option [ngValue]="4">4 items per page</option>
+                                    <option [ngValue]="6">6 items per page</option>
+                                </select>
+                                <ngb-pagination
+                                        [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
+                                </ngb-pagination>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #getContent let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Approve Appointment</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <label class="col-xs-3 col-sm-auto col-form-label">Student:</label>
+            <input class="form-control" type="text" [(ngModel)]="selectedUser" disabled>
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label" >Reason:</label>
+            <textarea class="form-control" [(ngModel)]="reason" disabled></textarea>
+        </div>
+        <div class="mb-3">
+                        <label class="col-form-label" >Date:</label>
+                        <input id="testDate" type="datetime-local" class="form-control" (input)="assignDate($event)"
+                        />
+                    </div>
+    </div>
+    <div class="modal-footer">
+        <button (click)="approveAppointment()" class="btn btn-primary" type="button">Approve Appointment</button>
+    </div>
+</ng-template>

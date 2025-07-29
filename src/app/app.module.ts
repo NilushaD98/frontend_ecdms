@@ -34,6 +34,12 @@ import {DigitalPortfolioModule} from "./ecdms/digital-portfolio/digital-portfoli
 import {StudentManagementModule} from "./ecdms/student-management/student-management.module";
 import {AttendanceSummeryModule} from "./ecdms/attendance-summery/attendance-summery.module";
 import {AcademicMilestonesModule} from "./ecdms/academic-milestones/academic-milestones.module";
+import {AppointmentRoutingModule} from "./ecdms/appointment/appointment-routing.module";
+import {AppointmentModule} from "./ecdms/appointment/appointment.module";
+import {PaymentsModule} from "./ecdms/payments/payments.module";
+import {AnnualCalendarModule} from "./ecdms/annual-calendar/annual-calendar.module";
+import {UserProfileModule} from "./ecdms/user-profile/user-profile.module";
+import {NoticesModule} from "./ecdms/notices/notices.module";
 
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -68,7 +74,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         AttendanceSummeryModule,
         NgxMasonryModule,
         NgxPermissionsModule.forRoot(),
-        AcademicMilestonesModule
+        AcademicMilestonesModule,
+        AppointmentModule,
+        PaymentsModule,
+        AnnualCalendarModule,
+        UserProfileModule,
+        NoticesModule
     ],
     providers: [
         AdminGuard,

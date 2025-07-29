@@ -12,6 +12,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { SharedModule } from 'src/app/shared/shared.module';
+import {HttpClientModule} from "@angular/common/http";
+import {BrowserModule} from "@angular/platform-browser";
 
 @NgModule({
   declarations: [
@@ -27,6 +29,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    NgbModule,
     FlatpickrModule.forRoot()
   ],
   exports: [CalenderComponent

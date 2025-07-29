@@ -23,6 +23,8 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
+import {CalenderService} from "../../ecdms/service/calender-service/calender.service";
+import {CalendarDTO} from "../../ecdms/dto/Calendar";
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -81,58 +83,68 @@ export class CalenderComponent {
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: {primary: '#ad2121',
-      secondary: '#FAE3E3'},
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: { ...colors['blue'] },
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
+  events: CalendarEvent[] = [];
+  //   {
+  //     start: subDays(startOfDay(new Date()), 1),
+  //     end: addDays(new Date(), 1),
+  //     title: 'A 3 day event',
+  //     color: {primary: '#ad2121',
+  //       secondary: '#FAE3E3'},
+  //     allDay: true,
+  //
+  //   },
+  //   {
+  //     start: startOfDay(new Date()),
+  //     title: 'An event with no end date',
+  //     color: { ...colors['yellow'] },
+  //   },
+  //   {
+  //     start: subDays(endOfMonth(new Date()), 3),
+  //     end: addDays(endOfMonth(new Date()), 3),
+  //     title: 'A long event that spans 2 months',
+  //     color: { ...colors['blue'] },
+  //     allDay: true,
+  //   },
+  //   {
+  //     start: addHours(startOfDay(new Date()), 2),
+  //     end: addHours(new Date(), 2),
+  //     title: 'A draggable and resizable event',
+  //     color: { ...colors['yellow'] },
+  //   },
+  // ];
 
   activeDayIsOpen: boolean = true;
   color: any
-  constructor(private modal: NgbModal) {
+  userType:string= '';
+  constructor(
+      private modal: NgbModal,
+      public calenderService:CalenderService
+  ) {
+    const userType = localStorage.getItem('user_type');
+    const userId = localStorage.getItem('user_id');
+    if(userType){
+      this.userType = userType;
+    }
+    this.fetchEvents();
+
+  }
+  fetchEvents(){
+    this.calenderService.getEvents().subscribe((res: any) => {
+      this.events = res.map((event: any) => ({
+        ...event,
+        start: new Date(event.start),
+        end: new Date(event.end),
+        color: { ...event.color },
+      }));
+      this.refresh.next(); // Force calendar to re-render
+    });
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
+          (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+          events.length === 0
       ) {
         this.activeDayIsOpen = false;
       } else {
@@ -143,10 +155,10 @@ export class CalenderComponent {
   }
 
   eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
+                      event,
+                      newStart,
+                      newEnd,
+                    }: CalendarEventTimesChangedEvent): void {
     this.events = this.events.map((iEvent) => {
       if (iEvent === event) {
         return {
@@ -166,24 +178,26 @@ export class CalenderComponent {
   }
 
   addEvent(): void {
+
     this.events = [
-      ...this.events,
+        ...this.events,
       {
         title: 'New event',
         start: startOfDay(new Date()),
         end: endOfDay(new Date()),
         color: colors['red'],
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
       },
     ];
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
+    this.calenderService.deleteEvent(eventToDelete.id).subscribe(
+        (res:any)=>{
+          if (res.success){
+            this.events = this.events.filter((event) => event !== eventToDelete);
+          }
+        }
+    );
   }
 
   setView(view: CalendarView) {
@@ -192,5 +206,14 @@ export class CalenderComponent {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+
+  save() {
+    const c= new CalendarDTO(this.events);
+    this.calenderService.addEvent(c).subscribe(
+        (res:any) =>{
+          console.log(res)
+        }
+    );
   }
 }

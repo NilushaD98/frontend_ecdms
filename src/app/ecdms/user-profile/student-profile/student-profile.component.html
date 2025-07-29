@@ -1,0 +1,173 @@
+<app-breadcrumb [title]="'My Profile'" [items]="['Profile']" [active_item]="'My Profile'"></app-breadcrumb>
+<div class="card">
+    <div class="card-body">
+
+        <div class="text-center my-3">
+            <button class="btn btn-primary" (click)="openNoticesModal()" [disabled]="loadingNotices">
+                <span *ngIf="loadingNotices" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                View Special Notices
+                <span *ngIf="notices.length > 0" class="badge bg-danger ms-2">{{ notices.length }}</span>
+            </button>
+            <div *ngIf="noticeError" class="text-danger small mt-1">{{ noticeError }}</div>
+        </div>
+        <form>
+            <div class="row mb-2">
+                <div class="profile-title">
+                    <div class="media"><img class="img-70 rounded-circle" alt="" src="assets/images/avatar.jpg  ">
+                        <div class="media-body">
+                            <h3 class="mb-1 f-20 txt-primary">{{user.fullName}}</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--            <div class="mb-3">-->
+<!--                <h6 class="form-label">Bio</h6>-->
+<!--                <textarea class="form-control" rows="5">I have my permanent muses and my muses of the moment.</textarea>-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">Email-Address</label>-->
+<!--                <input class="form-control" placeholder="your-email@domain.com">-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">Password</label>-->
+<!--                <input class="form-control" type="password" value="password">-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label">Website</label>-->
+<!--                <input class="form-control" placeholder="http://Uplor .com">-->
+<!--            </div>-->
+<!--            <div class="form-footer">-->
+<!--                <button class="btn btn-primary btn-block">Save</button>-->
+<!--            </div>-->
+        </form>
+
+        <ul ngbNav #nav1="ngbNav" [activeId]="1" class="nav-tabs border-tab">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink><i class="icofont icofont-student-alt"></i>Profile</a>
+                <ng-template ngbNavContent>
+                    <div class="card">
+                        <div class="card-body megaoptions-border-space-sm">
+                            <div class="row g-3">
+                                <div class="media-body">
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Name</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.fullName}}</label>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Birthday</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.dob | date}}</label>
+
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Programme</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.programme}}</label>
+
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Gender</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.gender}}</label>
+
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label"><b>Allergies</b></label>
+                                        <label class="col-sm-3 col-form-label">{{ user.allergies || 'None' }}</label>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label"><b>Special Notice</b></label>
+                                        <label class="col-sm-3 col-form-label">{{ user.specialNotice || 'None' }}</label>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Parent Name</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.parentName}}</label>
+
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Relationship to child</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.relationship}}</label>
+
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Email</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.email}}</label>
+
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Contacts</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.contact1}} / {{user.contactTwo }}</label>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav1" class="mt-4"></div>
+    </div>
+</div>
+
+
+
+<!-- Your existing HTML content (breadcrumb, profile cards, etc.) -->
+
+<!-- Button/Link to open the Notices Modal -->
+
+
+<!-- Special Notices Modal -->
+<div class="modal fade" id="noticesModal" [ngClass]="{ 'show d-block': isNoticesModalOpen }" tabindex="-1" role="dialog" aria-labelledby="noticesModalLabel" aria-hidden="!isNoticesModalOpen" [style.display]="isNoticesModalOpen ? 'block' : 'none'">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document"> <!-- modal-lg for larger width -->
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="noticesModalLabel">Special Notices</h5>
+                <button type="button" class="btn-close btn-close-white" (click)="closeNoticesModal()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="notices.length === 0 && !loadingNotices && !noticeError" class="text-center text-muted my-5">
+                    No special notices found.
+                </div>
+
+                <div *ngIf="noticeError && !loadingNotices" class="alert alert-danger" role="alert">
+                    {{ noticeError }}
+                </div>
+
+                <div *ngIf="loadingNotices" class="text-center my-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading notices...</span>
+                    </div>
+                </div>
+
+                <!-- Notices List -->
+                <div class="notices-container" *ngIf="notices.length > 0 && !loadingNotices && !noticeError">
+                    <div class="notice-item mb-4 p-3 border rounded" *ngFor="let notice of notices">
+                        <!-- Message -->
+                        <p class="notice-message mb-2">{{ notice.message }}</p>
+
+                        <!-- Image -->
+                        <div class="notice-image-container mt-2" *ngIf="notice.displayMediaLink">
+                            <!-- Use target="_blank" to open image in new tab, rel="noopener noreferrer" for security -->
+                            <a [href]="notice.originalMediaLink" target="_blank" rel="noopener noreferrer">
+                                <!-- Use img-fluid for responsive image, rounded for rounded corners -->
+                                <img [src]="notice.displayMediaLink" [alt]="'Notice Image ' + notice.specialNoticeID" class="img-fluid rounded shadow-sm notice-image">
+                            </a>
+                            <!-- Optional: Add a small link below the image -->
+                            <!-- <small class="d-block text-center mt-1"><a [href]="notice.originalMediaLink" target="_blank" rel="noopener noreferrer">View Full Image</a></small> -->
+                        </div>
+
+                        <!-- Optional: Display Notice ID (for debugging or reference) -->
+                        <!-- <small class="text-muted">ID: {{ notice.specialNoticeID }}</small> -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeNoticesModal()">Close</button>
+                <!-- Add other actions if needed, like 'Mark All as Read' -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional: Backdrop for modal -->
+<div class="modal-backdrop fade" [ngClass]="{ 'show': isNoticesModalOpen }" *ngIf="isNoticesModalOpen" (click)="closeNoticesModal()"></div>
+
+<!-- Your existing HTML content (calendar, etc.) -->
