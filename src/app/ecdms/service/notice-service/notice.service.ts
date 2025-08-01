@@ -6,6 +6,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {debounceTime} from "rxjs/operators";
 import {PaymentDTO, PaymentFilterDTO} from "../../dto/PaymentFilterDTO";
 import {AddSpecialNoticeDTO, NoticesRequestDTO} from "../../dto/AddSpecialNoticeDTO";
+import {UpdateStudentDTO} from "../../dto/UpdateStudentDTO";
 
 interface SearchResult {
   basicTable: any[];
@@ -156,4 +157,17 @@ export class NoticeService {
         { headers: headers }
     );
   }
+
+    updateUser(updateStudentDTO: UpdateStudentDTO) {
+      const token = localStorage.getItem('token') || '';
+      console.log('Token:', token);
+      let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
+      console.log('Custom Headers:', headers);
+
+      return this.http.post(
+          'http://localhost:9090/user/update-student-by-parent',
+          updateStudentDTO,
+          { headers: headers }
+      );
+    }
 }

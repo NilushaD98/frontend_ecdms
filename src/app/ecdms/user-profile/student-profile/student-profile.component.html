@@ -2,14 +2,14 @@
 <div class="card">
     <div class="card-body">
 
-        <div class="text-center my-3">
-            <button class="btn btn-primary" (click)="openNoticesModal()" [disabled]="loadingNotices">
-                <span *ngIf="loadingNotices" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                View Special Notices
-                <span *ngIf="notices.length > 0" class="badge bg-danger ms-2">{{ notices.length }}</span>
-            </button>
-            <div *ngIf="noticeError" class="text-danger small mt-1">{{ noticeError }}</div>
-        </div>
+<!--        <div class="text-center my-3">-->
+<!--            <button class="btn btn-primary" (click)="openNoticesModal()" [disabled]="loadingNotices">-->
+<!--                <span *ngIf="loadingNotices" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>-->
+<!--                View Special Notices-->
+<!--                <span *ngIf="notices.length > 0" class="badge bg-danger ms-2">{{ notices.length }}</span>-->
+<!--            </button>-->
+<!--            <div *ngIf="noticeError" class="text-danger small mt-1">{{ noticeError }}</div>-->
+<!--        </div>-->
         <form>
             <div class="row mb-2">
                 <div class="profile-title">
@@ -100,6 +100,9 @@
                             </div>
                         </div>
                     </div>
+                            <div class="text-center my-3">
+                                <button class="btn btn-primary " (click)="openEditModal(getContent)">Edit</button>
+                            </div>
                 </ng-template>
             </li>
         </ul>
@@ -107,6 +110,34 @@
     </div>
 </div>
 
+
+<ng-template #getContent let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Special Notice</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <label class="col-form-label">Allergies:</label>
+            <input class="form-control" type="text" value="Test Name" [(ngModel)]="allergies" >
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label">Special Notice:</label>
+            <input class="form-control" type="text" value="Test Name" [(ngModel)]="specialNotice" >
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label">Contact One:</label>
+            <input class="form-control" type="text" value="Test Name" [(ngModel)]="contactOne" >
+        </div>
+        <div class="mb-3">
+            <label class="col-form-label">Contact One:</label>
+            <input class="form-control" type="text" value="Test Name" [(ngModel)]="contactTwo" >
+        </div>
+    </div>
+    <div class="modal-footer" *ngIf="userType == 'PARENT'">
+        <button class="btn btn-primary" (click)="editUser()">Save</button>
+    </div>
+</ng-template>
 
 
 <!-- Your existing HTML content (breadcrumb, profile cards, etc.) -->

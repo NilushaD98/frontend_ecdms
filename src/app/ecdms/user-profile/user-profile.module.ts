@@ -18,7 +18,8 @@ import {NgSelectModule} from "@ng-select/ng-select";
         ReactiveFormsModule,
         SharedModule,
         CalendarModule,
-        NgSelectModule
+        NgSelectModule,
+        FormsModule
     ]
 })
 export class UserProfileModule { }

@@ -103,5 +103,10 @@ export class ProfileComponent {
           );
     }
   }
+  isLandscape(url: string): boolean {
+    const img = new Image();
+    img.src = url;
+    return img.naturalWidth > img.naturalHeight;
+  }
 }
 

@@ -31,6 +31,7 @@ export class ResultsComponent {
   passScore: any;
   score: any;
   testType:any;
+  maxScore: any;
   constructor(
       public service: AcademicMilestoneService,
       public route:Router,
@@ -87,14 +88,14 @@ export class ResultsComponent {
   }
 
   addResult() {
-    console.log(this.selectedUser);
-    console.log(this.selectedTest)
+
     const result = new ExamResultDTO(
         null,
         this.selectedUser,
         this.selectedTest,
         this.score,
         this.passScore,
+        this.maxScore,
         this.score >= this.passScore
     );
     this.service.addExamResult(result).pipe(

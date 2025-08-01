@@ -1,10 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'; // Import OnInit, OnDestroy
 import { CalendarEvent } from "angular-calendar";
-import { Subject, takeUntil } from "rxjs"; // Import takeUntil
+import {Subject, takeUntil, throwError} from "rxjs"; // Import takeUntil
 import { addMonths, subMonths } from "date-fns";
 import { ProfileService } from "../../service/profile-service/profile.service";
 import { NoticesRequestDTO } from "../../dto/AddSpecialNoticeDTO"; // Make sure path is correct
 import { NoticeService } from "../../service/notice-service/notice.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UpdateStudentDTO} from "../../dto/UpdateStudentDTO";
+import {catchError} from "rxjs/operators";
+import Swal from "sweetalert2";
 
 // Define interface for processed notice data
 interface DisplayNotice {
@@ -29,6 +33,7 @@ export class StudentProfileComponent implements OnInit, OnDestroy { // Implement
   viewDate: Date = new Date();
   refresh: Subject<any> = new Subject();
   user: any;
+  userType:any;
 
   // For Notices
   notices: DisplayNotice[] = [];
@@ -41,13 +46,15 @@ export class StudentProfileComponent implements OnInit, OnDestroy { // Implement
 
   constructor(
       public ups: ProfileService,
-      public noticeService: NoticeService
+      public noticeService: NoticeService,
+      public modalService:NgbModal
   ) {
     this.openNoticesModal();
   }
 
   ngOnInit(): void {
     const userIdStr = localStorage.getItem('user_id');
+    const userType = localStorage.getItem('user_type');
     const userId: number | null = userIdStr ? +userIdStr : null;
 
     if (userId) {
@@ -57,6 +64,8 @@ export class StudentProfileComponent implements OnInit, OnDestroy { // Implement
       console.error('User ID not found in localStorage');
       // Handle missing user ID, maybe redirect
     }
+
+    this.userType = userType;
   }
 
   fetchStudentData(userId: number): void {
@@ -136,6 +145,10 @@ export class StudentProfileComponent implements OnInit, OnDestroy { // Implement
   //   // Implement logic to mark notices as read via NoticeService
   //   // This might involve sending a list of IDs or updating a status
   // }
+  allergies: any;
+  specialNotice: any;
+  contactOne: any;
+  contactTwo: any;
 
   nextMonth() {
     this.viewDate = addMonths(this.viewDate, 1);
@@ -148,5 +161,40 @@ export class StudentProfileComponent implements OnInit, OnDestroy { // Implement
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  editUser() {
+    let updateStudentDTO:UpdateStudentDTO = new UpdateStudentDTO();
+    const userIdStr = localStorage.getItem('user_id');
+    const userId: number | null = userIdStr ? +userIdStr : null;
+    updateStudentDTO.userID = userId;
+    updateStudentDTO.allergies = this.allergies;
+    updateStudentDTO.specialNotice = this.specialNotice;
+    updateStudentDTO.contactOne = this.contactOne;
+    updateStudentDTO.contactTwo = this.contactTwo;
+    this.noticeService.updateUser(updateStudentDTO).pipe(
+        catchError(err => {
+          Swal.fire('Error', 'Update unsuccessful.', 'error');
+          return throwError(err);
+        })
+    ).subscribe(
+        (res:any) =>{
+          if (res.success) {
+            Swal.fire('Success', 'User updated successfully.', 'success');
+            this.modalService.dismissAll();
+            if(userId){
+              this.fetchStudentData(userId);
+            }
+          }
+        }
+    );
+  }
+
+  openEditModal(getContent: any) {
+    this.modalService.open(getContent,{size: 'lg'});
+    this.allergies = this.user.allergies;
+    this.specialNotice = this.user.specialNotice;
+    this.contactOne = this.user.contact1;
+    this.contactTwo = this.user.contactTwo;
   }
 }

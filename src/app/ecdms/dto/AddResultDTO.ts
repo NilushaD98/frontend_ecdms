@@ -5,6 +5,7 @@ export class ExamResultDTO {
         public testType: number | null = null,
         public score: number = 0,
         public passScore: number = 0,
+        public maxScore:number=0,
         public passStatus: boolean = false
     ) {}
 }
