@@ -1,105 +1,191 @@
-<app-breadcrumb [title]="'Permissions Allocation'" [items]="['System User Management']" [active_item]="'Permissions Allocation'"></app-breadcrumb>
-<div>
-    <div class="card">
-        <div class="card-body">
-            <div class="text-end col-sm-12">
-                <div class="btn-showcase" >
-                    <ng-container>
-                        <button class="btn btn-primary" type="button"><i class="fa fa-floppy-o"></i> Save</button>
-                        <button class="btn btn-danger" type="button" routerLink="/company/user-management"><i class="fa fa-backward" ></i> Back</button>
+<app-breadcrumb [title]="'My Profile'" [items]="['Profile']" [active_item]="'My Profile'"></app-breadcrumb>
+<div class="card">
+    <div class="card-body">
 
-                    </ng-container>
+        <!--        <div class="text-center my-3">-->
+        <!--            <button class="btn btn-primary" (click)="openNoticesModal()" [disabled]="loadingNotices">-->
+        <!--                <span *ngIf="loadingNotices" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>-->
+        <!--                View Special Notices-->
+        <!--                <span *ngIf="notices.length > 0" class="badge bg-danger ms-2">{{ notices.length }}</span>-->
+        <!--            </button>-->
+        <!--            <div *ngIf="noticeError" class="text-danger small mt-1">{{ noticeError }}</div>-->
+        <!--        </div>-->
+        <form>
+            <div class="row mb-2">
+                <div class="profile-title">
+                    <div class="media"><img class="img-70 rounded-circle" alt="" src="assets/images/profile-image.png  ">
+                        <div class="media-body">
+                            <h3 class="mb-1 f-20 txt-dark">{{user.fullName}}</h3>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <ul ngbNav #nav1="ngbNav" [activeId]="1" class="nav-tabs border-tab">
-                <li [ngbNavItem]="1">
-                    <a ngbNavLink><i class="icofont icofont-star"></i>Product Permission</a>
-                    <ng-template ngbNavContent>
-                        <div class="card">
-                            <div class="card-body megaoptions-border-space-sm">
-                                <div class="row g-3">
-                                    <div class="media-body">
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-1 col-form-label" >User Type</label>
-                                            <div class="col-sm-3">
-                                            </div>
-                                            <label class="col-sm-1 col-form-label">Company List</label>
-                                            <div class="col-sm-3">
+        </form>
 
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-1 col-form-label" >Plant List</label>
-                                            <div class="col-sm-3">
-                                            </div>
-                                            <label class="col-sm-1 col-form-label" >Buyer Permission</label>
-                                            <div class="col-sm-3">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <div class="col-sm-2">
-                                                <div class="form-check checkbox checkbox-solid-dark">
-                                                    <input class="form-check-input" id="procom" type="checkbox" >
-                                                    <label class="form-check-label mb-0" for="procom">Production Complete</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <div class="form-check checkbox checkbox-solid-dark">
-                                                    <input class="form-check-input" id="shippingn" type="checkbox" >
-                                                    <label class="form-check-label mb-0" for="shippingn">Shipping Notifications</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <div class="form-check checkbox checkbox-solid-dark">
-                                                    <input class="form-check-input" id="storen" type="checkbox" >
-                                                    <label class="form-check-label mb-0" for="storen">Stores Notifications</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2">
-                                                <div class="form-check checkbox checkbox-solid-dark">
-                                                    <input class="form-check-input" id="poclose" type="checkbox" >
-                                                    <label class="form-check-label mb-0" for="poclose">PO Close</label>
-                                                </div>
-                                            </div>
-                                        </div>
+        <ul ngbNav #nav1="ngbNav" [activeId]="1" class="nav-tabs border-tab">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink><i class="icofont icofont-student-alt"></i>Profile</a>
+                <ng-template ngbNavContent>
+                    <div class="card">
+                        <div class="card-body megaoptions-border-space-sm">
+                            <div class="row g-3">
+                                <div class="media-body">
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Full Name</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.fullName}}</label>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>NIC</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.nic}}</label>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Birthday</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.dob | date}}</label>
+
+                                    </div>
+
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Gender</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.gender}}</label>
+                                    </div>
+<!--                                    <div class="mb-3 row">-->
+<!--                                        <label class="col-sm-3 col-form-label"><b>Allergies</b></label>-->
+<!--                                        <label class="col-sm-3 col-form-label">{{ user.allergies || 'None' }}</label>-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3 row">-->
+<!--                                        <label class="col-sm-3 col-form-label"><b>Special Notice</b></label>-->
+<!--                                        <label class="col-sm-3 col-form-label">{{ user.specialNotice || 'None' }}</label>-->
+<!--                                    </div>-->
+<!--                                    <div class="mb-3 row">-->
+<!--                                        <label class="col-sm-3 col-form-label" ><b>Parent Name</b></label>-->
+<!--                                        <label class="col-sm-3 col-form-label" >{{user.parentName}}</label>-->
+
+<!--                                    </div>-->
+<!--                                    <div class="mb-3 row">-->
+<!--                                        <label class="col-sm-3 col-form-label" ><b>Relationship to child</b></label>-->
+<!--                                        <label class="col-sm-3 col-form-label" >{{user.relationship}}</label>-->
+
+<!--                                    </div>-->
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Email</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.email}}</label>
+
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Contacts</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.contact}}</label>
+
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Joining Date</b></label>
+                                        <label class="col-sm-3 col-form-label" >{{user.joiningDate | date}}</label>
+
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label class="col-sm-3 col-form-label" ><b>Salary</b></label>
+                                        <label class="col-sm-3 col-form-label" >Rs.{{user.salary}}.00</label>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </ng-template>
-                </li>
-                <li [ngbNavItem]="2">
-                    <a ngbNavLink><i class="icofont icofont-notebook"></i>Account Permission</a>
-                    <ng-template ngbNavContent>
-                        <div class="media-body">
-                            <div class="mb-3 row">
-                                <label class="col-sm-1 col-form-label" >Company List</label>
-                                <div class="col-sm-3">
-
-                                </div>
-
-                                <label class="col-sm-1 col-form-label" >Plant List</label>
-                                <div class="col-sm-3">
-
-                                </div>
-                                <label class="col-sm-1 col-form-label" >Buyer Permission</label>
-                                <div class="col-sm-3">
-
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-sm-2">
-                                    <div class="form-check checkbox checkbox-solid-dark">
-                                        <input class="form-check-input" id="pocloseacc" type="checkbox" >
-                                        <label class="form-check-label mb-0" for="pocloseacc">PO Close</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </ng-template>
-                </li>
-            </ul>
-            <div [ngbNavOutlet]="nav1" class="mt-4"></div>
-        </div>
+                    </div>
+                </ng-template>
+            </li>
+        </ul>
+        <div [ngbNavOutlet]="nav1" class="mt-4"></div>
     </div>
 </div>
+
+
+<!--<ng-template #getContent let-modal>-->
+<!--    <div class="modal-header">-->
+<!--        <h5 class="modal-title">Special Notice</h5>-->
+<!--        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>-->
+<!--    </div>-->
+<!--    <div class="modal-body">-->
+<!--        <div class="mb-3">-->
+<!--            <label class="col-form-label">Allergies:</label>-->
+<!--            <input class="form-control" type="text" value="Test Name" [(ngModel)]="allergies" >-->
+<!--        </div>-->
+<!--        <div class="mb-3">-->
+<!--            <label class="col-form-label">Special Notice:</label>-->
+<!--            <input class="form-control" type="text" value="Test Name" [(ngModel)]="specialNotice" >-->
+<!--        </div>-->
+<!--        <div class="mb-3">-->
+<!--            <label class="col-form-label">Contact One:</label>-->
+<!--            <input class="form-control" type="text" value="Test Name" [(ngModel)]="contactOne" >-->
+<!--        </div>-->
+<!--        <div class="mb-3">-->
+<!--            <label class="col-form-label">Contact One:</label>-->
+<!--            <input class="form-control" type="text" value="Test Name" [(ngModel)]="contactTwo" >-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="modal-footer" *ngIf="userType == 'PARENT'">-->
+<!--        <button class="btn btn-primary" (click)="editUser()">Save</button>-->
+<!--    </div>-->
+<!--</ng-template>-->
+
+
+<!--&lt;!&ndash; Your existing HTML content (breadcrumb, profile cards, etc.) &ndash;&gt;-->
+
+<!--&lt;!&ndash; Button/Link to open the Notices Modal &ndash;&gt;-->
+
+
+<!--&lt;!&ndash; Special Notices Modal &ndash;&gt;-->
+<!--<div class="modal fade" id="noticesModal" [ngClass]="{ 'show d-block': isNoticesModalOpen }" tabindex="-1" role="dialog" aria-labelledby="noticesModalLabel" aria-hidden="!isNoticesModalOpen" [style.display]="isNoticesModalOpen ? 'block' : 'none'">-->
+<!--    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document"> &lt;!&ndash; modal-lg for larger width &ndash;&gt;-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header bg-primary text-white">-->
+<!--                <h5 class="modal-title" id="noticesModalLabel">Special Notices</h5>-->
+<!--                <button type="button" class="btn-close btn-close-white" (click)="closeNoticesModal()" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <div *ngIf="notices.length === 0 && !loadingNotices && !noticeError" class="text-center text-muted my-5">-->
+<!--                    No special notices found.-->
+<!--                </div>-->
+
+<!--                <div *ngIf="noticeError && !loadingNotices" class="alert alert-danger" role="alert">-->
+<!--                    {{ noticeError }}-->
+<!--                </div>-->
+
+<!--                <div *ngIf="loadingNotices" class="text-center my-5">-->
+<!--                    <div class="spinner-border text-primary" role="status">-->
+<!--                        <span class="visually-hidden">Loading notices...</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; Notices List &ndash;&gt;-->
+<!--                <div class="notices-container" *ngIf="notices.length > 0 && !loadingNotices && !noticeError">-->
+<!--                    <div class="notice-item mb-4 p-3 border rounded" *ngFor="let notice of notices">-->
+<!--                        &lt;!&ndash; Message &ndash;&gt;-->
+<!--                        <p class="notice-message mb-2">{{ notice.message }}</p>-->
+
+<!--                        &lt;!&ndash; Image &ndash;&gt;-->
+<!--                        <div class="notice-image-container mt-2" *ngIf="notice.displayMediaLink">-->
+<!--                            &lt;!&ndash; Use target="_blank" to open image in new tab, rel="noopener noreferrer" for security &ndash;&gt;-->
+<!--                            <a [href]="notice.originalMediaLink" target="_blank" rel="noopener noreferrer">-->
+<!--                                &lt;!&ndash; Use img-fluid for responsive image, rounded for rounded corners &ndash;&gt;-->
+<!--                                <img [src]="notice.displayMediaLink" [alt]="'Notice Image ' + notice.specialNoticeID" class="img-fluid rounded shadow-sm notice-image">-->
+<!--                            </a>-->
+<!--                            &lt;!&ndash; Optional: Add a small link below the image &ndash;&gt;-->
+<!--                            &lt;!&ndash; <small class="d-block text-center mt-1"><a [href]="notice.originalMediaLink" target="_blank" rel="noopener noreferrer">View Full Image</a></small> &ndash;&gt;-->
+<!--                        </div>-->
+
+<!--                        &lt;!&ndash; Optional: Display Notice ID (for debugging or reference) &ndash;&gt;-->
+<!--                        &lt;!&ndash; <small class="text-muted">ID: {{ notice.specialNoticeID }}</small> &ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" (click)="closeNoticesModal()">Close</button>-->
+<!--                &lt;!&ndash; Add other actions if needed, like 'Mark All as Read' &ndash;&gt;-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Optional: Backdrop for modal &ndash;&gt;-->
+<!--<div class="modal-backdrop fade" [ngClass]="{ 'show': isNoticesModalOpen }" *ngIf="isNoticesModalOpen" (click)="closeNoticesModal()"></div>-->
+
+<!--&lt;!&ndash; Your existing HTML content (calendar, etc.) &ndash;&gt;-->

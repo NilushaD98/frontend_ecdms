@@ -26,13 +26,18 @@ export class PaymentComponent implements OnInit{
   paidDateFormatted: string = '';
   paidStatus: boolean= false;
   selectedItem:any;
-
+  userType:any;
 
   constructor(
       public userServiceService:UserServiceService,
       public service:PaymentService,
       public modalService:NgbModal,
   ) {
+      const userType = localStorage.getItem('user_type');
+      const userId = localStorage.getItem('user_id');
+      if(userType){
+          this.userType = userType;
+      }
     userServiceService.getAllStudents().subscribe(
         (res:any) =>{
           console.log(res)

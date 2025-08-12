@@ -119,7 +119,7 @@ export class TeacherService {
     );
   }
 
-  getTeacherById(id: number) {
+  getTeacherById(id: number| null) {
     const token = localStorage.getItem('token') || '';
     console.log('Token:', token);
     let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);

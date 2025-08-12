@@ -1,51 +1,94 @@
-<div class="container-fluid p-0">
+<div class="container-fluid">
     <div class="row">
+        <!-- Background Image Section -->
+        <div class="col-xl-7 b-center bg-size"
+             style="background-image: url('assets/images/login/2.jpg');
+                    background-size: cover;
+                    background-position: center center;
+                    display: block;">
+            <img class="bg-img-cover bg-center" src="assets/images/login/2.jpg" alt="loginpage" style="display: none;">
+        </div>
 
-        <div class="col-12">
+        <!-- Login Form Section -->
+        <div class="col-xl-5 p-0">
             <div class="login-card">
-                <form class="theme-form login-form" [formGroup]="loginForm">
-                    <div class="text-center mb-3">
-                        <img src="../../../../assets/images/ChatGPT%20Image%20Apr%2029,%202025,%2008_20_28%20AM.png" width="100px">
-                    </div>
+                <form class="theme-form login-form" [formGroup]="loginForm" (ngSubmit)="login()">
                     <h4>Login</h4>
                     <h6>Welcome back! Log in to your account.</h6>
+
+                    <!-- Email Field -->
                     <div class="form-group">
                         <label>Email Address</label>
-                        <div class="input-group"><span class="input-group-text"><i class="icon-email"></i></span>
-                            <input class="form-control" type="email" placeholder="app@yourmail.com" formControlName="email" />
-                            @if (loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required']) {
-                            <div class="text text-danger mt-1"> Email is required </div>
-                            }
-                            @if (loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']) {
-                            <div class="text text-danger mt-1"> Invalid Email </div>
-                            }
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="icon-email"></i></span>
+                            <input class="form-control"
+                                   type="email"
+                                   placeholder="Test@gmail.com"
+                                   formControlName="email" />
                         </div>
+                        <!-- Validation Errors for Email -->
+                        @if (loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['required']) {
+                        <div class="text text-danger mt-1">Email is required</div>
+                        }
+                        @if (loginForm.controls['email'].touched && loginForm.controls['email'].errors?.['email']) {
+                        <div class="text text-danger mt-1">Invalid email address</div>
+                        }
                     </div>
+
+                    <!-- Password Field -->
                     <div class="form-group">
                         <label>Password</label>
-                        <div class="input-group"><span class="input-group-text"><i class="icon-lock"></i></span>
-                            <input class="form-control" [type]="show ? 'text' : 'password'" formControlName="password" required=""
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="icon-lock"></i></span>
+                            <input class="form-control"
+                                   [type]="show ? 'text' : 'password'"
+                                   formControlName="password"
                                    placeholder="*********" />
-                            @if (show) {
-                            <div class="show-hide" (click)="showPassword()"><span class="Hide"></span></div>
-                            } @else {
-                            <div class="show-hide" (click)="showPassword()"><span class="show"></span></div>
-                            }
-                            @if (loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']) {
-                            <div class="text text-danger mt-1"> Password is required </div>
-                            }
+                            <!-- Show/Hide Toggle -->
+                            <div class="show-hide" (click)="showPassword()" *ngIf="!show"><span class="show"></span></div>
+                            <div class="show-hide" (click)="showPassword()" *ngIf="show"><span class="Hide"></span></div>
                         </div>
+                        <!-- Validation Error for Password -->
+                        @if (loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']) {
+                        <div class="text text-danger mt-1">Password is required</div>
+                        }
                     </div>
+
+                    <!-- Remember Password & Forgot Link -->
                     <div class="form-group">
                         <div class="checkbox ms-1">
-                            <input id="checkbox1" type="checkbox" />
-                            <label for="checkbox1">Remember password</label>
-                        </div><a class="link" [routerLink]="'/authentication/forgot-password'">Forgot password?</a>
+                            <input id="checkbox1" type="checkbox" formControlName="rememberMe">
+                            <label class="text-muted" for="checkbox1">Remember password</label>
+                        </div>
+                        <a class="link" [routerLink]="'/authentication/forgot-password'">Forgot password?</a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-block"
+                                type="submit"
+                                [disabled]="!loginForm.valid">
+                            Sign in
+                        </button>
+                    </div>
+
+                    <!-- Social Login Section -->
+                    <div class="login-social-title">
+                        <h5>Sign in with</h5>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary btn-block" [disabled]="!loginForm.valid" (click)="login()"
-                                type="button"><span>Sign In</span> </button>
+                        <ul class="login-social">
+                            <li><a href="https://www.linkedin.com" target="_blank"><app-feather-icon [icon]="'linkedin'"></app-feather-icon></a></li>
+                            <li><a href="https://twitter.com" target="_blank"><app-feather-icon [icon]="'twitter'"></app-feather-icon></a></li>
+                            <li><a href="https://www.facebook.com" target="_blank"><app-feather-icon [icon]="'facebook'"></app-feather-icon></a></li>
+                            <li><a href="https://www.instagram.com" target="_blank"><app-feather-icon [icon]="'instagram'"></app-feather-icon></a></li>
+                        </ul>
                     </div>
+
+                    <!-- Register Link -->
+                    <p>Don't have an account?
+                        <a class="ms-2" [routerLink]="'/authentication/register/register-simple'">Create Account</a>
+                    </p>
                 </form>
             </div>
         </div>

@@ -18,11 +18,12 @@
                     <div class="timeline-content">
                         <p>{{item.caption}}</p>
                         <div class="like-content mt-2">
-                            <span class="comment-number">
-                                <i style="cursor: pointer" (click)="changeLikeStatus(item)"  *ngIf="item.likeStatus" class="fa fa-heart font-danger"></i>
+                            <span class="comment-number" *ngIf="userType != 'ADMIN' && userType != 'TEACHER'">
+                                <i style="cursor: pointer"(click)="changeLikeStatus(item)"  *ngIf="item.likeStatus" class="fa fa-heart font-danger"></i>
                                 <i style="cursor: pointer" (click)="changeLikeStatus(item)" *ngIf="!item.likeStatus" class="fa fa-heart-o"></i>
-                                <span>{{item.likeCount}}</span>
                             </span>
+                            <span class="comment-number"  *ngIf="userType == 'ADMIN' || userType == 'TEACHER'" ><i  class="fa fa-heart-o"></i></span>
+                            <span>{{item.likeCount}}</span>
                             <span class="pull-right comment-number">
                                 <span>
                                     <i style="cursor: pointer" (click)="item.commentShow = !item.commentShow" class="fa fa-comments-o"></i>
@@ -45,7 +46,7 @@
                                 <a style="cursor: pointer" class="f-w-600" (click)="item.commentShow = !item.commentShow">Hide Comments</a>
                             </div>
                         </div>
-                        <div class="comments-box">
+                        <div *ngIf="userType != 'ADMIN' && userType != 'TEACHER'" class="comments-box">
                             <div class="media"><img class="img-50 img-fluid m-r-20 rounded-circle" alt=""
                                                     src="assets/images/user/1.jpg">
                                 <div class="media-body">

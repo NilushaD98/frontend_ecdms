@@ -38,7 +38,7 @@
                                     <th scope="col" sortable="score" (sort)="onSort($event)">Due Date</th>
                                     <th scope="col" sortable="score" (sort)="onSort($event)">Paid Date</th>
                                     <th scope="col" >Paid Status</th>
-                                    <th scope="col" >Action</th>
+                                    <th scope="col" *ngIf="userType == 'ADMIN'" >Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -62,7 +62,7 @@
                                         <span *ngIf="item.paid" class="badge badge-success">Paid</span>
                                         <span *ngIf="!item.paid" class="badge badge-danger">Unpaid</span>
                                     </td>
-                                    <td>
+                                    <td *ngIf="userType == 'ADMIN'">
                                         <span>
                                           <i class="fa fa-eye font-primary pe-2"  (click)="viewPayment(item,getContent)"></i>
                                           </span >

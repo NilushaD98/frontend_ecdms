@@ -18,7 +18,11 @@ export class ProfileComponent {
   replyMassage:any
   public massages = data.massages
   posts:AnnouncementDTO[];
+  userType:any;
   constructor(public announcementService:AnnouncementService) {
+    const userIdStr = localStorage.getItem('user_id');
+    this.userType = localStorage.getItem('user_type');
+    const userId: number | null = userIdStr ? +userIdStr : null;
 
     announcementService.getAllAnnouncements().subscribe(
         (res:any)=>{
