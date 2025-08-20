@@ -66,9 +66,12 @@ export class ResultsComponent {
 
   }
   fetchResults(){
+    console.log(this.selectedTest)
     this.service.getTestTypeAllDetailsByID(this.selectedTest).subscribe(
         (res:any) =>{
+          console.log(res)
           this.testType =res.data;
+          console.log(this.testType)
           this.service.setTableData(this.testType.examResultDetailsDTOS);
           this.basicTable$ = this.service.basicTable$;
           this.total$ = this.service.total$;

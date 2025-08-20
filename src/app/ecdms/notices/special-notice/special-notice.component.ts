@@ -146,6 +146,7 @@ export class SpecialNoticeComponent {
 
     this.service.addSpecialNotice(addSpecialNoticeDTO).pipe(
         catchError(err => {
+            console.log(err)
           Swal.fire('Error', 'Notice add unsuccessful.', 'error');
           return throwError(err);
         })
@@ -157,7 +158,7 @@ export class SpecialNoticeComponent {
             this.fetchData();
             this.message = '';
             this.selectedUsers = [];
-            this.uploadedImageUrl = [];
+            this.uploadedImageUrl = '';
             this.files = [];
           }
         }

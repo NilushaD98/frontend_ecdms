@@ -25,6 +25,7 @@ import {
 import { EventColor } from 'calendar-utils';
 import {CalenderService} from "../../ecdms/service/calender-service/calender.service";
 import {CalendarDTO} from "../../ecdms/dto/Calendar";
+import Swal from "sweetalert2";
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -195,6 +196,7 @@ export class CalenderComponent {
         (res:any)=>{
           if (res.success){
             this.events = this.events.filter((event) => event !== eventToDelete);
+            Swal.fire('Success', 'Event Removed', 'success');
           }
         }
     );
@@ -213,6 +215,9 @@ export class CalenderComponent {
     this.calenderService.addEvent(c).subscribe(
         (res:any) =>{
           console.log(res)
+          if(res.success){
+            Swal.fire('Success', 'Event added successfully.', 'success');
+          }
         }
     );
   }

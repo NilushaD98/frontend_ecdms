@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../auth/service/auth.service";
 import Swal from "sweetalert2";
-import {DeviceDetectorService} from "ngx-device-detector";
 import {Router} from "@angular/router";
 
 @Component({
@@ -11,7 +10,7 @@ import {Router} from "@angular/router";
 })
 export class DefaultComponent implements OnInit {
   
-  constructor(private deviceService: DeviceDetectorService,public router: Router,) {
+  constructor(public router: Router,) {
   }
 
   ngOnInit(): void {
@@ -19,13 +18,7 @@ export class DefaultComponent implements OnInit {
   }
 
   isAuthenticate(){
-    const browser = this.deviceService.browser;
-    console.log('browser : ' + browser);
 
-    if (browser !== 'Chrome') {
-      this.router.navigate(['/error-page/error-page1']);
-      return false;
-    }
 
     console.log(AuthService. isCredentialsValid())
     if (AuthService. isCredentialsValid()) {

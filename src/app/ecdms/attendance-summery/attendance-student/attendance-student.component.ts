@@ -108,22 +108,31 @@ export class AttendanceStudentComponent {
   }
 
   toggleAttendance(item: any): void {
+    // Toggle the local state immediately for a responsive UI
+    const newStatus = !item.presentStatus;
+
+    // Create the DTO with the new status
     const attendance = new AttendanceMarkDTO(
         this.selectedDate,
-        item.presentStatus,
+        newStatus,
         'Present',
         item.attendanceID,
         null
     );
+
+    // Call the service to update attendance
     this.attendanceService.updateAttendanceStatus(attendance).subscribe(
         (res) => {
           console.log('Attendance updated successfully', res);
+          // If the update is successful, update the local data model
+          item.presentStatus = newStatus;
           this.toastr.success('Attendance updated successfully!', 'Success');
-          this.fetchAllStudentsAttendance(this.selectedDate);
         },
         (error) => {
           console.error('Error updating attendance:', error);
-          // Revert UI if needed
+          this.toastr.error('Failed to update attendance.', 'Error');
+          // No need to revert UI if it wasn't toggled yet,
+          // but if you want to show a failure state, you can do it here.
         }
     );
   }

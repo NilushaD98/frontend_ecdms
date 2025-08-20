@@ -4,8 +4,6 @@ import {catchError, Observable, throwError} from "rxjs";
 import {AuthService} from "../../auth/service/auth.service";
 import Swal from "sweetalert2";
 import {NgxPermissionsService, NgxRolesService} from "ngx-permissions";
-import {DeviceDetectorService} from "ngx-device-detector";
-
 @Injectable({
     providedIn: "root",
 })
@@ -15,18 +13,10 @@ export class AdminGuard implements CanActivate {
         public permissionService: NgxPermissionsService,
         public roleService: NgxRolesService,
         public authService: AuthService,
-        private deviceService: DeviceDetectorService
     ) {
     }
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        const browser = this.deviceService.browser;
-        console.log('browser : ' + browser);
-
-        if (browser !== 'Chrome') {
-            this.route.navigate(['/error-page/error-page1']);
-            return false;
-        }
 
         console.log(state.url)
         if (state.url.search('authentication') > 0) {

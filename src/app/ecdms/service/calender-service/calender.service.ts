@@ -37,7 +37,7 @@ export class CalenderService {
     return this.http.put<CalendarEvent>(`${this.apiUrl}/${event.id}`, event,{ headers: headers });
   }
 
-  deleteEvent(id?: number): any {
+  deleteEvent(id?: number |string | undefined): any {
     const token = localStorage.getItem('token') || '';
     console.log('Token:', token);
     let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);

@@ -7,6 +7,8 @@ import Swal from "sweetalert2";
 import {LoginDTO} from "../../dto/LoginDTO";
 import {NoticeService} from "../../../ecdms/service/notice-service/notice.service";
 import {NoticesRequestDTO} from "../../../ecdms/dto/AddSpecialNoticeDTO";
+import {NewNotificationService} from "../../service/newNotificationService";
+import {connect} from "net";
 
 @Component({
     selector: "app-login", templateUrl: "./login.component.html", styleUrls: ["./login.component.scss"],
@@ -20,12 +22,14 @@ export class LoginComponent implements OnInit {
         public authService:AuthService,
         private fb: FormBuilder,
         public router: Router,
-        public noticeService:NoticeService
+        public noticeService:NoticeService,
+        public notificationService:NewNotificationService
     ) {
         this.loginForm = this.fb.group({
             email: ["admin", [Validators.required]],
             password: ["Password@123", Validators.required],
         });
+
     }
 
     ngOnInit() {}
@@ -63,5 +67,8 @@ export class LoginComponent implements OnInit {
                 }
             );
         }
+    }
+    connect() {
+        this.notificationService.connect("admin");
     }
 }

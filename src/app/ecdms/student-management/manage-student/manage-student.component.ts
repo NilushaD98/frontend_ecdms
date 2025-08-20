@@ -50,13 +50,13 @@ export class ManageStudentComponent {
     this.fetchAllStudents();
 
   }
-  fetchAllStudents(){
-    this.userService.getAllStudents().subscribe(
-        (res:any)=>{
-          console.log(res)
-          this.userService.setTableData(res.data);
-          this.basicTable$ = this.userService.basicTable$;
-          this.total$ = this.userService.total$;
+    fetchAllStudents(){
+      this.userService.getAllStudents().subscribe(
+          (res:any)=>{
+            console.log(res)
+            this.userService.setTableData(res.data);
+            this.basicTable$ = this.userService.basicTable$;
+            this.total$ = this.userService.total$;
         }
     );
   }
