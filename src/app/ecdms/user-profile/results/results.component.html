@@ -98,7 +98,9 @@
                                         <td>
                         <span class="badge"
                               [ngClass]="getResultBadgeClass(result.passStatus)">
-                          {{ getResultStatusText(result.passStatus) }}
+                            <span *ngIf="result.passStatus">Excellent ! Keep shining</span>
+                            <span *ngIf="!result.passStatus">Good effort! Let's keep practicing</span>
+
                         </span>
                                         </td>
                                     </tr>
