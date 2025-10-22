@@ -10,6 +10,7 @@ import {PaymentsComponent} from "./payments/payments.component";
 import {NoticesComponent} from "./notices/notices.component";
 import {AttendanceComponent} from "./attendance/attendance.component";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {NgxDropzoneModule} from "ngx-dropzone";
 
 @NgModule({
   declarations: [StudentProfileComponent,TeacherProfileComponent,ResultsComponent,PaymentsComponent,NoticesComponent,AttendanceComponent],
@@ -19,7 +20,8 @@ import {NgSelectModule} from "@ng-select/ng-select";
         SharedModule,
         CalendarModule,
         NgSelectModule,
-        FormsModule
+        FormsModule,
+        NgxDropzoneModule
     ]
 })
 export class UserProfileModule { }

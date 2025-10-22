@@ -21,6 +21,7 @@ export class AnnouncementDTO {
     likeStatus: boolean;
     likeCount: number;
     commentCount: number;
+    classroomList:number[];
     commentDTOList: CommentDTO[]; // List of comments
     commentShow:boolean = false;
     newComment:string = '';

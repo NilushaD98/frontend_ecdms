@@ -5,20 +5,30 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
-                        <div class="col-sm-4">
-                            <label class="col-xs-3 col-sm-auto col-form-label">Test Type:</label>
-                            <ng-select [(ngModel)]="selectedTest" [items]="tests"
-                                       bindLabel="testName" bindValue="testTypeID"
-                                       placeholder="Select a Test Type"
-                                        (change)="fetchResults()"
+                        <div class="col-sm-3">
+                            <label class="col-xs-3 col-sm-auto col-form-label"> Class:</label>
+                            <ng-select [(ngModel)]="selectedClass" [items]="classrooms"
+                                       bindLabel="name" bindValue="id"
+                                       placeholder="Select a Test Class"
+                                       (change)="fetchTests()"
                             >
                             </ng-select>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
+                            <label class="col-xs-3 col-sm-auto col-form-label">Test Type:</label>
+                            <ng-select  [(ngModel)]="selectedTest" [items]="tests"
+                                       bindLabel="testName" bindValue="testTypeID"
+                                       placeholder="Select a Test Type"
+                                        (change)="fetchResults()"
+                                        [disabled]="typeDisable"
+                            >
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-3">
                             <label class="col-xs-3 col-sm-auto col-form-label">Pass Score:</label>
                             <input id="table-complete-search-" placeholder="Pass Score" type="number" class="form-control" name="searchTerm" [(ngModel)]="passScore">
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <label class="col-xs-3 col-sm-auto col-form-label">Max Score:</label>
                             <input id="table-complete-search-d" placeholder="Max Score" type="number" class="form-control" name="searchTerm" [(ngModel)]="maxScore">
                         </div>

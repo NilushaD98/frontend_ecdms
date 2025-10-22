@@ -798,7 +798,7 @@ export class NavService {
       ],
       permission:['ADMIN','TEACHER','PARENT']
     },
-    { path: "/profile/results", title: "Results", icon: "calender", type: "link" },
+    { path: "/profile/results", title: "Academic Milestones", icon: "calender", type: "link" },
     { path: "/profile/attendance", title: "Attendance", icon: "calender", type: "link" },
     { path: "/profile/payments", title: "Payments", icon: "calender", type: "link" },
     { path: "/profile/notices", title: "Notices", icon: "calender", type: "link" },

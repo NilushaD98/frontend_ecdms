@@ -65,7 +65,7 @@
             <div class="row g-3 mb-2">
                 <div class="col-md-12">
                     <label class="form-label" >Assign Classroom(s)</label>
-                    <ng-select formControlName="classroomList" [items]="classrooms" bindLabel="name" bindValue="id" [multiple]="true" placeholder="Select cities" [(ngModel)]="selectedClasses">
+                    <ng-select [items]="classrooms" bindLabel="name" bindValue="id" [multiple]="true" placeholder="Select cities" [(ngModel)]="selectedClasses">
                     </ng-select>
                 </div>
             </div>

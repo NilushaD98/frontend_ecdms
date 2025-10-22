@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProfileService } from "../../service/profile-service/profile.service";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Subject, throwError } from "rxjs";
+import { takeUntil, catchError } from "rxjs/operators";
 import { format, isAfter, isBefore, parseISO } from 'date-fns'; // Import date-fns functions
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import Swal from "sweetalert2";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-payments',
@@ -16,9 +19,25 @@ export class PaymentsComponent {
   overduePayments: any[] = []; // For overdue payments
   paidPayments: any[] = []; // For paid payments
 
+  // Upload popup properties
+  selectedPayment: any = null;
+  files: File[] = [];
+  uploadedImageUrl: string = '';
+  uploading = false;
+  pendingApprovalPayments: any[] = [];
+
+
+  // Cloudinary config
+  private cloudName = 'dsc7devgs';
+  private uploadPreset = 'ecdmstemplate';
+
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(public usp: ProfileService) {}
+  constructor(
+    public usp: ProfileService,
+    private http: HttpClient,
+    private modalService: NgbModal,
+  ) {}
 
   ngOnInit(): void {
     this.fetchPaymentData();
@@ -59,6 +78,7 @@ export class PaymentsComponent {
     this.upcomingPayments = [];
     this.overduePayments = [];
     this.paidPayments = [];
+    this.pendingApprovalPayments = [];
   }
 
   private categorizePayments() {
@@ -66,11 +86,14 @@ export class PaymentsComponent {
     const upcoming: any[] = [];
     const overdue: any[] = [];
     const paid: any[] = [];
+    const pendingApproval: any[] = [];
 
     this.paymentDetails.forEach(payment => {
       const dueDate = parseISO(payment.dueDate); // Convert string to Date object
 
-      if (payment.paid) {
+      if (payment.isPendingApprove === true) {
+        pendingApproval.push({ ...payment, parsedDueDate: dueDate });
+      } else if (payment.paid) {
         paid.push({ ...payment, parsedDueDate: dueDate }); // Add parsed date for sorting
       } else {
         if (isBefore(dueDate, now)) { // Due date is in the past
@@ -94,9 +117,13 @@ export class PaymentsComponent {
       return paidDateB - paidDateA; // Descending order
     });
 
+    // Sort pending approval by due date (ascending)
+    this.pendingApprovalPayments = pendingApproval.sort((a, b) => a.parsedDueDate.getTime() - b.parsedDueDate.getTime());
+
     console.log('Upcoming Payments:', this.upcomingPayments);
     console.log('Overdue Payments:', this.overduePayments);
     console.log('Paid Payments:', this.paidPayments);
+    console.log('Pending Approval Payments:', this.pendingApprovalPayments);
   }
 
   // Helper method to format dates for display
@@ -164,5 +191,93 @@ export class PaymentsComponent {
 
   trackByIndex(index: number, item: any): any {
     return index;
+  }
+
+  // Upload popup methods
+  openUploadPopup(payment: any, content: any) {
+    this.selectedPayment = payment;
+    this.resetUploadForm();
+    this.modalService.open(content, { size: 'lg' });
+  }
+
+  onSelect(event: any) {
+    const file = event.addedFiles[0];
+    this.files = [file];
+    this.uploadToCloudinary(file);
+  }
+
+  onRemove(file: File) {
+    this.files = this.files.filter(f => f !== file);
+  }
+
+  uploadToCloudinary(file: File) {
+    this.uploading = true;
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', this.uploadPreset);
+
+    const httpOptions = {
+      headers: new HttpHeaders({}),
+    };
+
+    const uploadUrl = `https://api.cloudinary.com/v1_1/${this.cloudName}/upload`;
+
+    this.http.post(uploadUrl, formData, httpOptions)
+      .pipe(
+        catchError(err => {
+          console.error('Upload to Cloudinary failed', err);
+          Swal.fire('Error', 'Failed to upload receipt.', 'error');
+          this.uploading = false;
+          return throwError(() => err);
+        })
+      )
+      .subscribe({
+        next: (response: any) => {
+          Swal.fire('Success', 'Receipt uploaded successfully.', 'success');
+          this.uploadedImageUrl = response.secure_url;
+          this.uploading = false;
+        }
+      });
+  }
+
+  submitPayment() {
+    if (!this.uploadedImageUrl) {
+      Swal.fire('Error', 'Please upload a payment receipt.', 'error');
+      return;
+    }
+
+    const paymentData = {
+      ...this.selectedPayment,
+      receiptUrl: this.uploadedImageUrl,
+      submittedDate: new Date().toISOString()
+    };
+
+    this.http.post('http://localhost:9090/payment/payment-submit',paymentData).subscribe(
+      (response: any) => {
+
+        if(response.success){
+          Swal.fire('Success', 'Payment receipt submitted successfully!', 'success');
+          this.pendingApprovalPayments.push(paymentData);
+          this.removeFromCurrentArrays(this.selectedPayment);
+          this.resetUploadForm();
+        }
+      },
+      (error) => {
+        console.error('Error submitting payment receipt:', error);
+        Swal.fire('Error', 'Failed to submit payment receipt.', 'error');
+      }
+    );
+  }
+
+  resetUploadForm() {
+    this.files = [];
+    this.uploadedImageUrl = '';
+    this.uploading = false;
+  }
+
+  removeFromCurrentArrays(payment: any) {
+    this.upcomingPayments = this.upcomingPayments.filter(p => p.paymentId !== payment.paymentId);
+    this.overduePayments = this.overduePayments.filter(p => p.paymentId !== payment.paymentId);
   }
 }

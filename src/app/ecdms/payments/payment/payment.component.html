@@ -59,8 +59,7 @@
                                         <ngb-highlight [result]="item.paidDate | date:'yyyy-MM-dd h:mm a'" [term]="service.searchTerm"></ngb-highlight>
                                     </td>
                                     <td>
-                                        <span *ngIf="item.paid" class="badge badge-success">Paid</span>
-                                        <span *ngIf="!item.paid" class="badge badge-danger">Unpaid</span>
+                                        <span class="badge" [ngClass]="getStatusClass(item)">{{ getPaymentStatus(item) }}</span>
                                     </td>
                                     <td *ngIf="userType == 'ADMIN'">
                                         <span>
@@ -111,8 +110,16 @@
             <label class="col-form-label">Paid Date:</label>
             <input class="form-control" type="text" [value]="paidDateFormatted" disabled>
         </div>
+        
+        <div class="mb-3" *ngIf="selectedItem?.paymentReceipt">
+            <label class="col-form-label">Payment Receipt:</label>
+            <div class="mt-2">
+                <img [src]="selectedItem.paymentReceipt" class="img-thumbnail" style="max-width: 300px; max-height: 300px;" alt="Payment Receipt">
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <button *ngIf="!paidStatus" (click)="makePayment()" class="btn btn-primary" type="button">Make Payment</button>
+        <button *ngIf="selectedItem?.isPendingApprove === true" (click)="rejectPayment()" class="btn btn-danger" type="button">Reject Payment</button>
      </div>
 </ng-template>

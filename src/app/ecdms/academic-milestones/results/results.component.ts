@@ -32,6 +32,13 @@ export class ResultsComponent {
   score: any;
   testType:any;
   maxScore: any;
+  typeDisable:boolean;
+    classrooms = [
+        { id: 1, name: 'Montessori - PLAYGROUP' },
+        { id: 2, name: 'Montessori - LKG' },
+        { id: 3, name: 'Montessori - UKG'}
+    ];
+    selectedClass:any;
   constructor(
       public service: AcademicMilestoneService,
       public route:Router,
@@ -50,12 +57,8 @@ export class ResultsComponent {
     const day = ('0' + today.getDate()).slice(-2);
     this.todayDate = `${year}-${month}-${day}`;
     this.selectedDate =new Date();
+    this.typeDisable = true;
 
-    testService.getAllTestTypes().subscribe(
-        (res:any) =>{
-          this.tests = res.data
-        }
-    );
     userServiceService.getAllStudents().subscribe(
         (res:any) =>{
           console.log(res)
@@ -132,4 +135,15 @@ export class ResultsComponent {
       }
     });
   }
+
+    fetchTests() {
+      this.selectedTest = null;
+        this.testService.getAllTestTypes(this.selectedClass).subscribe(
+            (res:any) =>{
+                this.tests = res.data;
+                this.typeDisable = false;
+                this.service.setTableData([]);
+            }
+        );
+    }
 }

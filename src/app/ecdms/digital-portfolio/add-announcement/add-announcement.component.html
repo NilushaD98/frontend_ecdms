@@ -12,6 +12,11 @@
                     <!-- Caption Input -->
                     <form class="row needs-validation" novalidate>
                         <div class="col-sm-12">
+                            <label class="form-label" >Assign Classroom(s)</label>
+                            <ng-select [items]="classrooms" bindLabel="name" bindValue="id" [multiple]="true" placeholder="Select cities" [(ngModel)]="selectedClasses">
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-12">
                             <div class="mb-3">
                                 <label for="validationCustom01">Caption:</label>
                                 <input class="form-control" id="validationCustom01" type="text" name="validationCustom01"
@@ -19,6 +24,8 @@
                                 <div class="valid-feedback">Looks good!</div>
                             </div>
                         </div>
+
+
                     </form>
 
                     <!-- Upload Label -->

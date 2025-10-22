@@ -24,12 +24,16 @@ export class AppointmentRequestsComponent {
   reason: any;
   selectedItem:any;
   selectedDate:any;
+  userType:any;
+  userId:any;
 
   constructor(
       public service:AppointmentService,
       public modalService:NgbModal,
       public toaster:ToastrService
   ) {
+    this.userType = localStorage.getItem('user_type');
+    this.userId = localStorage.getItem('user_id');
     this.fetchAppointment();
   }
 

@@ -56,7 +56,7 @@ export class AttendanceTeacherComponent {
   }
   fetchAllTeacherAttendance(date:Date){
     this.selectedDate = date;
-    let attendanceRequestDTO:AttendanceRequestDTO = new AttendanceRequestDTO(date);
+    let attendanceRequestDTO:AttendanceRequestDTO = new AttendanceRequestDTO(date,0);
     this.attendanceService.getAttendanceByDateTeacher(attendanceRequestDTO).subscribe(
         (res:any) =>{
           console.log(res)
@@ -102,6 +102,7 @@ export class AttendanceTeacherComponent {
         this.selectedDate,
         item.presentStatus,
         'Present',
+        '',
         null,
         item.attendanceID,
     );

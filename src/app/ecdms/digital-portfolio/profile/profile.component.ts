@@ -24,7 +24,7 @@ export class ProfileComponent {
     this.userType = localStorage.getItem('user_type');
     const userId: number | null = userIdStr ? +userIdStr : null;
 
-    announcementService.getAllAnnouncements().subscribe(
+    announcementService.getAllAnnouncements(this.userType).subscribe(
         (res:any)=>{
           this.posts = res;
         }

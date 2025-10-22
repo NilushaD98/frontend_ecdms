@@ -29,7 +29,12 @@ export class TestsComponent {
   @ViewChildren(NgbdSortableHeader) headers!: QueryList<NgbdSortableHeader>;
     testName: any;
     description: any;
-
+    classrooms = [
+    { id: 1, name: 'Montessori - PLAYGROUP' },
+    { id: 2, name: 'Montessori - LKG' },
+    { id: 3, name: 'Montessori - UKG'}
+    ];
+    selectedClass:any;
 
   constructor(
       public service: AcademicMilestoneService,
@@ -62,7 +67,7 @@ export class TestsComponent {
     }
 
   fetchAllTests(){
-   this.service.getAllTestTypes().subscribe(
+   this.service.getAllTestTypes(0).subscribe(
        (res:any) =>{
          this.service.setTableData(res.data);
          this.basicTable$ = this.service.basicTable$;
@@ -89,7 +94,7 @@ export class TestsComponent {
       if(this.editMode){
           this.updateTest();
       }else {
-          let testTypeDTO= new TestTypeDTO(null,this.testName,this.description,this.selectedDate);
+          let testTypeDTO= new TestTypeDTO(null,this.testName,this.description,this.selectedDate,this.selectedClass);
 
           this.service.addTestType(testTypeDTO).subscribe(
               (res:any) =>{
@@ -117,6 +122,9 @@ export class TestsComponent {
 
     }
 
+    getClassNames(classroomId: number): string | undefined {
+        return this.classrooms.find(c => c.id === classroomId)?.name;
+    }
     viewTest(item: any,getContent:any) {
       this.editMode = true;
         const modalRef = this.modalService.open(getContent);
@@ -126,9 +134,11 @@ export class TestsComponent {
                 this.todayDate = new Date(res.data.testDate).toISOString().split('T')[0];
                 this.testName = res.data.testName;
                 this.description = res.data.description;
+                this.selectedClass = res.data.testClass;
             }
         );
     }
+    
 
     removeTest(item: any) {
         Swal.fire({
@@ -175,7 +185,7 @@ export class TestsComponent {
     }
     updateTest() {
       this.editMode = false;
-        let testTypeDTO= new TestTypeDTO(this.testID,this.testName,this.description,this.selectedDate);
+        let testTypeDTO= new TestTypeDTO(this.testID,this.testName,this.description,this.selectedDate,this.selectedClass);
 
         this.service.updateTestType(testTypeDTO).subscribe(
             (res:any) =>{

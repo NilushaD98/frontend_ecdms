@@ -7,6 +7,7 @@ import {PaymentFilterDTO} from "../../dto/PaymentFilterDTO";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import Swal from "sweetalert2";
 import {catchError} from "rxjs/operators";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-payment',
@@ -32,6 +33,7 @@ export class PaymentComponent implements OnInit{
       public userServiceService:UserServiceService,
       public service:PaymentService,
       public modalService:NgbModal,
+      private http: HttpClient
   ) {
       const userType = localStorage.getItem('user_type');
       const userId = localStorage.getItem('user_id');
@@ -130,5 +132,43 @@ export class PaymentComponent implements OnInit{
         // const seconds = ('0' + d.getSeconds()).slice(-2); // optional
 
         return `${year}-${month}-${day} ${hours}:${minutes}`;
+    }
+
+    getPaymentStatus(payment: any): string {
+        if (payment.isPendingApprove === true) {
+            return 'Pending Approve';
+        }
+        return payment.paid ? 'Paid' : 'Unpaid';
+    }
+
+    getStatusClass(payment: any): string {
+        if (payment.isPendingApprove === true) {
+            return 'badge-warning';
+        }
+        return payment.paid ? 'badge-success' : 'badge-danger';
+    }
+
+    rejectPayment() {
+        this.http.post('http://localhost:9090/payment/reject-payment', this.selectedItem)
+            .pipe(
+                catchError(err => {
+                    Swal.fire('Error', 'Failed to reject payment.', 'error');
+                    return throwError(() => err);
+                })
+            )
+            .subscribe({
+                next: (res: any) => {
+                    if(res.success){
+                        Swal.fire('Success', 'Payment rejected successfully.', 'success');
+                        this.getPayments();
+                        this.modalService.dismissAll();
+                    }else{
+                        Swal.fire('Error', 'Failed to reject payment.', 'error');
+                        this.getPayments();
+                        this.modalService.dismissAll();
+                    }
+                   
+                }
+            });
     }
 }

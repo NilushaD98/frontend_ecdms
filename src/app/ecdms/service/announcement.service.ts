@@ -24,14 +24,11 @@ export class  AnnouncementService {
     );
   }
 
-  getAllAnnouncements(): Observable<any> {
-    // const token = localStorage.getItem('token') || '';
-    // console.log(token)
-    // const customHeaders = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(
-        'http://localhost:9090/announcement/get-all-announcements',
-        // { headers: customHeaders }
-    );
+  getAllAnnouncements(userType?: string): Observable<any> {
+    const url = userType ? 
+      `http://localhost:9090/announcement/get-all-announcements?userType=${userType}` :
+      'http://localhost:9090/announcement/get-all-announcements';
+    return this.http.get(url);
   }
 
   likeAnnouncement(id:number): Observable<any> {

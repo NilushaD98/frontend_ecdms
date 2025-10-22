@@ -20,6 +20,13 @@ export class AddAnnouncementComponent {
   uploadedImageUrl: string;
   uploading = false;
   caption: string = '';
+  classrooms = [
+    { id: 1, name: 'Day Care' },
+    { id: 2, name: 'Montessori - PLAYGROUP' },
+    { id: 3, name: 'Montessori - LKG' },
+    { id: 4, name: 'Montessori - UKG'}
+  ];
+  selectedClasses: number[]=[];
 
   // Cloudinary config
   private cloudName = 'dsc7devgs';
@@ -88,6 +95,7 @@ export class AddAnnouncementComponent {
     addAnnouncementDTO.announcementID = 0;
     addAnnouncementDTO.pictureLink = this.uploadedImageUrl;
     addAnnouncementDTO.caption = this.caption;
+    addAnnouncementDTO.classroomList = this.selectedClasses;
 
     this.announcementService.addAnnouncement(addAnnouncementDTO)
         .pipe(

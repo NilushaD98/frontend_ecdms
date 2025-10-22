@@ -17,7 +17,9 @@ export class AppointmentComponent implements OnInit{
   users:any;
   selectedUser: any;
   groupedAppointments: any;
-  userType:string = '';
+  userId: any;
+  userType:any = '';
+
   ngOnInit(){
 
   }
@@ -33,7 +35,7 @@ export class AppointmentComponent implements OnInit{
               this.users = res.data;
           });
       const userType = localStorage.getItem('user_type');
-      const userId = localStorage.getItem('user_id');
+      this.userId = localStorage.getItem('user_id')? localStorage.getItem('user_id') :'';
       if (userType) {
         this.userType = userType;
         if(userType == 'ADMIN'){
@@ -43,7 +45,7 @@ export class AppointmentComponent implements OnInit{
                 }
             )
         }else {
-            appointmentService.getAppointmentDateViseAndUserVise(userId).subscribe(
+            appointmentService.getAppointmentDateViseAndUserVise(this.userId).subscribe(
                 (res:any) =>{
                     this.groupedAppointments = res.data;
                 }
@@ -62,7 +64,7 @@ export class AppointmentComponent implements OnInit{
   addAppointment() {
    const appointmentDTO = new AppointmentDTO(
        null,
-       this.selectedUser,
+       this.userType == 'ADMIN'?this.selectedUser:this.userId,
        null,
        this.reason,
        null,

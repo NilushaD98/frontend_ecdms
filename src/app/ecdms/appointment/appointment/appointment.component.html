@@ -73,7 +73,7 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="userType == 'ADMIN'">
             <label class="col-xs-3 col-sm-auto col-form-label">Student:</label>
             <ng-select [(ngModel)]="selectedUser" [items]="users"
                        bindLabel="fullName" bindValue="stuID"

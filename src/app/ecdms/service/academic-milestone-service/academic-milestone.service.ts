@@ -111,14 +111,14 @@ export class AcademicMilestoneService {
     return of({ basicTable, total });
   }
 
-  getAllTestTypes(){
+  getAllTestTypes(selectedClass:number){
     const token = localStorage.getItem('token') || '';
     console.log('Token:', token);
     let headers = new HttpHeaders().append('Content-Type', 'application/json').append('Authorization','Bearer'+' '+token);
     console.log('Custom Headers:', headers);
 
     return this.http.get(
-        'http://localhost:9090/test-type/get-all-test-type',
+        'http://localhost:9090/test-type/get-all-test-type?testClass='+selectedClass,
         { headers: headers }
     );
   }

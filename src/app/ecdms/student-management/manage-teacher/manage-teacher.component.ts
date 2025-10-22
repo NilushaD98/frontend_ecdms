@@ -19,7 +19,9 @@ export class ManageTeacherComponent {
   @ViewChildren(NgbdSortableHeader) headers!: QueryList<NgbdSortableHeader>;
   classrooms = [
     { id: 1, name: 'Day Care' },
-    { id: 2, name: 'Montessori' }
+    { id: 2, name: 'Montessori - PLAYGROUP' },
+    { id: 3, name: 'Montessori - LKG' },
+    { id: 4, name: 'Montessori - UKG'}
   ];
   constructor(
       public service: TeacherService  ,

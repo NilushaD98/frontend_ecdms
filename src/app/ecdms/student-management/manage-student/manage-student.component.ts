@@ -36,9 +36,9 @@ export class ManageStudentComponent {
     ecddc: 'ECD & Daycare Center'
   };
   categoryMapping:any = {
-    1: '2.5 - 3 years',
-    2: '3 - 4 years',
-    3: '4 - 5 years'
+    2: '2.5 - 3 years',
+    3: '3 - 4 years',
+    4: '4 - 5 years'
   };
   constructor(
       public service: UserServiceService,

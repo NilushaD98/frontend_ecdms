@@ -43,6 +43,11 @@
                             <div class="mt-1 small text-muted" *ngIf="nextPayment.paidDate">
                                 <strong>Paid On:</strong> {{ formatDateTime(nextPayment.paidDate) }}
                             </div>
+                            <div class="mt-2" *ngIf="!nextPayment.paid">
+                                <button class="btn btn-primary btn-sm" (click)="openUploadPopup(nextPayment, uploadModal)">
+                                    <i class="fas fa-upload"></i> Upload Receipt
+                                </button>
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -78,9 +83,11 @@
                             <div class="mt-2 small text-muted">
                                 <strong>Due Date:</strong> {{ formatDate(payment.dueDate) }}
                             </div>
-                            <!-- <div class="mt-1 small text-muted" *ngIf="payment.paidDate">
-                              <strong>Paid On:</strong> {{ formatDateTime(payment.paidDate) }}
-                            </div> -->
+                            <div class="mt-2">
+                                <button class="btn btn-danger btn-sm" (click)="openUploadPopup(payment, uploadModal)">
+                                    <i class="fas fa-upload"></i> Upload Receipt
+                                </button>
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-exclamation-circle fa-2x text-danger"></i>
@@ -141,12 +148,45 @@
                             <div class="mt-2 small text-muted">
                                 <strong>Due Date:</strong> {{ formatDate(payment.dueDate) }}
                             </div>
-                            <!-- <div class="mt-1 small text-muted" *ngIf="payment.paidDate">
-                              <strong>Paid On:</strong> {{ formatDateTime(payment.paidDate) }}
-                            </div> -->
+                            <div class="mt-2">
+                                <button class="btn btn-warning btn-sm" (click)="openUploadPopup(payment, uploadModal)">
+                                    <i class="fas fa-upload"></i> Upload Receipt
+                                </button>
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-clock fa-2x text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Approval Payments Section -->
+    <div class="row mb-4" *ngIf="pendingApprovalPayments.length > 0">
+        <div class="col-12">
+            <h5>Pending Approval</h5>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let payment of pendingApprovalPayments; trackBy: trackByPaymentId">
+            <div class="card border-left-info border-left-4 shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{{ payment.type }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">${{ payment.amount }}</div>
+                            <div class="mt-2">
+                                <span class="badge badge-info">Pending Approval</span>
+                            </div>
+                            <div class="mt-2 small text-muted">
+                                <strong>Due Date:</strong> {{ formatDate(payment.dueDate) }}
+                            </div>
+                            <div class="mt-1 small text-muted" *ngIf="payment.submittedDate">
+                                <strong>Submitted:</strong> {{ formatDateTime(payment.submittedDate) }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-hourglass-half fa-2x text-info"></i>
                         </div>
                     </div>
                 </div>
@@ -164,14 +204,49 @@
     </div>
 </div>
 
-<!-- TrackBy functions for performance -->
-<!-- Add these to your component.ts if not already there -->
-<!--
-trackByPaymentId(index: number, item: any): any {
-  return item.paymentId;
-}
-
-trackByIndex(index: number, item: any): any {
-  return index;
-}
--->
+<ng-template #uploadModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">Upload Payment Receipt</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3" *ngIf="selectedPayment">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Payment Details</h6>
+                    <p><strong>Type:</strong> {{ selectedPayment.type }}</p>
+                    <p><strong>Amount:</strong> ${{ selectedPayment.amount }}</p>
+                    <p><strong>Due Date:</strong> {{ formatDate(selectedPayment.dueDate) }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label class="col-form-label">Upload Receipt Image:</label>
+            <ngx-dropzone (change)="onSelect($event)" [accept]="'image/*'" [multiple]="false">
+                <ngx-dropzone-label>Drop receipt image here or click to browse</ngx-dropzone-label>
+                <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                    <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                </ngx-dropzone-preview>
+            </ngx-dropzone>
+        </div>
+        
+        <div class="mb-3" *ngIf="uploading">
+            <div class="d-flex align-items-center">
+                <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+                <span>Uploading receipt...</span>
+            </div>
+        </div>
+        
+        <div class="mb-3" *ngIf="uploadedImageUrl && !uploading">
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i> Receipt uploaded successfully!
+            </div>
+            <img [src]="uploadedImageUrl" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" alt="Receipt">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="submitPayment(); modal.close()" 
+                [disabled]="!uploadedImageUrl || uploading">Submit Payment</button>
+    </div>
+</ng-template>

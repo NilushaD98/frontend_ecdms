@@ -1,7 +1,9 @@
 export class AttendanceRequestDTO{
     attendanceDate:Date;
-    constructor(attendanceDate: Date) {
+    classType:number;
+    constructor(attendanceDate: Date,classType:number) {
         this.attendanceDate = attendanceDate;
+        this.classType = classType;
     }
 }
 export class AttendanceMarkDTO {
@@ -9,6 +11,7 @@ export class AttendanceMarkDTO {
         public date: Date,
         public present: boolean,
         public remark: string,
+        public type:string,
         public student: number | null,
         public teacher: number | null
     ) {}

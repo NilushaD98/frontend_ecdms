@@ -23,7 +23,9 @@ export class AddTeacherComponent implements OnInit {
   teacherID: number = 0;
   classrooms = [
     { id: 1, name: 'Day Care' },
-    { id: 2, name: 'Montessori' }
+    { id: 2, name: 'Montessori - PLAYGROUP' },
+    { id: 3, name: 'Montessori - LKG' },
+    { id: 4, name: 'Montessori - UKG'}
   ];
   selectedClasses: number[]=[];
 

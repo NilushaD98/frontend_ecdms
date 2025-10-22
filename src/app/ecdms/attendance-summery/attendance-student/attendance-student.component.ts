@@ -26,6 +26,8 @@ export class AttendanceStudentComponent {
   selectedDate:any;
   todayDate: string;
   @ViewChildren(NgbdSortableHeader) headers!: QueryList<NgbdSortableHeader>;
+  selectedClass: any;
+
 
   programMapping:any = {
     ecd: 'ECD Center',
@@ -38,8 +40,10 @@ export class AttendanceStudentComponent {
     3: '4 - 5 years'
   };
   classrooms = [
-    { id: 1, name: 'Day Care' },
-    { id: 2, name: 'Montessori' }
+    { id: 1, name: 'Play Class' },
+    { id: 2, name: 'LKG Class' },
+    { id: 3, name: 'UKG Class' },
+    { id: 4, name: 'Day Care' },
   ];
   selectedClasses: number[]=[];
   constructor(
@@ -50,18 +54,17 @@ export class AttendanceStudentComponent {
       private toastr: ToastrService
 
   ) {
-    this.fetchAllStudentsAttendance(new Date());
-
     const today = new Date();
+    this.selectedDate = new Date();
     const year = today.getFullYear();
     const month = ('0' + (today.getMonth() + 1)).slice(-2); // Months are zero-based
     const day = ('0' + today.getDate()).slice(-2);
     this.todayDate = `${year}-${month}-${day}`;
 
   }
-  fetchAllStudentsAttendance(date:Date){
+  fetchAllStudentsAttendance(date:Date,classType:number){
     this.selectedDate = date;
-    let attendanceRequestDTO:AttendanceRequestDTO = new AttendanceRequestDTO(date);
+    let attendanceRequestDTO:AttendanceRequestDTO = new AttendanceRequestDTO(date,classType);
     this.attendanceService.getAttendanceByDate(attendanceRequestDTO).subscribe(
         (res:any) =>{
           console.log(res)
@@ -100,7 +103,7 @@ export class AttendanceStudentComponent {
     const selectedDate = new Date(event.target.value);
     this.selectedDate=selectedDate;
     if (event.target.value && !isNaN(selectedDate.getTime())) {
-      this.fetchAllStudentsAttendance(selectedDate);
+      this.fetchAllStudentsAttendance(selectedDate,this.selectedClass);
     } else {
       // Optionally handle invalid date
       console.warn('Invalid date selected');
@@ -111,11 +114,18 @@ export class AttendanceStudentComponent {
     // Toggle the local state immediately for a responsive UI
     const newStatus = !item.presentStatus;
 
+    let type:string = '';
+    if(this.selectedClass == 1 || this.selectedClass==2 || this.selectedClass==3 ){
+      type = 'ecd'
+    }else {
+      type = 'day_care'
+    }
     // Create the DTO with the new status
     const attendance = new AttendanceMarkDTO(
         this.selectedDate,
         newStatus,
         'Present',
+        type,
         item.attendanceID,
         null
     );
@@ -138,4 +148,8 @@ export class AttendanceStudentComponent {
   }
 
   protected readonly HTMLInputElement = HTMLInputElement;
+
+  fetchAttendance() {
+    this.fetchAllStudentsAttendance(this.selectedDate,this.selectedClass);
+  }
 }

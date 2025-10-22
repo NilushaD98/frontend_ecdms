@@ -23,6 +23,7 @@
                                     <th scope="col" sortable="testTypeID" (sort)="onSort($event)">Test ID</th>
                                     <th scope="col" sortable="testName" (sort)="onSort($event)">Name</th>
                                     <th scope="col" sortable="testDate" (sort)="onSort($event)">Date</th>
+                                    <th scope="col" sortable="testClass" (sort)="onSort($event)">Class</th>
                                     <th scope="col" >Mark</th>
                                 </tr>
                                 </thead>
@@ -37,6 +38,9 @@
                                     </td>
                                     <td>
                                         <ngb-highlight [result]="item.testDate | date:'yyyy-MM-dd'" [term]="service.searchTerm"></ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-primary">{{ getClassNames(item.testClass) }}</span>
                                     </td>
                                     <td>
                                         <span>
@@ -74,6 +78,12 @@
         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
+
+        <div class="mb-3">
+            <label class="col-form-label">Class:</label>
+            <ng-select [items]="classrooms" bindLabel="name" bindValue="id"  placeholder="Select class" [(ngModel)]="selectedClass">
+                    </ng-select>
+        </div>
         <div class="mb-3">
             <label class="col-form-label">Test Name:</label>
             <input class="form-control" type="text" value="Test Name" [(ngModel)]="testName">
