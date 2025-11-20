@@ -1,0 +1,101 @@
+<app-breadcrumb [title]="'Teacher Salary'" [items]="['Teacher Salary']" [active_item]="'Teacher Salary'"></app-breadcrumb>
+
+<div class="container-fluid">
+    <!-- Add Salary Section -->
+    <div *ngIf="addSalarySection" class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Add Teacher Salary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="form-label">Select Teacher:</label>
+                            <select class="form-select" [(ngModel)]="selectedTeacher" (change)="onTeacherChange()">
+                                <option value="">Choose Teacher</option>
+                                <option *ngFor="let teacher of teachers" [value]="teacher.teacherID">
+                                    {{ teacher.fullName }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Select Month:</label>
+                            <select class="form-select" [(ngModel)]="selectedMonth">
+                                <option value="">Choose Month</option>
+                                <option *ngFor="let month of months" [value]="month">
+                                    {{ month }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Select Year:</label>
+                            <select class="form-select" [(ngModel)]="selectedYear">
+                                <option *ngFor="let year of years" [value]="year">
+                                    {{ year }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Salary Amount:</label>
+                            <input type="number" class="form-control" [(ngModel)]="salaryAmount" placeholder="Enter amount">
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn btn-primary" (click)="addSalary()">Add Salary</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Salary History Section -->
+    <div class="row mb-4" *ngIf="selectedTeacher && salaryHistory.length > 0">
+        <div class="col-12">
+            <h5>Salary History - {{ getTeacherName(selectedTeacher) }}</h5>
+        </div>
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let salary of salaryHistory">
+            <div class="card border-left-success border-left-4 shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                {{ salary.month }}
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                ${{ salary.amount }}
+                            </div>
+                            <div class="mt-2">
+                                <span class="badge badge-success">Paid</span>
+                            </div>
+                            <div class="mt-2 small text-muted" *ngIf="salary.paidDate">
+                                <strong>Paid On:</strong> {{ formatDate(salary.paidDate) }}
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-money-bill-wave fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- No Teacher Selected Message -->
+    <div class="row" *ngIf="!selectedTeacher">
+        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                Please select a teacher to view salary history.
+            </div>
+        </div>
+    </div>
+
+    <!-- No Salary History Message -->
+    <div class="row" *ngIf="selectedTeacher && salaryHistory.length === 0">
+        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                No salary history found for selected teacher.
+            </div>
+        </div>
+    </div>
+</div>
