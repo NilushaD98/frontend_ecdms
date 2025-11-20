@@ -6,6 +6,7 @@ import {ResultsComponent} from "./results/results.component";
 import {AttendanceComponent} from "./attendance/attendance.component";
 import {PaymentsComponent} from "./payments/payments.component";
 import {NoticesComponent} from "./notices/notices.component";
+import {TeacherSalaryComponent} from "./teacher-salary/teacher-salary.component";
 var routingAnimation = localStorage.getItem('animate')
 
 const routes: Routes = [
@@ -40,6 +41,11 @@ const routes: Routes = [
             {
                 path: 'notices',
                 component: NoticesComponent,
+                data: { animation: [routingAnimation] }
+            },
+            {
+                path: 'teacher-salary',
+                component: TeacherSalaryComponent,
                 data: { animation: [routingAnimation] }
             },
         ]

@@ -121,6 +121,17 @@ export class NavService {
       ],
       permission:['ADMIN','TEACHER','PARENT']
     },
+    {
+      title: "Salary",
+      icon: "newUser",
+      type: "sub",
+      active: false,
+      children: [
+        { path: "/profile/teacher-salary", title: "Teacher Salary", type: "link" ,permission:['ADMIN','TEACHER','PARENT']},
+      ],
+      permission:['ADMIN','TEACHER','PARENT']
+    },
+
 
     // {
     //   title: "Dashboards",
@@ -769,6 +780,16 @@ export class NavService {
       active: false,
       children: [
         { path: "/notice/notices", title: "Notice", type: "link" ,permission:['ADMIN','TEACHER','PARENT']},
+      ],
+      permission:['ADMIN','TEACHER','PARENT']
+    },
+    {
+      title: "My Salary",
+      icon: "newUser",
+      type: "sub",
+      active: false,
+      children: [
+        { path: "/profile/teacher-salary", title: "Salary", type: "link" ,permission:['ADMIN','TEACHER','PARENT']},
       ],
       permission:['ADMIN','TEACHER','PARENT']
     },
