@@ -53,16 +53,6 @@
                         <div class="text text-danger mt-1">Password is required</div>
                         }
                     </div>
-
-                    <!-- Remember Password & Forgot Link -->
-                    <div class="form-group">
-                        <div class="checkbox ms-1">
-                            <input id="checkbox1" type="checkbox" formControlName="rememberMe">
-                            <label class="text-muted" for="checkbox1">Remember password</label>
-                        </div>
-                        <a class="link" [routerLink]="'/authentication/forgot-password'">Forgot password?</a>
-                    </div>
-
                     <!-- Submit Button -->
                     <div class="form-group">
                         <button class="btn btn-primary btn-block"
@@ -71,24 +61,6 @@
                             Sign in
                         </button>
                     </div>
-
-                    <!-- Social Login Section -->
-                    <div class="login-social-title">
-                        <h5>Sign in with</h5>
-                    </div>
-                    <div class="form-group">
-                        <ul class="login-social">
-                            <li><a href="https://www.linkedin.com" target="_blank"><app-feather-icon [icon]="'linkedin'"></app-feather-icon></a></li>
-                            <li><a href="https://twitter.com" target="_blank"><app-feather-icon [icon]="'twitter'"></app-feather-icon></a></li>
-                            <li><a href="https://www.facebook.com" target="_blank"><app-feather-icon [icon]="'facebook'"></app-feather-icon></a></li>
-                            <li><a href="https://www.instagram.com" target="_blank"><app-feather-icon [icon]="'instagram'"></app-feather-icon></a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Register Link -->
-                    <p>Don't have an account?
-                        <a class="ms-2" [routerLink]="'/authentication/register/register-simple'">Create Account</a>
-                    </p>
                 </form>
             </div>
         </div>
