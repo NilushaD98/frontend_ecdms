@@ -110,11 +110,11 @@ export class AttendanceTeacherComponent {
         (res) => {
           console.log('Attendance updated successfully', res);
           this.toastr.success('Attendance updated successfully!', 'Success');
-          this.fetchAllTeacherAttendance(this.selectedDate);
         },
         (error) => {
           console.error('Error updating attendance:', error);
-          // Revert UI if needed
+          item.presentStatus = !item.presentStatus; // Revert UI on error
+          this.toastr.error('Failed to update attendance.', 'Error');
         }
     );
   }
